@@ -1,19 +1,16 @@
-import { FC } from "react";
 import Home from "../pages/Home/Home";
 
 export interface RouteInterface {
   path: string;
   name?: string,
-  exact?: boolean;
-  component?: FC;
+  element?: React.ReactElement;
   children?: Array<RouteInterface>;
 }
 
 // root routes
 const rootRoute: RouteInterface = {
   path: '/',
-  exact: true,
-  component: () => <Home />,
+  element: <Home />,
 };
 
 const openingsRoutes: RouteInterface = {

@@ -1,11 +1,21 @@
 import { FC } from 'react';
+
 import { useTranslation } from 'react-i18next';
 import { namespaces } from '../../i18n/i18n.constants';
-import { Button, Center, Header, Hero, Page} from 'decentraland-ui'
+
+import 'semantic-ui-css/semantic.min.css'
+import 'balloon-css/balloon.min.css'
+import 'decentraland-ui/dist/themes/base-theme.css'
+import 'decentraland-ui/dist/themes/alternative/light-theme.css'
+
+import { Button } from 'decentraland-ui/dist/components/Button/Button'
+import { Hero } from 'decentraland-ui/dist/components/Hero/Hero'
+import { Page } from 'decentraland-ui/dist/components/Page/Page'
+
 import { openings3D, professionals3D } from '../../assets/illustrations';
-import './Home.scss';
 import Card3D from '../../components/common/Card3D/Card3D';
 import Layout from '../../components/layout/Layout/Layout';
+import './Home.scss';
 
 const Home:FC = () => {
   const { t, i18n } = useTranslation(namespaces.pages.hello);

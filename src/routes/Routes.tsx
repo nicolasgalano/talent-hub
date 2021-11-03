@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Routes as Switch, Route } from "react-router-dom";
 import { allFlattenRoutes as routes, RouteInterface } from './index';
 
 const Routes:FC = () => {
@@ -12,8 +12,7 @@ const Routes:FC = () => {
               <Route
                 key={index}
                 path={route.path}
-                exact={route.exact}
-                component={route.component}
+                element={route.element}
                 />
               : null
           );
