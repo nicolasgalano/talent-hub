@@ -1,0 +1,92 @@
+@import '../utils/Mixins.scss';
+
+.heading-xl{
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 4.5rem;
+  letter-spacing: 0px;
+}
+.heading-l{
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 4rem;
+  letter-spacing: 0px;
+}
+.heading-m{
+  font-size: 3rem;
+  font-weight: 600;
+  line-height: 3.5rem;
+  letter-spacing: 0px;
+  @include media-breakpoint-down(xs) {
+    font-size: 2.125rem;
+    line-height: 2.5rem;
+  }
+}
+.heading-s{
+  font-size: 2.5rem;
+  font-weight: 500;
+  line-height: 3rem;
+  letter-spacing: 0.4px;
+  @include media-breakpoint-down(xs) {
+    font-size: 2.125rem;
+    line-height: 2.625rem;
+  }
+}
+.heading-xs{
+  font-size: 2.125rem;
+  font-weight: 600;
+  line-height: 2.625rem;
+  letter-spacing: 0.4px;
+  @include media-breakpoint-down(xs) {
+    font-size: 1.75rem;
+    line-height: 2.125rem;
+  }
+}
+.heading-xxs{
+  font-size: 1.75rem;
+  line-height: 2.125rem;
+  letter-spacing: 0.3px;
+  @include media-breakpoint-down(xs) {
+    font-size: 1.3125rem;
+    line-height: 1.875rem;
+  }
+}
+.body-xl{
+  font-size: 1.3125rem;
+  line-height: 1.875rem;
+  letter-spacing: 0.3px;
+  @include media-breakpoint-down(xs) {
+    font-size: 1.0625rem;
+    line-height: 1.625rem;
+    letter-spacing: -0.2px;
+  }
+}
+.body-l{
+  font-size: 1.0625rem;
+  line-height: 1.625rem;
+  letter-spacing: -0.2px;
+  @include media-breakpoint-down(xs) {
+    font-size: 0.9375rem;
+    line-height: 1.5rem;
+    letter-spacing: 0;
+  }
+}
+.body-m{
+  font-size: 0.9375rem;
+  line-height: 1.5rem;
+}
+.body-s{
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+}
+.body-xs{
+  font-size: 0.6875rem;
+  line-height: 1rem;
+}
+.label{
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.125rem;
+  letter-spacing: 0px;
+  text-transform: uppercase;
+}
