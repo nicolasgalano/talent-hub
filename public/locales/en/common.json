@@ -1,6 +1,7 @@
 {
   "buttons": {
     "save": "Save",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "view-all": "View All"
   }
 }

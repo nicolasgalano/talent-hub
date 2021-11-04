@@ -3,9 +3,5 @@ export const namespaces = {
     hello: "pages.hello",
   },
   common: "common",
-};
-
-export const languages = {
-  es: "es",
-  en: "en",
+  layout: "layout",
 };

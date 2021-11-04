@@ -1,7 +1,9 @@
 import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { arrowRight } from '../../../assets/icons';
+import { namespaces } from '../../../i18n/i18n.constants';
 
 import './Card3D.scss';
 
@@ -14,6 +16,8 @@ interface Card3DProps {
 }
 
 const Card3D:FC<Card3DProps> = ({imgSrc, title, description, to, color}) => {
+  const { t } = useTranslation(namespaces.common);
+
   return (
     <div className={`card3d ${color}`}>
       <div className="illustration">
@@ -23,7 +27,7 @@ const Card3D:FC<Card3DProps> = ({imgSrc, title, description, to, color}) => {
         <h3 className="title">{title}</h3>
         <div className="description">{description}</div>
         <Link to={to} className="link">
-          View All
+          {t("buttons.view-all")}
           <img src={arrowRight} className="arrow-right" alt="view all" />
         </Link>
       </div>

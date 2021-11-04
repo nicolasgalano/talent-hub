@@ -1,0 +1,16 @@
+{
+  "header": {
+    "marketplace": "Mercado",
+    "builder": "Constructor",
+    "docs": "Documentos",
+    "events": "Eventos",
+    "dao": "Dao",
+    "blog": "Noticias",
+    "talent-hub": "Centro de Talentos"
+  },
+  "footer": {
+    "press-kit": "Prensa",
+    "legal-information": "Legal",
+    "home": "Home"
+  }
+}
