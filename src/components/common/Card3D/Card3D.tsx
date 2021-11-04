@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { arrowRight } from '../../../assets/icons';
 import { namespaces } from '../../../i18n/i18n.constants';
+import Typography from '../Typography/Typography';
 
 import './Card3D.scss';
 
@@ -24,7 +25,8 @@ const Card3D:FC<Card3DProps> = ({imgSrc, title, description, to, color}) => {
         <img src={imgSrc} alt={title} />
       </div>
       <div className="info">
-        <h3 className="title">{title}</h3>
+        <Typography variant="h6" element="h2" className="description">{title}</Typography>
+        {/* <h3 className="title">{title}</h3> */}
         <div className="description">{description}</div>
         <Link to={to} className="link">
           {t("buttons.view-all")}
