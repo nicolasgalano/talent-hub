@@ -5,6 +5,7 @@ import './Typography.scss';
 const Typography:FC = () => {
   return (
     <>
+    
     </>
   );  
 }
