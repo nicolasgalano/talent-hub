@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
 
-import { LanguageDropdown } from 'decentraland-ui/dist/components/LanguageDropdown/LanguageDropdown'
+import { LanguageDropdown, LanguageDropdownI18N } from 'decentraland-ui/dist/components/LanguageDropdown/LanguageDropdown'
 import { discord, github, reddit, tw } from "../../../assets/icons";
 import './Footer.scss';
 import { useTranslation } from "react-i18next";
@@ -12,6 +12,15 @@ const Footer:FC = () => {
   const { t, i18n } = useTranslation(namespaces.layout);
   
   const handleChangeLanguage = (lang: string) => i18n.changeLanguage(lang);
+
+  const i18nNav: LanguageDropdownI18N = {
+    en: <>English</>,
+    es: <>Español</>,
+    fr: <>Français</>,
+    ja: <>JA</>,
+    zh: <>ZH</>,
+    ko: <>KO</>,
+  }
 
   return ( 
     <div id="footer">
@@ -26,6 +35,7 @@ const Footer:FC = () => {
                   i18n.language : 
                   "en"
               }
+              i18n={i18nNav}
               locales={['en', 'es']}
               onChange={(e, data) => (
                 typeof data.value === 'string'  &&

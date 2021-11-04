@@ -10,8 +10,10 @@ const Header:FC = () => {
 
   return (
     <Navbar
+    activePage="Talent Hub"
       leftMenu={
         <>
+          <Menu.Item>{t("buttons.save", {ns: namespaces.common})}</Menu.Item>
           <Menu.Item>{t("header.marketplace")}</Menu.Item>
           <Menu.Item>{t("header.builder")}</Menu.Item>
           <Menu.Item>{t("header.docs")}</Menu.Item>
