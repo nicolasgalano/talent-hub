@@ -15,7 +15,7 @@ const Home:FC = () => {
         <div className="cards3d">
           <Card3D
             imgSrc={openings3D}
-            title="Openings"
+            title="Openings "
             description="Find or post positions for modellers, developers, designers and more."
             to="#"
             color="orange"
