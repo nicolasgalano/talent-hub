@@ -6,12 +6,14 @@ import { openings3D, professionals3D } from '../../assets/illustrations';
 import Card3D from '../../components/common/Card3D/Card3D';
 import Layout from '../../components/layout/Layout/Layout';
 import './Home.scss';
+import Typography from '../../components/common/Typography/Typography';
 
 const Home:FC = () => {
 
   return (
     <Layout>
       <Page>
+        <Typography element="h1" variant="h1" weight="400">Hellow world</Typography>
         <div className="cards3d">
           <Card3D
             imgSrc={openings3D}

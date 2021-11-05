@@ -28,6 +28,12 @@ type Element =
   | 'span'
   | 'label';
 
+type Weight =
+| '400'
+| '500'
+| '600'
+| '700';
+
 const variantsMapping = {
   h1: "heading-xl",
   h2: "heading-l",
@@ -46,16 +52,19 @@ const variantsMapping = {
 interface TypographyProps {
   variant: Variant;
   element: Element;
+  weight?: Weight;
   className?: object | string;
 }
 
-const Typography:FC<TypographyProps> = ({ variant, element, children, className }) => {
+const Typography:FC<TypographyProps> = ({ variant, element, weight, children, className }) => {
 
   const Component: Element = element ? element : 'p';
   const variantClass = variant ? variantsMapping[variant] : 'body-xl';
 
   return (
-    <Component className={clsx(variantClass, className)}>
+    <Component className={clsx(variantClass, className, {
+      ['fw-' + weight]: weight
+    })}>
       {children}
     </Component>
   );  
