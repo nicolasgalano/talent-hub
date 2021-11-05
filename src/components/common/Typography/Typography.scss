@@ -1,18 +1,121 @@
 @import '../../../assets/scss/utils/Mixins.scss';
+@import '../../../assets/scss/utils/Consts.scss';
+
+
+// Import SF UI Text font
+@font-face {
+  font-family: 'SF UI Text';
+  src: url('../../../assets/fonts/SFUIText-Regular.eot');
+  src: url('../../../assets/fonts/SFUIText-Regular.eot?#iefix') format('embedded-opentype'),
+      url('../../../assets/fonts/SFUIText-Regular.woff2') format('woff2'),
+      url('../../../assets/fonts/SFUIText-Regular.woff') format('woff'),
+      url('../../../assets/fonts/SFUIText-Regular.ttf') format('truetype'),
+      url('../../../assets/fonts/SFUIText-Regular.svg#SFUIText-Regular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF UI Text';
+  src: url('../../../assets/fonts/SFUIText-Medium.eot');
+  src: url('../../../assets/fonts/SFUIText-Medium.eot?#iefix') format('embedded-opentype'),
+      url('../../../assets/fonts/SFUIText-Medium.woff2') format('woff2'),
+      url('../../../assets/fonts/SFUIText-Medium.woff') format('woff'),
+      url('../../../assets/fonts/SFUIText-Medium.ttf') format('truetype'),
+      url('../../../assets/fonts/SFUIText-Medium.svg#SFUIText-Medium') format('svg');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF UI Text';
+  src: url('../../../assets/fonts/SFUIText-Semibold.eot');
+  src: url('../../../assets/fonts/SFUIText-Semibold.eot?#iefix') format('embedded-opentype'),
+      url('../../../assets/fonts/SFUIText-Semibold.woff2') format('woff2'),
+      url('../../../assets/fonts/SFUIText-Semibold.woff') format('woff'),
+      url('../../../assets/fonts/SFUIText-Semibold.ttf') format('truetype'),
+      url('../../../assets/fonts/SFUIText-Semibold.svg#SFUIText-Semibold') format('svg');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+// Import SF UI Display font
+@font-face {
+  font-family: 'SF UI Display';
+  src: url('../../../assets/fonts/SFUIDisplay-Bold.eot');
+  src: url('../../../assets/fonts/SFUIDisplay-Bold.eot?#iefix') format('embedded-opentype'),
+      url('../../../assets/fonts/SFUIDisplay-Bold.woff2') format('woff2'),
+      url('../../../assets/fonts/SFUIDisplay-Bold.woff') format('woff'),
+      url('../../../assets/fonts/SFUIDisplay-Bold.ttf') format('truetype'),
+      url('../../../assets/fonts/SFUIDisplay-Bold.svg#SFUIDisplay-Bold') format('svg');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF UI Display';
+  src: url('../../../assets/fonts/SFUIDisplay-Semibold.eot');
+  src: url('../../../assets/fonts/SFUIDisplay-Semibold.eot?#iefix') format('embedded-opentype'),
+      url('../../../assets/fonts/SFUIDisplay-Semibold.woff2') format('woff2'),
+      url('../../../assets/fonts/SFUIDisplay-Semibold.woff') format('woff'),
+      url('../../../assets/fonts/SFUIDisplay-Semibold.ttf') format('truetype'),
+      url('../../../assets/fonts/SFUIDisplay-Semibold.svg#SFUIDisplay-Semibold') format('svg');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF UI Display';
+  src: url('../../../assets/fonts/SFUIDisplay-Medium.eot');
+  src: url('../../../assets/fonts/SFUIDisplay-Medium.eot?#iefix') format('embedded-opentype'),
+      url('../../../assets/fonts/SFUIDisplay-Medium.woff2') format('woff2'),
+      url('../../../assets/fonts/SFUIDisplay-Medium.woff') format('woff'),
+      url('../../../assets/fonts/SFUIDisplay-Medium.ttf') format('truetype'),
+      url('../../../assets/fonts/SFUIDisplay-Medium.svg#SFUIDisplay-Medium') format('svg');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF UI Display';
+  src: url('../../../assets/fonts/SFUIDisplay-Regular.eot');
+  src: url('../../../assets/fonts/SFUIDisplay-Regular.eot?#iefix') format('embedded-opentype'),
+      url('../../../assets/fonts/SFUIDisplay-Regular.woff2') format('woff2'),
+      url('../../../assets/fonts/SFUIDisplay-Regular.woff') format('woff'),
+      url('../../../assets/fonts/SFUIDisplay-Regular.ttf') format('truetype'),
+      url('../../../assets/fonts/SFUIDisplay-Regular.svg#SFUIDisplay-Regular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+html, body {
+  font-size: 16px !important;
+}
 
 .heading-xl{
+  font-family: $font-display;
   font-size: 4rem;
   font-weight: 700;
   line-height: 4.5rem;
   letter-spacing: 0px;
 }
 .heading-l{
+  font-family: $font-display;
   font-size: 3.5rem;
   font-weight: 700;
   line-height: 4rem;
   letter-spacing: 0px;
 }
 .heading-m{
+  font-family: $font-display;
   font-size: 3rem;
   font-weight: 600;
   line-height: 3.5rem;
@@ -23,6 +126,7 @@
   }
 }
 .heading-s{
+  font-family: $font-display;
   font-size: 2.5rem;
   font-weight: 500;
   line-height: 3rem;
@@ -33,6 +137,7 @@
   }
 }
 .heading-xs{
+  font-family: $font-display;
   font-size: 2.125rem;
   font-weight: 600;
   line-height: 2.625rem;
@@ -43,7 +148,9 @@
   }
 }
 .heading-xxs{
+  font-family: $font-display;
   font-size: 1.75rem;
+  font-weight: 600;
   line-height: 2.125rem;
   letter-spacing: 0.3px;
   @include media-breakpoint-down(xs) {
@@ -52,7 +159,9 @@
   }
 }
 .body-xl{
+  font-family: $font-display;
   font-size: 1.3125rem;
+  font-weight: 400;
   line-height: 1.875rem;
   letter-spacing: 0.3px;
   @include media-breakpoint-down(xs) {
@@ -62,7 +171,9 @@
   }
 }
 .body-l{
+  font-family: $font-text;
   font-size: 1.0625rem;
+  font-weight: 400;
   line-height: 1.625rem;
   letter-spacing: -0.2px;
   @include media-breakpoint-down(xs) {
@@ -72,21 +183,43 @@
   }
 }
 .body-m{
+  font-family: $font-text;
   font-size: 0.9375rem;
+  font-weight: 400;
   line-height: 1.5rem;
 }
 .body-s{
+  font-family: $font-text;
   font-size: 0.8125rem;
+  font-weight: 400;
   line-height: 1.125rem;
 }
 .body-xs{
+  font-family: $font-text;
   font-size: 0.6875rem;
+  font-weight: 400;
   line-height: 1rem;
 }
 .label{
+  font-family: $font-text;
   font-size: 0.8125rem;
   font-weight: 600;
   line-height: 1.125rem;
   letter-spacing: 0px;
   text-transform: uppercase;
+}
+.fw-300{
+  font-weight: 300 !important;
+}
+.fw-400{
+  font-weight: 400 !important;
+}
+.fw-500{
+  font-weight: 500 !important;
+}
+.fw-600{
+  font-weight: 600 !important;
+}
+.fw-700{
+  font-weight: 700 !important;
 }

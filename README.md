@@ -1,6 +1,7 @@
 # Recuriments
 
 Node version v16.9.0
+Yarn version v1.22.5
 
 ## Available Scripts
 
