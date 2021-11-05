@@ -1,6 +1,11 @@
 import { FC } from 'react';
 
 import { Page } from 'decentraland-ui/dist/components/Page/Page'
+import { Button } from 'decentraland-ui/dist/components/Button/Button';
+import { Header } from 'decentraland-ui/dist/components/Header/Header';
+import { HeaderMenu }  from 'decentraland-ui/dist/components/HeaderMenu/HeaderMenu';
+import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon/Icon'
+
 
 import { openings3D, professionals3D } from '../../assets/illustrations';
 import Card3D from '../../components/common/Card3D/Card3D';
@@ -28,6 +33,20 @@ const Home:FC = () => {
             color="pink"
           />
         </div>
+      </Page>
+
+      <Page>
+        <HeaderMenu>
+          <HeaderMenu.Left>
+            <Header size="medium">Feature Jobs</Header>
+          </HeaderMenu.Left>
+          <HeaderMenu.Right>
+            <Button basic size="small">
+              View More
+              <Icon name="chevron right" />
+            </Button>
+          </HeaderMenu.Right>
+        </HeaderMenu>
       </Page>
     </Layout>
   );
