@@ -1,10 +1,6 @@
 import { FC } from 'react';
 
 import { Page } from 'decentraland-ui/dist/components/Page/Page'
-import { Button } from 'decentraland-ui/dist/components/Button/Button';
-import { Header } from 'decentraland-ui/dist/components/Header/Header';
-import { HeaderMenu }  from 'decentraland-ui/dist/components/HeaderMenu/HeaderMenu';
-import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon/Icon'
 
 
 import { openings3D, professionals3D } from '../../assets/illustrations';
@@ -12,6 +8,7 @@ import Card3D from '../../components/common/Card3D/Card3D';
 import Layout from '../../components/layout/Layout/Layout';
 import './Home.scss';
 import Typography from '../../components/common/Typography/Typography';
+import FeaturedCards from '../../components/common/FeaturedCards/FeaturedCards';
 
 const Home:FC = () => {
 
@@ -38,17 +35,7 @@ const Home:FC = () => {
       </Page>
 
       <Page>
-        <HeaderMenu>
-          <HeaderMenu.Left>
-            <Header size="medium">Feature Jobs</Header>
-          </HeaderMenu.Left>
-          <HeaderMenu.Right>
-            <Button basic size="small">
-              View More
-              <Icon name="chevron right" />
-            </Button>
-          </HeaderMenu.Right>
-        </HeaderMenu>
+        <FeaturedCards title="Featured jobs" action="view all jobs"/>  
       </Page>
     </Layout>
   );
