@@ -17,23 +17,27 @@ const Home:FC = () => {
   return (
     <Layout>
       <Page>
-        <Typography variant="h1" element="h2" className="description">{t("shape_the_future")}</Typography>
-        <Typography variant="body4" element="h4" className="description">The Decentraland Talent Hub is your destination for jobs in the virtual social world.</Typography>
-        <div className="cards3d">
-          <Card3D
-            imgSrc={openings3D}
-            title="Openings"
-            description="Find or post positions for modellers, developers, designers and more."
-            to="#"
-            color="orange"
-          />
-          <Card3D
-            imgSrc={professionals3D}
-            title="Professionals"
-            description="Search for skilled professionals or create your own profile to showcase your talent."
-            to="#"
-            color="pink"
-          />
+        <div className="home-hero">
+          <div className="hero-top">
+            <Typography variant="h1" element="h2" weight="700" className="title">{t("shape_the_future")}</Typography>
+            <Typography variant="h6" element="h3" weight="400" className="description">The Decentraland Talent Hub is your destination for jobs in the virtual social world.</Typography>
+          </div>
+          <div className="cards3d">
+            <Card3D
+              imgSrc={openings3D}
+              title="Openings"
+              description="Find or post positions for modellers, developers, designers and more."
+              to="#"
+              color="orange"
+            />
+            <Card3D
+              imgSrc={professionals3D}
+              title="Professionals"
+              description="Search for skilled professionals or create your own profile to showcase your talent."
+              to="#"
+              color="pink"
+            />
+          </div>
         </div>
       </Page>
     </Layout>

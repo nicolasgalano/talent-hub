@@ -1,4 +1,22 @@
+@import '../../assets/scss/utils/Consts.scss';
 @import '../../assets/scss/utils/Mixins.scss';
+
+
+.home-hero{
+
+  .hero-top{
+    max-width:696px;
+    padding:28px 0 64px;
+  }
+  
+}
+
+.title{
+  color: $color-grey-700;
+}
+.description{
+  color: $color-grey-400;
+}
 
 .cards3d{
   display: grid;
