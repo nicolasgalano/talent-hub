@@ -5,7 +5,8 @@ import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon/Icon'
 import clsx from 'clsx';
 import './FeaturedCards.scss';
 import Typography from "../Typography/Typography";
-import { CardProps } from "../Card/Card";
+import Card, { CardProps } from "../Card/Card";
+import { Link } from "react-router-dom";
 
 interface FeaturedCardsProps {
   title: string;
@@ -16,6 +17,8 @@ interface FeaturedCardsProps {
 }
  
 const FeaturedCards: FC<FeaturedCardsProps> = ({title, action, to, data, className}) => {
+
+
   return ( 
     <div className={clsx(className)}>
       <HeaderMenu>
@@ -23,12 +26,29 @@ const FeaturedCards: FC<FeaturedCardsProps> = ({title, action, to, data, classNa
             <Typography element="h2" variant="h5">{title}</Typography>
           </HeaderMenu.Left>
           <HeaderMenu.Right>
-            <Button basic size="small">
-              {action}
-              <Icon name="chevron right" />
-            </Button>
+            <Link to={to}>
+              <Button basic size="small">
+                {action}
+                <Icon name="chevron right" />
+              </Button>
+            </Link>
           </HeaderMenu.Right>
         </HeaderMenu>
+        <div className="featuredCards">
+          { 
+            data.map((job, index) => (
+              <Card 
+                title={job.title}
+                img={job.img}
+                company={job.company}
+                description={job.description}
+                date={job.date}
+                location={job.location}
+                to="#"
+                key={`featured-card-${index}`} />
+            ))
+          }
+        </div>
     </div>
    );
 }

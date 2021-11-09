@@ -7,6 +7,7 @@ import 'decentraland-ui/dist/themes/alternative/light-theme.css'
 
 import Header from "../Header";
 import Footer from "../Footer/Footer";
+import "../../../assets/scss/base/reset.scss";
 
 const Layout:FC = (props) => {
   return (

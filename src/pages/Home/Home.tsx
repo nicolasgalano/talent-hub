@@ -9,6 +9,8 @@ import Layout from '../../components/layout/Layout/Layout';
 import './Home.scss';
 import Typography from '../../components/common/Typography/Typography';
 import FeaturedCards from '../../components/common/FeaturedCards/FeaturedCards';
+import jobs from '../../data/jobs.json';
+import professionals from '../../data/professionals.json';
 
 const Home:FC = () => {
 
@@ -35,8 +37,21 @@ const Home:FC = () => {
       </Page>
 
       <Page>
-        <FeaturedCards title="Featured jobs" action="view all jobs"/>  
+        <FeaturedCards 
+          data={jobs}
+          title="Featured jobs" 
+          action="view all jobs"
+          to="/openings" />
       </Page>
+
+      <Page>
+        <FeaturedCards 
+          data={professionals}
+          title="Featured professionals" 
+          action="view all professionals"
+          to="/professional" />
+      </Page>
+
     </Layout>
   );
 }
