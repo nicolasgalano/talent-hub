@@ -1,21 +1,26 @@
 import Home from "../pages/Home/Home";
+import Openings from "../pages/Openings/Openings";
 
 export interface RouteInterface {
   path: string;
-  name?: string,
-  element?: React.ReactElement;
+  name?: string;
+  component?: React.ComponentType;
   children?: Array<RouteInterface>;
+  exact?: boolean;
 }
 
 // root routes
 const rootRoute: RouteInterface = {
   path: '/',
-  element: <Home />,
+  component: Home,
+  exact: true,
 };
 
 const openingsRoutes: RouteInterface = {
   path: '/openings',
   name: 'Openings',
+  component: Openings,
+  exact: true,
   children: [
     {
       path: '/openings/create',
@@ -27,6 +32,7 @@ const openingsRoutes: RouteInterface = {
 const jobsRoutes: RouteInterface = {
   path: '/job',
   name: 'Job details',
+  exact: true,
   children: [
     {
       path: '/job/organization',

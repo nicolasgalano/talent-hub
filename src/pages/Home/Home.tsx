@@ -1,13 +1,11 @@
-import { FC } from 'react';
+import { FC, Fragment } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
 import { Page } from 'decentraland-ui/dist/components/Page/Page'
 
-
 import { openings3D, professionals3D } from '../../assets/illustrations';
 import Card3D from '../../components/common/Card3D/Card3D';
-import Layout from '../../components/layout/Layout/Layout';
 import { namespaces } from '../../i18n/i18n.constants';
 import Typography from '../../components/common/Typography/Typography';
 import FeaturedCards from '../../components/common/FeaturedCards/FeaturedCards';
@@ -19,7 +17,7 @@ const Home:FC = () => {
   const { t } = useTranslation(namespaces.pages.hello);
 
   return (
-    <Layout>
+    <Fragment>
       <Page>
         <div className="home-hero">
           <div className="hero-top">
@@ -61,7 +59,7 @@ const Home:FC = () => {
           to="/professional" />
       </Page>
 
-    </Layout>
+    </Fragment>
   );
 }
  
