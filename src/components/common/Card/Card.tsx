@@ -18,8 +18,8 @@ export interface CardProps {
  
 const Card: FC<CardProps> = ({img, title, company, description, date, location, to}) => {
   return (
-    <Link to={to}>
-      <div className="card">
+    <div className="card">
+      <Link to={to}>
         <div className="header">
           { img && 
             <div className="image">
@@ -55,8 +55,8 @@ const Card: FC<CardProps> = ({img, title, company, description, date, location, 
               </Button>
           }
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
    );
 }
  

@@ -1,10 +1,10 @@
 // Breackpoint
-$breakpoint-xs: 641px;
-$breakpoint-sm: 768px;
-$breakpoint-md: 992px;
-$breakpoint-lg: 1200px;
-$breakpoint-xl: 1440px;
-$breakpoint-xxl: 1680px;
+$breakpoint-xs: 639px;
+$breakpoint-sm: 768px; // not use
+$breakpoint-md: 1024px;
+$breakpoint-lg: 1200px; // not use
+$breakpoint-xl: 1440px; // not use
+$breakpoint-xxl: 1679px;
 
 @mixin media-breakpoint-down($media) {
   @if $media == xs {

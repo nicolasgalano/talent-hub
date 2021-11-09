@@ -8,6 +8,10 @@ import Typography from "../Typography/Typography";
 import Card, { CardProps } from "../Card/Card";
 import { Link } from "react-router-dom";
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+
 interface FeaturedCardsProps {
   title: string;
   action: string;
@@ -18,6 +22,26 @@ interface FeaturedCardsProps {
  
 const FeaturedCards: FC<FeaturedCardsProps> = ({title, action, to, data, className}) => {
 
+  const settings = {
+    slidesToShow: 1.5,
+    infinite: false,
+    responsive: [
+      {
+        breakpoint: 5000,
+        settings: "unslick"
+      },
+      {
+        breakpoint: 1024,
+        centerMode: false,
+        variableWidth: true,
+        settings: "slick"
+      },
+      {
+        breakpoint: 641,
+        settings: "unslick"
+      }
+    ]
+  };
 
   return ( 
     <div className={clsx(className)}>
@@ -34,7 +58,7 @@ const FeaturedCards: FC<FeaturedCardsProps> = ({title, action, to, data, classNa
             </Link>
           </HeaderMenu.Right>
         </HeaderMenu>
-        <div className="featuredCards">
+        <Slider className="featuredCards" {...settings}>
           { 
             data.map((job, index) => (
               <Card 
@@ -48,7 +72,22 @@ const FeaturedCards: FC<FeaturedCardsProps> = ({title, action, to, data, classNa
                 key={`featured-card-${index}`} />
             ))
           }
-        </div>
+        </Slider>
+        {/* <div className="featuredCards">
+          { 
+            data.map((job, index) => (
+              <Card 
+                title={job.title}
+                img={job.img}
+                company={job.company}
+                description={job.description}
+                date={job.date}
+                location={job.location}
+                to="#"
+                key={`featured-card-${index}`} />
+            ))
+          }
+        </div> */}
     </div>
    );
 }
