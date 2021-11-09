@@ -1,23 +1,65 @@
+@import '../../../assets/scss/utils/Mixins.scss';
+
 .card3d{
-  display: flex;
-  align-items: center;
   box-shadow: 0px 1.83914px 3.67827px rgba(0, 0, 0, 0.16);
   border-radius: 14px;
   overflow: hidden;
   &.orange{
-    background: linear-gradient(212.86deg, rgba(245, 179, 106, 0.8) 6.22%, rgba(235, 73, 90, 0.9628) 94.91%);
+    background: #FF2D55;
+    .card3d-content{
+      background: linear-gradient(212.86deg, rgba(245, 179, 106, 0.8) 6.22%, rgba(235, 73, 90, 0.9628) 94.91%);
+    }
   }
   &.pink{
-    background: linear-gradient(212.86deg, rgba(242, 99, 146, 0.7) 6.22%, rgba(218, 78, 224, 0.96) 94.91%);
+    background: #C640CD;
+    .card3d-content{
+      background: linear-gradient(212.86deg, rgba(242, 99, 146, 0.7) 6.22%, rgba(218, 78, 224, 0.96) 94.91%);
+    }
   }
+
+  .card3d-content{
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap:30px;
+    @include media-breakpoint-down(md) {
+      grid-template-columns: 1fr;
+      gap:0px;
+    }
+    @include media-breakpoint-down(xs) {
+      grid-template-columns: 1fr 2fr;
+      gap:10px;
+    }
+  }
+
+  .illustration{
+    padding:0 0 0 10%;
+    display: flex;
+    align-items: center;
+    img{
+      width:100%;
+    }
+  }
+
   .info{
+    
+    align-items: top;
+    padding:70px 57px 50px 0;
+
+    @include media-breakpoint-down(md) {
+      padding:10px 40px 40px 40px;
+    }
+    @include media-breakpoint-down(xs) {    
+      padding:20px;
+    }
+
     .title{
       color: #FFFFFF;
       margin-bottom: 12px;
     }
     .description{
       color: #FFFFFF;
-      margin-bottom: 35px;
+      margin-bottom: 23px;
     }
     .link{
       color: #FFFFFF;
