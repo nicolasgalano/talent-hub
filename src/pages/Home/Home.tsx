@@ -2,11 +2,15 @@ import { FC } from 'react';
 
 import { Page } from 'decentraland-ui/dist/components/Page/Page'
 
+
 import { openings3D, professionals3D } from '../../assets/illustrations';
 import Card3D from '../../components/common/Card3D/Card3D';
 import Layout from '../../components/layout/Layout/Layout';
 import './Home.scss';
 import Typography from '../../components/common/Typography/Typography';
+import FeaturedCards from '../../components/common/FeaturedCards/FeaturedCards';
+import jobs from '../../data/jobs.json';
+import professionals from '../../data/professionals.json';
 
 const Home:FC = () => {
 
@@ -31,6 +35,23 @@ const Home:FC = () => {
           />
         </div>
       </Page>
+
+      <Page>
+        <FeaturedCards 
+          data={jobs}
+          title="Featured jobs" 
+          action="view all jobs"
+          to="/openings" />
+      </Page>
+
+      <Page>
+        <FeaturedCards 
+          data={professionals}
+          title="Featured professionals" 
+          action="view all professionals"
+          to="/professional" />
+      </Page>
+
     </Layout>
   );
 }

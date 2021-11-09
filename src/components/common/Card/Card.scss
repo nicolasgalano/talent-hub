@@ -1,0 +1,76 @@
+@import '../../../assets/scss/utils/Consts.scss';
+@import '../../../assets/scss/utils/Mixins.scss';
+
+.card{
+  padding: 33px 32px;
+  border: 1.26471px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0px 1.94878px 3.89756px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  overflow: hidden;
+  @include media-breakpoint-down(xl){
+    padding: 24px 32px;
+  }
+  .header{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    column-gap: 13px;
+    margin-bottom: 32px;
+    .image{
+      position: relative;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      overflow: hidden;
+      img{
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: auto;
+        right: auto;
+      }
+    }
+    .txt{
+      display: flex;
+      flex-direction: column;
+      h3{
+        color: $color-grey-700;
+        margin-bottom: 4px;
+      }
+      h4{
+        color: $color-grey-400;
+        margin-top: 0;
+        margin-bottom: 0px;
+      }
+    }
+  }
+  .body{
+    margin-bottom: 30px;
+    p{
+      color: $color-grey-400;
+      height: 96px;
+    }
+  }
+  .footer{
+    display: flex;
+    &.jobs{
+      justify-content: space-between;
+      align-items: center;
+      span{
+        color: $color-grey-400;
+        text-transform: uppercase;
+        &.location{
+          display: flex;
+          align-items: center;
+          img{
+            margin-right: 6px;
+          }
+        }
+      }
+    }
+    &.professionals{
+      justify-content: flex-end;
+    }
+  }
+}

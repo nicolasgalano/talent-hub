@@ -3,6 +3,7 @@ import github from './github.svg';
 import reddit from './reddit.svg';
 import tw from './tw.svg';
 import arrowRight from './arrow-right.svg';
+import location from './location.svg';
 
 export {
   discord,
@@ -10,4 +11,5 @@ export {
   reddit,
   tw,
   arrowRight,
+  location,
 }
