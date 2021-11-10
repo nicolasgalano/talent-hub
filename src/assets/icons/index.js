@@ -4,6 +4,8 @@ import reddit from './reddit.svg';
 import tw from './tw.svg';
 import arrowRight from './arrow-right.svg';
 import location from './location.svg';
+import filterActive from './filter-active.svg';
+import filterInactive from './filter-inactive.svg';
 
 export {
   discord,
@@ -12,4 +14,6 @@ export {
   tw,
   arrowRight,
   location,
+  filterActive,
+  filterInactive,
 }

@@ -1,0 +1,18 @@
+{
+  "field": [
+    "Design",
+    "Development",
+    "Engineering"
+  ],
+  "contract": [
+    "Permanent",
+    "Freelance",
+    "Temporary",
+    "Internship"
+  ],
+  "schedule": [
+    "Full-Time",
+    "Part-Time",
+    "Per Hour"
+  ]
+}
