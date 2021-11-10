@@ -4,13 +4,13 @@ import React, { FC, Fragment } from 'react';
 import { Page } from 'decentraland-ui/dist/components/Page/Page'
 
 import './Openings.scss';
-import ListCard from '../../components/common/ListCards/ListCard';
+import CardList from '../../components/common/CardList/CardList';
 
 const Openings:FC = () => {
   return ( 
     <Fragment>
       <Page>
-        <ListCard />
+        <CardList />
       </Page>
     </Fragment>
   );

@@ -1,15 +1,17 @@
 @import '../../../assets/scss/utils/Consts.scss';
+@import '../../../assets/scss/utils/Mixins.scss';
 
-.list-card{
+.card-list{
   .header-menu{
-    margin-bottom: 28px;
+    margin-bottom: 34px;
   }
   .btn-filters{
     display: flex !important;
     justify-content: space-between;
     align-items: center;
     column-gap: 8px;
-    margin-right: 16px !important;
+    margin-right: 24px !important;
+    padding: 0 !important;
     img{
       width: 24px;
       height: 24px;
@@ -34,6 +36,23 @@
     overflow: hidden;
     &.open{
       display: flex;
+    }
+  }
+  .cards-container{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 44px;
+    @include media-breakpoint-down(xxl){
+      column-gap: 32px;
+      row-gap: 34px;
+    }
+    @include media-breakpoint-down(md){
+      grid-template-columns: 380px;
+      justify-content: center;
+      row-gap: 24px;
+    }
+    @include media-breakpoint-down(xs){
+      grid-template-columns: 1fr;
     }
   }
 }

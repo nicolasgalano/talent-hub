@@ -1,4 +1,4 @@
-import React, { FC, Fragment, useState } from "react";
+import React, { FC, Fragment, useEffect, useState } from "react";
 import clsx from 'clsx';
 
 // UI Decentraland
@@ -8,19 +8,37 @@ import { TextFilter } from 'decentraland-ui/dist/components/TextFilter/TextFilte
 import { Button } from 'decentraland-ui/dist/components/Button/Button';
 
 
-import './ListCard.scss';
+import './CardList.scss';
 import { filterActive, filterInactive } from "../../../assets/icons";
 import Typography from "../Typography/Typography";
 import Filters from "../Filters/Filters";
+import Card, { CardProps } from "../Card/Card";
 import data from '../../../data/filters.json';
+import dataJobs from '../../../data/jobs.json';
 
-const ListCard:FC = () => {
+const CardList:FC = () => {
   const [openFilter, setOpenFilter] = useState(false);
+  const [jobs, setJobs] = useState(null);
 
   const handleOpenFilter = () => setOpenFilter(!openFilter);
 
+  const getJobs = () => {
+    let allJobs = [];
+    // we increase the data size
+    for (let index = 0; index < 9; index++) {
+      const random = Math.floor(Math.random() * dataJobs.length);
+      const doc = dataJobs[random];
+      allJobs.push(doc);
+    }
+    return allJobs;
+  }
+
+  useEffect(() => {
+    setJobs(getJobs());
+  }, []);
+
   return(
-    <div className="list-card">
+    <div className="card-list">
       {/* Header */}
       <HeaderMenu>
         <HeaderMenu.Left>
@@ -55,9 +73,21 @@ const ListCard:FC = () => {
         <Filters title="Working schedule" listFilters={data.schedule} />
       </div>
       <div className="cards-container">
-
+        { jobs &&
+            jobs.map((job: CardProps, key: string) => (
+              <Card
+                title={job.title}
+                img={job.img}
+                company={job.company}
+                description={job.description}
+                date={job.date}
+                location={job.location}
+                to="#"
+                key={`card-job-${key}`}/>
+            ))
+        }
       </div>
     </div>
   );
 }
-export default ListCard;
+export default CardList;
