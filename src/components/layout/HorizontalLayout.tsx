@@ -5,11 +5,11 @@ import 'balloon-css/balloon.min.css'
 import 'decentraland-ui/dist/themes/base-theme.css'
 import 'decentraland-ui/dist/themes/alternative/light-theme.css'
 
-import Header from "../Header";
-import Footer from "../Footer/Footer";
-import "../../../assets/scss/base/reset.scss";
+import Header from "./Header";
+import Footer from "./Footer/Footer";
+import "../../assets/scss/base/reset.scss";
 
-const Layout:FC = (props) => {
+const HorizontalLayout:FC = (props) => {
   return (
     <Fragment>
       <Header />
@@ -19,4 +19,4 @@ const Layout:FC = (props) => {
   );
 }
  
-export default Layout;
+export default HorizontalLayout;

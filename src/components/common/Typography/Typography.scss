@@ -106,6 +106,10 @@ html, body {
   font-weight: 700;
   line-height: 4.5rem;
   letter-spacing: 0px;
+  @include media-breakpoint-down(xs) {
+    font-size: 3rem;
+    line-height: 3.5rem;
+  }
 }
 .heading-l{
   font-family: $font-display;

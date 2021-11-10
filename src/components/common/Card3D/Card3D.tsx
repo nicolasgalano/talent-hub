@@ -21,17 +21,18 @@ const Card3D:FC<Card3DProps> = ({imgSrc, title, description, to, color}) => {
 
   return (
     <div className={`card3d ${color}`}>
-      <div className="illustration">
-        <img src={imgSrc} alt={title} />
-      </div>
-      <div className="info">
-        <Typography variant="h6" element="h2" className="description">{title}</Typography>
-        {/* <h3 className="title">{title}</h3> */}
-        <div className="description">{description}</div>
-        <Link to={to} className="link">
-          {t("buttons.view-all")}
-          <img src={arrowRight} className="arrow-right" alt="view all" />
-        </Link>
+      <div className="card3d-content">
+        <div className="illustration">
+          <img src={imgSrc} alt={title} />
+        </div>
+        <div className="info">
+          <Typography variant="h6" element="h4" className="title">{title}</Typography>
+          <Typography variant="body2" element="p" className="description">{description}</Typography>
+          <Link to={to} className="link">
+            <Typography variant="label" element="span" className="label">{t("buttons.view-all")}</Typography>
+            <img src={arrowRight} className="arrow-right" alt="view all" />
+          </Link>
+        </div>
       </div>
     </div>
   );

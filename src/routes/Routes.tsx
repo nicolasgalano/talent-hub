@@ -1,22 +1,32 @@
 import { FC } from "react";
-import { BrowserRouter, Routes as Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import HorizontalLayout from "../components/layout/HorizontalLayout";
 import { allFlattenRoutes as routes, RouteInterface } from './index';
 
 const Routes:FC = () => {
+
+  const getLayout = () => {
+    let useThisLayout: React.ComponentType = HorizontalLayout;
+    return useThisLayout;
+  }
+
+  const Layout = getLayout();
+
   return (
     <BrowserRouter>
       <Switch>
-        {routes.map((route: RouteInterface, index: number) => {
-          return (
-            !route.children ?
+        <Layout>
+          {routes.map((route: RouteInterface, index: number) => {
+            return (
               <Route
-                key={index}
+                exact={route.exact}
                 path={route.path}
-                element={route.element}
+                component={route.component}
+                key={index}
                 />
-              : null
-          );
-        })}
+            );
+          })}
+        </Layout>
       </Switch>
     </BrowserRouter>
   );
