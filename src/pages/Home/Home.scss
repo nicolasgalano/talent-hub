@@ -26,3 +26,22 @@
     grid-template-columns: 1fr;
   }
 }
+
+#featured-jobs{
+  margin-bottom: 659px;
+  @include media-breakpoint-down(xxl){
+    margin-bottom: 545px;
+  }
+  @include media-breakpoint-down(md){
+    margin-bottom: 74px;
+  }
+}
+#featured-professionals{
+  margin-bottom: 634px;
+  @include media-breakpoint-down(xxl){
+    margin-bottom: 534px;
+  }
+  @include media-breakpoint-down(md){
+    margin-bottom: 74px;
+  }
+}

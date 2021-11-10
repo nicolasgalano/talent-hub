@@ -4,6 +4,7 @@ import 'semantic-ui-css/semantic.min.css'
 import 'balloon-css/balloon.min.css'
 import 'decentraland-ui/dist/themes/base-theme.css'
 import 'decentraland-ui/dist/themes/alternative/light-theme.css'
+import { Page } from "decentraland-ui/dist/components/Page/Page";
 
 import Header from "./Header";
 import Footer from "./Footer/Footer";
@@ -13,7 +14,9 @@ const HorizontalLayout:FC = (props) => {
   return (
     <Fragment>
       <Header />
-      { props.children }
+      <Page>
+        { props.children }
+      </Page>
       <Footer />
     </Fragment>
   );

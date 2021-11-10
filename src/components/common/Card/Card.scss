@@ -50,6 +50,12 @@
     p{
       color: $color-grey-400;
       height: 96px;
+      @include media-breakpoint-down(xl){
+        height: 155px;
+      }
+      @include media-breakpoint-down(md){
+        height: 96px;
+      }
     }
   }
   .footer{
