@@ -43,21 +43,21 @@ const Home:FC = () => {
         </div>
       </Page>
 
-      <Page>
+      <div className="ui container" id="featured-jobs">
         <FeaturedCards 
           data={jobs}
           title="Featured jobs" 
           action="view all jobs"
           to="/openings" />
-      </Page>
+      </div>
 
-      <Page>
+      <div className="ui container" id="featured-professionals">
         <FeaturedCards 
           data={professionals}
           title="Featured professionals" 
           action="view all professionals"
           to="/professional" />
-      </Page>
+      </div>
 
     </Fragment>
   );
