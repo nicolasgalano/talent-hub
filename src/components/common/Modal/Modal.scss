@@ -1,0 +1,34 @@
+@import '../../../assets/scss/utils/Consts.scss';
+
+.ui.dimmer{
+  background-color: rgba(22, 20, 25, 0.25) !important;
+  .modal-theme-grey{
+    border-radius: 8px;
+    overflow: hidden;
+    .content{
+      display: flex;
+      flex-direction: column;
+      row-gap: 36px;
+      padding: 46px 56px 61px;
+      .apply .button{
+        width: 100%;
+      }
+    }
+  }
+  .ui.modal,
+   .ui.modal > .content,
+   .ui.modal > .header,
+   .ui.modal > .description,
+   .ui.modal > .actions,
+   .ui.modal > .ui.form > .content,
+   .ui.modal > .ui.form > .header,
+   .ui.modal > .ui.form > .description,
+   .ui.modal > .ui.form > .actions{
+    background-color: $color-grey-300;
+  }
+  .close-icon{
+    position: absolute;
+    right: 44px;
+    top: 35px;
+  }
+}

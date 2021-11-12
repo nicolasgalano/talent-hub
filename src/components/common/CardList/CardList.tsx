@@ -1,20 +1,22 @@
-import React, { FC, Fragment, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import clsx from 'clsx';
 
 // UI Decentraland
-import { HeaderMenu }  from 'decentraland-ui/dist/components/HeaderMenu/HeaderMenu';
-import { Dropdown } from 'decentraland-ui/dist/components/Dropdown/Dropdown';
 import { TextFilter } from 'decentraland-ui/dist/components/TextFilter/TextFilter';
 import { Button } from 'decentraland-ui/dist/components/Button/Button';
 
-
+// Files
 import './CardList.scss';
+import data from '../../../data/filters.json';
+import dataJobs from '../../../data/jobs.json';
 import { filterActive, filterInactive } from "../../../assets/icons";
+
+// UI Custom Component
 import Typography from "../Typography/Typography";
 import Filters from "../Filters/Filters";
 import Card, { CardProps } from "../Card/Card";
-import data from '../../../data/filters.json';
-import dataJobs from '../../../data/jobs.json';
+import Dropdown from "../Dropdown/Dropdown";
+import Modal from "../Modal/Modal";
 
 const CardList:FC = () => {
   const [openFilter, setOpenFilter] = useState(false);
@@ -39,16 +41,23 @@ const CardList:FC = () => {
 
   return(
     <div className="card-list">
+      <Modal open={true} theme="grey" >
+        <Filters title="Field" listFilters={data.field} />
+        <Filters title="Type of contract" listFilters={data.contract} />
+        <Filters title="Working schedule" listFilters={data.schedule} />
+        <div className="apply">
+          <Button primary size="large">Apply</Button>
+        </div>
+      </Modal>
       {/* Header */}
-      <HeaderMenu>
-        <HeaderMenu.Left>
-          <TextFilter
+      <div className="card-list-menu">
+        <div className="title">
+        <TextFilter
             placeholder="Search jobs..."
             value=""
-            onChange={() => console.log("searching")}
-          />
-        </HeaderMenu.Left>
-        <HeaderMenu.Right>
+            onChange={() => console.log("searching")} />
+        </div>
+        <div className="actions">
           <Button basic className="btn-filters" onClick={() => handleOpenFilter()}>
             <Typography variant="label" element="span" >Filters</Typography>
             {
@@ -57,15 +66,11 @@ const CardList:FC = () => {
                 <img src={filterActive} alt="btn filters active"/>
             }
           </Button>
-          <Dropdown text="Latest" direction="left" className="btn-dropdown">
-            <Dropdown.Menu>
-              <Dropdown.Item text="Newest" />
-              <Dropdown.Item text="Popular" />
-              <Dropdown.Item text="Recent" />
-            </Dropdown.Menu>
-          </Dropdown>
-        </HeaderMenu.Right>
-      </HeaderMenu>
+          <Dropdown
+            options={Array('Latest', 'Popular', 'Recent')}
+            optionDefault="Latest" />
+        </div>
+      </div>
       {/* box */}
       <div className={clsx('filter-box', { 'open': openFilter })}>
         <Filters title="Field" listFilters={data.field} />
@@ -86,6 +91,9 @@ const CardList:FC = () => {
                 key={`card-job-${key}`}/>
             ))
         }
+      </div>
+      <div className="load-more">
+        <Button secondary >Load More</Button>
       </div>
     </div>
   );
