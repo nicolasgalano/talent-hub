@@ -18,6 +18,8 @@ import Card, { CardProps } from "../Card/Card";
 import Dropdown from "../Dropdown/Dropdown";
 import Modal, { ModalHandle } from "../Modal/Modal";
 import { useWindowSize } from "../../hooks/useWindowsSize";
+import Range from "../Range/Range";
+
 
 const CardList:FC = () => {
   const [openFilter, setOpenFilter] = useState(false);
@@ -30,6 +32,7 @@ const CardList:FC = () => {
       <Filters title="Field" listFilters={data.field} />
       <Filters title="Type of contract" listFilters={data.contract} />
       <Filters title="Working schedule" listFilters={data.schedule} />
+      <Range />
     </Fragment>
   );
 
