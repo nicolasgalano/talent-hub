@@ -1,15 +1,21 @@
 @import '../../../assets/scss/utils/Consts.scss';
+@import '../../../assets/scss/utils/Mixins.scss';
 
 .ui.dimmer{
   background-color: rgba(22, 20, 25, 0.25) !important;
   .modal-theme-grey{
+    width: 100%;
+    max-width: 440px;
     border-radius: 8px;
     overflow: hidden;
     .content{
       display: flex;
       flex-direction: column;
       row-gap: 36px;
-      padding: 46px 56px 61px;
+      padding: 46px 56px 61px !important;
+      @include media-breakpoint-down(xs){
+        padding: 44px 44px 48px !important;
+      }
       .apply .button{
         width: 100%;
       }
@@ -28,7 +34,15 @@
   }
   .close-icon{
     position: absolute;
-    right: 44px;
-    top: 35px;
+    right: 34px;
+    top: 25px;
+    padding: 10px;
+    &:hover{
+      cursor: pointer;
+    }
+    @include media-breakpoint-down(xs){
+      right: 23px;
+      top: 23px;
+    }
   }
 }

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, Fragment, useEffect, useRef, useState } from "react";
 import clsx from 'clsx';
 
 // UI Decentraland
@@ -16,13 +16,30 @@ import Typography from "../Typography/Typography";
 import Filters from "../Filters/Filters";
 import Card, { CardProps } from "../Card/Card";
 import Dropdown from "../Dropdown/Dropdown";
-import Modal from "../Modal/Modal";
+import Modal, { ModalHandle } from "../Modal/Modal";
+import { useWindowSize } from "../../hooks/useWindowsSize";
 
 const CardList:FC = () => {
   const [openFilter, setOpenFilter] = useState(false);
   const [jobs, setJobs] = useState(null);
+  const modalRef = useRef<ModalHandle>(null);
+  const {width: widthBrowser} = useWindowSize();
 
-  const handleOpenFilter = () => setOpenFilter(!openFilter);
+  const renderFilters = () => (
+    <Fragment>
+      <Filters title="Field" listFilters={data.field} />
+      <Filters title="Type of contract" listFilters={data.contract} />
+      <Filters title="Working schedule" listFilters={data.schedule} />
+    </Fragment>
+  );
+
+  const handleOpenFilter = () => {
+    if(widthBrowser >= 640){
+      setOpenFilter(!openFilter);
+    }else{
+      modalRef.current.openModal();
+    }
+  };
 
   const getJobs = () => {
     let allJobs = [];
@@ -39,63 +56,76 @@ const CardList:FC = () => {
     setJobs(getJobs());
   }, []);
 
+  useEffect(() => {
+    // Listener if browser width changed
+    if(widthBrowser >= 640){
+      if(modalRef.current.display()){
+        modalRef.current.closeModal();
+        setOpenFilter(true);
+      }
+    }else{
+      if(openFilter){
+        setOpenFilter(false);
+        modalRef.current.openModal();
+      }
+    }
+  }, [widthBrowser])
+
   return(
-    <div className="card-list">
-      <Modal open={true} theme="grey" >
-        <Filters title="Field" listFilters={data.field} />
-        <Filters title="Type of contract" listFilters={data.contract} />
-        <Filters title="Working schedule" listFilters={data.schedule} />
+    <Fragment>
+      <div className="card-list">
+        {/* Header */}
+        <div className="card-list-menu">
+          <div className="title">
+          <TextFilter
+              placeholder="Search jobs..."
+              value=""
+              onChange={() => console.log("searching")} />
+          </div>
+          <div className="actions">
+            <Button basic className="btn-filters" onClick={() => handleOpenFilter()}>
+              <Typography variant="label" element="span" >Filters</Typography>
+              {
+                !openFilter ?
+                  <img src={filterInactive} alt="btn filters inactive"/> :
+                  <img src={filterActive} alt="btn filters active"/>
+              }
+            </Button>
+            <Dropdown
+              options={Array('Latest', 'Popular', 'Recent')}
+              optionDefault="Latest" />
+          </div>
+        </div>
+        {/* box */}
+        <div className={clsx('filter-box', { 'open': openFilter })}>
+          { renderFilters() }
+        </div>
+        <div className="cards-container">
+          { jobs &&
+              jobs.map((job: CardProps, key: string) => (
+                <Card
+                  title={job.title}
+                  img={job.img}
+                  company={job.company}
+                  description={job.description}
+                  date={job.date}
+                  location={job.location}
+                  to="#"
+                  key={`card-job-${key}`}/>
+              ))
+          }
+        </div>
+        <div className="load-more">
+          <Button secondary >Load More</Button>
+        </div>
+      </div>
+      <Modal ref={modalRef} theme="grey" >
+        { renderFilters() }
         <div className="apply">
           <Button primary size="large">Apply</Button>
         </div>
       </Modal>
-      {/* Header */}
-      <div className="card-list-menu">
-        <div className="title">
-        <TextFilter
-            placeholder="Search jobs..."
-            value=""
-            onChange={() => console.log("searching")} />
-        </div>
-        <div className="actions">
-          <Button basic className="btn-filters" onClick={() => handleOpenFilter()}>
-            <Typography variant="label" element="span" >Filters</Typography>
-            {
-              !openFilter ?
-                <img src={filterInactive} alt="btn filters inactive"/> :
-                <img src={filterActive} alt="btn filters active"/>
-            }
-          </Button>
-          <Dropdown
-            options={Array('Latest', 'Popular', 'Recent')}
-            optionDefault="Latest" />
-        </div>
-      </div>
-      {/* box */}
-      <div className={clsx('filter-box', { 'open': openFilter })}>
-        <Filters title="Field" listFilters={data.field} />
-        <Filters title="Type of contract" listFilters={data.contract} />
-        <Filters title="Working schedule" listFilters={data.schedule} />
-      </div>
-      <div className="cards-container">
-        { jobs &&
-            jobs.map((job: CardProps, key: string) => (
-              <Card
-                title={job.title}
-                img={job.img}
-                company={job.company}
-                description={job.description}
-                date={job.date}
-                location={job.location}
-                to="#"
-                key={`card-job-${key}`}/>
-            ))
-        }
-      </div>
-      <div className="load-more">
-        <Button secondary >Load More</Button>
-      </div>
-    </div>
+    </Fragment>
   );
 }
 export default CardList;
