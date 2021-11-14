@@ -1,0 +1,39 @@
+@import '../../../assets/scss/utils/Mixins.scss';
+
+.subscription-box{
+
+  height: 100%;
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap:0px;
+
+  @include media-breakpoint-down(xs) {
+    grid-template-columns: 2fr 3fr;
+    gap:0px;
+  }
+
+  .illustration{
+
+    padding:0 0 0 10%;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(180deg, #AEF3E5 0%, #54D8BD 99.99%, #54D8BD 100%);
+    border-radius: 8px 0px 0px 8px;
+
+    img{
+      width:100%;
+    }
+
+  }
+
+  .info{
+    
+    align-items: center;
+    padding:48px;
+    background: #F3F2F5;
+
+    border-radius: 0px 8px 8px 0px;
+
+  }
+
+}

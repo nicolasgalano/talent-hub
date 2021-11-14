@@ -4,11 +4,12 @@ import { useTranslation } from 'react-i18next';
 
 import { Page } from 'decentraland-ui/dist/components/Page/Page'
 
-import { openings3D, professionals3D } from '../../assets/illustrations';
+import { openings3D, professionals3D, subscriptionMailbox } from '../../assets/illustrations';
 import Card3D from '../../components/common/Card3D/Card3D';
 import { namespaces } from '../../i18n/i18n.constants';
 import Typography from '../../components/common/Typography/Typography';
 import FeaturedCards from '../../components/common/FeaturedCards/FeaturedCards';
+import SubscriptionBox from '../../components/common/SubscriptionBox/SubscriptionBox';
 import jobs from '../../data/jobs.json';
 import professionals from '../../data/professionals.json';
 import './Home.scss';
@@ -57,6 +58,16 @@ const Home:FC = () => {
           title="Featured professionals" 
           action="view all professionals"
           to="/professional" />
+      </div>
+
+      <div className="ui container" id="subscription-box">
+        <SubscriptionBox
+          imgSrc={subscriptionMailbox}
+          title="Get the latest updates"
+          description="Stay up to date with the latest developments in the metaverse."
+          placeholder="mail@domain.com"
+          buttonText="SUBSCRIBE"
+        />
       </div>
 
     </Fragment>
