@@ -1,0 +1,46 @@
+@import '../../../assets/scss/utils/Mixins.scss';
+@import '../../../assets/scss/utils/Consts.scss';
+
+.dcl.tabs{
+  margin-top: 17px;
+  @include media-breakpoint-down(md){
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+  @include media-breakpoint-down(xs){
+    padding-left: 0px;
+  }
+  .tab-content{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @include media-breakpoint-down(xs){
+      align-items: flex-start;
+    }
+    .tabs{
+      .tab{
+        margin-right: 40px;
+        @include media-breakpoint-down(md){
+          margin-bottom: 16px;
+        }
+      }
+      a div{
+        &.active{
+          color: $color-grey-700;
+        }
+        &:not(.active){
+          color: $color-grey-400;
+        }
+      }
+    }
+    .action{
+      button{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        column-gap: 13px;
+      }
+    }
+  }
+}

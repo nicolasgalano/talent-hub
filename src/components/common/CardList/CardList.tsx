@@ -9,6 +9,8 @@ import { Button } from 'decentraland-ui/dist/components/Button/Button';
 import './CardList.scss';
 import filter from '../../../data/filters.json';
 import { filterActive, filterInactive } from "../../../assets/icons";
+import { useTranslation } from "react-i18next";
+import { namespaces } from "../../../i18n/i18n.constants";
 
 // UI Custom Component
 import Typography from "../Typography/Typography";
@@ -29,23 +31,24 @@ const CardList:FC<CardListProps> = ({data}) => {
   const [cards, setCards] = useState(null);
   const modalRef = useRef<ModalHandle>(null);
   const {width: widthBrowser} = useWindowSize();
+  const { t } = useTranslation(namespaces.pages.openingsProfessionals);
 
   const renderFilters = () => (
     <Fragment>
       <div>
-        <Label type="filter">Field</Label>
+        <Label type="filter">{ t("filters.field") }</Label>
         <FilterButtons options={filter.field} />
       </div>
       <div>
-        <Label type="filter">Type of contract</Label>
+        <Label type="filter">{ t("filters.type-of-contract") }</Label>
         <FilterButtons options={filter.contract} />
       </div>
       <div>
-        <Label type="filter">Working schedule</Label>
+        <Label type="filter">{ t("filters.working.schedule") }</Label>
         <FilterButtons options={filter.schedule} />
       </div>
       <div>
-        <Label type="filter">Experience</Label>
+        <Label type="filter">{ t("filters.experience") }</Label>
         <Range />
       </div>
     </Fragment>
@@ -102,7 +105,7 @@ const CardList:FC<CardListProps> = ({data}) => {
           </div>
           <div className="actions">
             <Button basic className="btn-filters" onClick={() => handleOpenFilter()}>
-              <Typography variant="label" element="span" >Filters</Typography>
+              <Typography variant="label" element="span" >{ t("filters.filters")}</Typography>
               {
                 !openFilter ?
                   <img src={filterInactive} alt="btn filters inactive"/> :
@@ -120,27 +123,27 @@ const CardList:FC<CardListProps> = ({data}) => {
         </div>
         <div className="cards-container">
           { cards &&
-              cards.map((job: CardProps, key: string) => (
+              cards.map((doc: CardProps, key: string) => (
                 <Card
-                  title={job.title}
-                  img={job.img}
-                  company={job.company}
-                  description={job.description}
-                  date={job.date}
-                  location={job.location}
+                  title={doc.title}
+                  img={doc.img}
+                  company={doc.company}
+                  description={doc.description}
+                  date={doc.date}
+                  location={doc.location}
                   to="#"
-                  key={`card-job-${key}`}/>
+                  key={`card-doc-${key}`}/>
               ))
           }
         </div>
         <div className="load-more">
-          <Button secondary >Load More</Button>
+          <Button secondary >{ t("filters.load-more") }</Button>
         </div>
       </div>
       <Modal ref={modalRef} theme="grey" >
         { renderFilters() }
         <div className="apply">
-          <Button primary size="large">Apply</Button>
+          <Button primary size="large">{ t("filters.apply") }</Button>
         </div>
       </Modal>
     </Fragment>
