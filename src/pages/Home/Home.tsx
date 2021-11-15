@@ -1,24 +1,24 @@
 import { FC, Fragment } from 'react';
-
 import { useTranslation } from 'react-i18next';
 
-import { Page } from 'decentraland-ui/dist/components/Page/Page'
-
+// Files
 import { openings3D, professionals3D } from '../../assets/illustrations';
-import Card3D from '../../components/common/Card3D/Card3D';
 import { namespaces } from '../../i18n/i18n.constants';
-import Typography from '../../components/common/Typography/Typography';
-import FeaturedCards from '../../components/common/FeaturedCards/FeaturedCards';
 import jobs from '../../data/jobs.json';
 import professionals from '../../data/professionals.json';
 import './Home.scss';
+
+// UI Custom Component
+import Card3D from '../../components/common/Card3D/Card3D';
+import Typography from '../../components/common/Typography/Typography';
+import FeaturedCards from '../../components/common/FeaturedCards/FeaturedCards';
 
 const Home:FC = () => {
   const { t } = useTranslation(namespaces.pages.home);
 
   return (
     <Fragment>
-      <Page>
+      <div className="ui container">
         <div className="home-hero">
           <div className="hero-top">
             <Typography variant="h1" element="h2" weight="700" className="title">{t("hero.title")}</Typography>
@@ -41,7 +41,7 @@ const Home:FC = () => {
             />
           </div>
         </div>
-      </Page>
+      </div>
 
       <div className="ui container" id={`featured-${ t("featured.jobs") }`}>
         <FeaturedCards 
