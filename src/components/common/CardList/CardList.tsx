@@ -7,8 +7,7 @@ import { Button } from 'decentraland-ui/dist/components/Button/Button';
 
 // Files
 import './CardList.scss';
-import data from '../../../data/filters.json';
-import dataJobs from '../../../data/jobs.json';
+import filter from '../../../data/filters.json';
 import { filterActive, filterInactive } from "../../../assets/icons";
 
 // UI Custom Component
@@ -21,10 +20,13 @@ import Range from "../Range/Range";
 import Label from "../Label/Label";
 import FilterButtons from "../FilterButtons/FilterButtons";
 
+interface CardListProps {
+  data: Array<object>;
+}
 
-const CardList:FC = () => {
+const CardList:FC<CardListProps> = ({data}) => {
   const [openFilter, setOpenFilter] = useState(false);
-  const [jobs, setJobs] = useState(null);
+  const [cards, setCards] = useState(null);
   const modalRef = useRef<ModalHandle>(null);
   const {width: widthBrowser} = useWindowSize();
 
@@ -32,15 +34,15 @@ const CardList:FC = () => {
     <Fragment>
       <div>
         <Label type="filter">Field</Label>
-        <FilterButtons options={data.field} />
+        <FilterButtons options={filter.field} />
       </div>
       <div>
         <Label type="filter">Type of contract</Label>
-        <FilterButtons options={data.contract} />
+        <FilterButtons options={filter.contract} />
       </div>
       <div>
         <Label type="filter">Working schedule</Label>
-        <FilterButtons options={data.schedule} />
+        <FilterButtons options={filter.schedule} />
       </div>
       <div>
         <Label type="filter">Experience</Label>
@@ -57,19 +59,19 @@ const CardList:FC = () => {
     }
   };
 
-  const getJobs = () => {
-    let allJobs = [];
+  const getCards = () => {
+    let allCards = [];
     // we increase the data size
     for (let index = 0; index < 9; index++) {
-      const random = Math.floor(Math.random() * dataJobs.length);
-      const doc = dataJobs[random];
-      allJobs.push(doc);
+      const random = Math.floor(Math.random() * data.length);
+      const doc = data[random];
+      allCards.push(doc);
     }
-    return allJobs;
+    return allCards;
   }
 
   useEffect(() => {
-    setJobs(getJobs());
+    setCards(getCards());
   }, []);
 
   useEffect(() => {
@@ -108,7 +110,7 @@ const CardList:FC = () => {
               }
             </Button>
             <Dropdown
-              options={Array('Latest', 'Popular', 'Recent')}
+              options={Array('Latest', 'Relevance')}
               optionDefault="Latest" />
           </div>
         </div>
@@ -117,8 +119,8 @@ const CardList:FC = () => {
           { renderFilters() }
         </div>
         <div className="cards-container">
-          { jobs &&
-              jobs.map((job: CardProps, key: string) => (
+          { cards &&
+              cards.map((job: CardProps, key: string) => (
                 <Card
                   title={job.title}
                   img={job.img}
