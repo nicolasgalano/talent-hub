@@ -1,0 +1,16 @@
+{
+  "tabs": {
+    "openings":       "Openings",
+    "professionals":  "Professionals",
+    "post-a-job":     "Post a jobs"
+  },
+  "filters": {
+    "filters":          "Filters",
+    "load-more":        "Load More",
+    "apply":            "Apply",
+    "field":            "Field",
+    "type-of-contract": "Type of contract",
+    "working-schedule": "Working schedule",
+    "experience":       "Experience"
+  }
+}

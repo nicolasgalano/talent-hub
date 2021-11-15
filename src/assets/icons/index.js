@@ -7,6 +7,7 @@ import location from './location.svg';
 import filterActive from './filter-active.svg';
 import filterInactive from './filter-inactive.svg';
 import close from './close.svg';
+import plus from './plus.svg';
 
 export {
   discord,
@@ -18,4 +19,5 @@ export {
   filterActive,
   filterInactive,
   close,
+  plus,
 }

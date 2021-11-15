@@ -14,28 +14,28 @@ import professionals from '../../data/professionals.json';
 import './Home.scss';
 
 const Home:FC = () => {
-  const { t } = useTranslation(namespaces.pages.hello);
+  const { t } = useTranslation(namespaces.pages.home);
 
   return (
     <Fragment>
       <Page>
         <div className="home-hero">
           <div className="hero-top">
-            <Typography variant="h1" element="h2" weight="700" className="title">{t("shape_the_future")}</Typography>
-            <Typography variant="h6" element="h3" weight="400" className="description">The Decentraland Talent Hub is your destination for jobs in the virtual social world.</Typography>
+            <Typography variant="h1" element="h2" weight="700" className="title">{t("hero.title")}</Typography>
+            <Typography variant="h6" element="h3" weight="400" className="description">{t("hero.description") }</Typography>
           </div>
           <div className="cards3d">
             <Card3D
               imgSrc={openings3D}
-              title="Openings"
-              description="Find or post positions for modellers, developers, designers and more."
-              to="#"
+              title={ t("openings.title") }
+              description={ t("openings.description") }
+              to="/openings"
               color="orange"
             />
             <Card3D
               imgSrc={professionals3D}
-              title="Professionals"
-              description="Search for skilled professionals or create your own profile to showcase your talent."
+              title={ t("professionals.title") }
+              description={ t("professionals.description") }
               to="#"
               color="pink"
             />
@@ -43,19 +43,19 @@ const Home:FC = () => {
         </div>
       </Page>
 
-      <div className="ui container" id="featured-jobs">
+      <div className="ui container" id={`featured-${ t("featured.jobs") }`}>
         <FeaturedCards 
           data={jobs}
-          title="Featured jobs" 
-          action="view all jobs"
+          title={`Featured ${ t("featured.jobs") }`}
+          action={`view all ${ t("featured.jobs") }`}
           to="/openings" />
       </div>
 
-      <div className="ui container" id="featured-professionals">
+      <div className="ui container" id={`featured-${ t("featured.professionals") }`}>
         <FeaturedCards 
           data={professionals}
-          title="Featured professionals" 
-          action="view all professionals"
+          title={`Featured ${ t("featured.professionals") }`}
+          action={`view all ${ t("featured.professionals") }`}
           to="/professional" />
       </div>
 
