@@ -13,12 +13,13 @@ import { filterActive, filterInactive } from "../../../assets/icons";
 
 // UI Custom Component
 import Typography from "../Typography/Typography";
-import Filters from "../Filters/Filters";
 import Card, { CardProps } from "../Card/Card";
 import Dropdown from "../Dropdown/Dropdown";
 import Modal, { ModalHandle } from "../Modal/Modal";
 import { useWindowSize } from "../../hooks/useWindowsSize";
 import Range from "../Range/Range";
+import Label from "../Label/Label";
+import FilterButtons from "../FilterButtons/FilterButtons";
 
 
 const CardList:FC = () => {
@@ -29,10 +30,22 @@ const CardList:FC = () => {
 
   const renderFilters = () => (
     <Fragment>
-      <Filters title="Field" listFilters={data.field} />
-      <Filters title="Type of contract" listFilters={data.contract} />
-      <Filters title="Working schedule" listFilters={data.schedule} />
-      <Range />
+      <div>
+        <Label type="filter">Field</Label>
+        <FilterButtons options={data.field} />
+      </div>
+      <div>
+        <Label type="filter">Type of contract</Label>
+        <FilterButtons options={data.contract} />
+      </div>
+      <div>
+        <Label type="filter">Working schedule</Label>
+        <FilterButtons options={data.schedule} />
+      </div>
+      <div>
+        <Label type="filter">Experience</Label>
+        <Range />
+      </div>
     </Fragment>
   );
 
