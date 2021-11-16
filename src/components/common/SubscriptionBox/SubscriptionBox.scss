@@ -1,0 +1,138 @@
+@import '../../../assets/scss/utils/Mixins.scss';
+
+.subscription-box{
+
+  min-height: 402px;
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap:0px;
+
+  @include media-breakpoint-down(md) {
+    min-height: 0px;
+    grid-template-columns: 1fr;
+    gap:0px;
+  }
+
+  .illustration{
+
+    padding:0 0 0 10%;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(180deg, #AEF3E5 0%, #54D8BD 99.99%, #54D8BD 100%);
+    border-radius: 8px 0px 0px 8px;
+
+    img{
+      width:100%;
+    }
+
+    @include media-breakpoint-down(md) {
+      border-radius: 8px 8px 0px 0px;
+    }
+
+  }
+
+  .info{
+
+    display: flex;
+    align-items: center;
+    padding:48px;
+    background: #F3F2F5;
+    border-radius: 0px 8px 8px 0px;
+
+    .heading-s{
+      margin-bottom:28px;
+    }
+    .body-xl{
+      margin-bottom:28px;
+      color: #736E7D;
+    }
+
+    @include media-breakpoint-down(md) {
+
+      display: block;
+      padding: 64px 24px 32px;
+      border-radius: 0px 0px 8px 8px;
+
+      .heading-s{
+        margin-bottom:12px;
+      }
+
+      .body-xl{
+        margin-bottom:24px;
+        color: #736E7D;
+      }
+
+    }
+
+    @include media-breakpoint-down(xs) {
+
+      padding: 32px 24px;
+
+    }
+
+  }
+
+  .form{
+
+    position: relative;
+    max-width: 670px;
+    width: 100%;
+
+    .primary.button{
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    .field{
+      max-width: 470px;
+      width: calc(100% - 200px);
+      input{
+        width: 100%;
+        border: 0px;
+        height: 52px;
+        background: #FFFFFF;
+        color: #736E7D;
+        border-radius: 6px;
+        &::placeholder {
+          color: #736E7D;
+        }
+      }
+    }
+
+    @include media-breakpoint-down(md) {
+
+      max-width: 100%;
+      width: 100%;
+
+      .field{
+        max-width: 100%;
+        width:100%;
+        margin-bottom: 20px;
+      }
+
+      .primary.button{
+        position:static;
+        width:100%
+      }
+
+    }
+  }
+
+  //SUBSCRIPTION SUCCESS STATE
+  &.subscription-success{
+    
+    .illustration{
+      background: #FFBC5B;
+    }
+
+    .info{
+      .body-xl{
+        margin-bottom:0px !important;
+      }
+    }
+
+  }
+  
+
+}
