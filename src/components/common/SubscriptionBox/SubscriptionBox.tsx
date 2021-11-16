@@ -15,7 +15,7 @@ interface SubscriptionBoxProps {
   thankyou_description: string;
   placeholder: string;
   buttonText: string;
-}
+}    
 
 interface Subscription {
   success: boolean;
