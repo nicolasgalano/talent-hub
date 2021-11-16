@@ -20,23 +20,23 @@ const SubscriptionBox:FC<SubscriptionBoxProps> = ({imgSrc, title, description, p
 
   return (
     <div className="subscription-box">
-        <div className="illustration">
-          <img src={imgSrc} alt={title} />
-        </div>
-        <div className="info">
-          <div className="info-cont">
-            <Typography variant="h4" element="h3" className="title">{title}</Typography>
-            <Typography variant="body1" element="p" className="description">{description}</Typography>
-            <div className="form">
-              <Input className="field" icon placeholder='mail@domain.com'>
-                <input />
-              </Input>
-              <Button primary size="large">
-                {buttonText}
-              </Button>
-            </div>
+      <div className="illustration">
+        <img src={imgSrc} alt={title} />
+      </div>
+      <div className="info">
+        <div className="info-cont">
+          <Typography variant="h4" element="h3" className="title">{title}</Typography>
+          <Typography variant="body1" element="p" className="description">{description}</Typography>
+          <div className="form">
+            <Input className="field" icon placeholder='mail@domain.com'>
+              <input />
+            </Input>
+            <Button primary size="large">
+              {buttonText}
+            </Button>
           </div>
         </div>
+      </div>
     </div>
   );
 }
