@@ -1,0 +1,18 @@
+{
+  "hero": {
+    "title":        "Shape the future of the metaverse",
+    "description":  "The Decentraland Talent Hub is your destination for jobs in the virtual social world."
+  },
+  "openings": {
+    "title":        "Openings",
+    "description":  "Find or post positions for modellers, developers, designers and more."
+  },
+  "professionals": {
+    "title":        "Professionals",
+    "description":  "Search for skilled professionals or create your own profile to showcase your talent."
+  },
+  "featured": {
+    "jobs":        "jobs",
+    "professionals":  "professionals"
+  }
+}

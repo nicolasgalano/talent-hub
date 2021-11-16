@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import clsx from 'clsx';
 
 import './Typography.scss';
@@ -54,6 +54,7 @@ interface TypographyProps {
   element: Element;
   weight?: Weight;
   className?: object | string;
+  children: React.ReactNode;
 }
 
 const Typography:FC<TypographyProps> = ({ variant, element, weight, children, className }) => {

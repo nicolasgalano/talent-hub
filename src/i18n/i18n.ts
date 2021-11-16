@@ -11,6 +11,7 @@ const createI18n = (language: string): i18nInstance => {
   i18n
     .use(HttpApi)
     .init({
+      load: 'languageOnly',
       backend: {
         loadPath: "./locales/{{lng}}/{{ns}}.json",
       },

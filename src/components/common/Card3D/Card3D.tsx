@@ -30,7 +30,7 @@ const Card3D:FC<Card3DProps> = ({imgSrc, title, description, to, color}) => {
           <Typography variant="body2" element="p" className="description">{description}</Typography>
           <Link to={to} className="link">
             <Typography variant="label" element="span" className="label">{t("buttons.view-all")}</Typography>
-            <img src={arrowRight} className="arrow-right" alt="view all" />
+            <img src={arrowRight} className="arrow-right" alt={t("buttons.view-all")} />
           </Link>
         </div>
       </div>

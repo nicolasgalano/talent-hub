@@ -1,3 +1,5 @@
+@import '../utils/Consts.scss';
+
 @media only screen and (min-width: 1200px){
   .ui.container{
     width: 1120px;
@@ -7,4 +9,7 @@
   .ui.container{
     width: 1348px;
   }
+}
+.ui.button{
+  font-family: $font-text !important;
 }

@@ -10,6 +10,8 @@ import { namespaces } from "../../../i18n/i18n.constants";
 const Footer:FC = () => {
   
   const { t, i18n } = useTranslation(namespaces.layout);
+
+  console.log(i18n.language);
   
   const handleChangeLanguage = (lang: string) => i18n.changeLanguage(lang);
 

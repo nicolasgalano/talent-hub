@@ -28,7 +28,7 @@ const SubscriptionBox:FC<SubscriptionBoxProps> = ({imgSrc, title, description, p
           <Typography variant="h4" element="h3" className="title">{title}</Typography>
           <Typography variant="body1" element="p" className="description">{description}</Typography>
           <div className="form">
-            <Input className="field" icon placeholder='mail@domain.com'>
+            <Input className="field" icon placeholder={placeholder}>
               <input />
             </Input>
             <Button primary size="large">
