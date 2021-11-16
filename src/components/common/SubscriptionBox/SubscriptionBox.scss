@@ -27,13 +27,40 @@
   }
 
   .info{
-    
+    display: flex;
     align-items: center;
     padding:48px;
     background: #F3F2F5;
-
     border-radius: 0px 8px 8px 0px;
 
+    .heading-s{
+      margin-bottom:28px;
+    }
+    .body-xl{
+      margin-bottom:28px;
+    }
+
+  }
+  .form{
+    position: relative;
+    max-width: 670px;
+    width: 100%;
+    .primary.button{
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+  }
+  .field{
+    max-width: 470px;
+    width: calc(100% - 200px);
+    input{
+      width: 100%;
+      border: 0px;
+      height: 52px;
+      background: #FFFFFF;
+      border-radius: 6px;
+    }
   }
 
 }
