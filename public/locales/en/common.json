@@ -1,7 +1,12 @@
 {
   "buttons": {
-    "save": "Save",
-    "cancel": "Cancel",
+    "save":     "Save",
+    "cancel":   "Cancel",
     "view-all": "View All"
+  },
+  "tabs": {
+    "openings":       "Openings",
+    "professionals":  "Professionals",
+    "post-a-job":  "Post a jobs"
   }
 }

@@ -1,0 +1,15 @@
+@import '../utils/Consts.scss';
+
+@media only screen and (min-width: 1200px){
+  .ui.container{
+    width: 1120px;
+  }
+}
+@media only screen and (min-width: 1440px){
+  .ui.container{
+    width: 1348px;
+  }
+}
+.ui.button{
+  font-family: $font-text !important;
+}

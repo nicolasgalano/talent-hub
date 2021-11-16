@@ -31,8 +31,8 @@ const Footer:FC = () => {
               direction="right"
               upward
               locale={
-                (i18n.language === "es" || i18n.language === "en") ? 
-                  i18n.language : 
+                (i18n.languages[0] === "es" || i18n.languages[0] === "en") ? 
+                  i18n.languages[0] : 
                   "en"
               }
               i18n={i18nNav}

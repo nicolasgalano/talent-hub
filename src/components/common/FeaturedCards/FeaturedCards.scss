@@ -1,0 +1,47 @@
+@import '../../../assets/scss/utils/Mixins.scss';
+
+.featured-cards{
+  .featured-menu{
+    display: flex;
+    align-items: center;
+    margin-bottom: 48px;
+    .title{
+      display: flex;
+      flex: 1 0 auto;
+    }
+    .actions{
+      display: flex;
+      align-items: center;
+      @include media-breakpoint-down(xs){
+        display: none;
+      }
+    }
+  }
+  .slide-cards{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 44px;
+    @include media-breakpoint-down(xl){
+      column-gap: 32px;
+    }
+    @include media-breakpoint-down(md){
+      display: flex;
+      .slick-slide{
+        padding-right: 24px;
+      }
+    }
+    @include media-breakpoint-down(xs){
+      display: grid;
+      grid-template-columns: 1fr;
+      row-gap: 24px;
+    }
+  }
+  .view-all-mobile{
+    display: none;
+    @include media-breakpoint-down(xs){
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 27px;
+    }
+  }
+}
