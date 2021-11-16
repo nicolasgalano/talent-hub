@@ -1,7 +1,7 @@
 import { FC, Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { openings3D, professionals3D, subscriptionMailbox } from '../../assets/illustrations';
+import { openings3D, professionals3D } from '../../assets/illustrations';
 import { namespaces } from '../../i18n/i18n.constants';
 import SubscriptionBox from '../../components/common/SubscriptionBox/SubscriptionBox';
 import jobs from '../../data/jobs.json';
@@ -21,8 +21,8 @@ const Home:FC = () => {
       <div className="ui container">
         <div className="home-hero">
           <div className="hero-top">
-            <Typography variant="h1" element="h2" weight="700" className="title">{t("hero.title")}</Typography>
-            <Typography variant="h6" element="h3" weight="400" className="description">{t("hero.description") }</Typography>
+            <Typography variant="heading-xl" element="h2" weight="700" className="title">{t("hero.title")}</Typography>
+            <Typography variant="heading-xxs" element="h3" weight="400" className="description">{t("hero.description") }</Typography>
           </div>
           <div className="cards3d">
             <Card3D
@@ -61,9 +61,10 @@ const Home:FC = () => {
 
       <div className="ui container" id="subscription-box">
         <SubscriptionBox
-          imgSrc={subscriptionMailbox}
           title="Get the latest updates"
           description="Stay up to date with the latest developments in the metaverse."
+          thankyou_title="Thank you for subscribing!"
+          thankyou_description="You will be up to date with every Decentraland news!"
           placeholder="mail@domain.com"
           buttonText="SUBSCRIBE"
         />

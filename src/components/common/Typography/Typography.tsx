@@ -4,17 +4,17 @@ import clsx from 'clsx';
 import './Typography.scss';
 
 type Variant = 
-  | 'h1'
-  | 'h2'
-  | 'h3'
-  | 'h4'
-  | 'h5'
-  | 'h6'
-  | 'body1'
-  | 'body2'
-  | 'body3'
-  | 'body4'
-  | 'body5'
+  | 'heading-xl'
+  | 'heading-l'
+  | 'heading-m'
+  | 'heading-s'
+  | 'heading-xs'
+  | 'heading-xxs'
+  | 'body-xl'
+  | 'body-l'
+  | 'body-m'
+  | 'body-s'
+  | 'body-xs'
   | 'label';
 
 type Element = 
@@ -34,6 +34,7 @@ type Weight =
 | '600'
 | '700';
 
+//DEPRECATED
 const variantsMapping = {
   h1: "heading-xl",
   h2: "heading-l",
@@ -60,7 +61,7 @@ interface TypographyProps {
 const Typography:FC<TypographyProps> = ({ variant, element, weight, children, className }) => {
 
   const Component: Element = element ? element : 'p';
-  const variantClass = variant ? variantsMapping[variant] : 'body-xl';
+  const variantClass = variant ? variant : 'body-xl';
 
   return (
     <Component className={clsx(variantClass, className, {

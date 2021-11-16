@@ -46,7 +46,7 @@ const FeaturedCards: FC<FeaturedCardsProps> = ({title, action, to, data, classNa
     <div className={clsx('featured-cards', className)}>
       <div className="featured-menu">
         <div className="title">
-          <Typography element="h2" variant="h5">{title}</Typography>
+          <Typography element="h2" variant="heading-xs">{title}</Typography>
         </div>
         <div className="actions">
           <Link to={to}>

@@ -64,3 +64,16 @@
     margin-bottom: 74px;
   }
 }
+#subscription-box{
+  margin-bottom: 300px;
+  @include media-breakpoint-down(xxl){
+    margin-bottom: 270px;
+  }
+  @include media-breakpoint-down(md){
+    margin-bottom: 200px;
+  }
+  @include media-breakpoint-down(xs){
+    margin-bottom: 120px;
+  }
+
+}
