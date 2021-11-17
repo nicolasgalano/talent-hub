@@ -24,13 +24,15 @@ const FeaturedCards: FC<FeaturedCardsProps> = ({title, action, to, data, classNa
   const settings = {
     slidesToShow: 1.5,
     infinite: false,
+    touchThreshold: 20,
     responsive: [
       {
         breakpoint: 5000,
         settings: "unslick"
       },
       {
-        breakpoint: 1024,
+        // breakpoint: 1024,
+        breakpoint: 1200,
         centerMode: false,
         variableWidth: true,
         settings: "slick"

@@ -24,9 +24,13 @@ const FilterButtons: FC<FiltersProps> = ({ options, callback, className}) => {
     }
   }
   
-  const isSelected = (option: string) => (
-    selected.find(selection => selection === option)
-  );
+  const isSelected = (option: string) => {
+    if( selected.find(selection => selection === option) === undefined ){
+      return false;
+    }else{
+      return true;
+    }
+  };
 
   const addSelection = (option: string) => {
     // TODO: Before
@@ -37,13 +41,13 @@ const FilterButtons: FC<FiltersProps> = ({ options, callback, className}) => {
 
     // TODO: After
     // Working
-    // let selection: Array<string> = selected.slice();
-    // selection.push(option);
-    // setSelected(selection);
-    // Or
-    let selection: Array<string> = selected;
+    let selection: Array<string> = selected.slice();
     selection.push(option);
-    setSelected([...selected, selection]);
+    setSelected(selection);
+    // Or (Not working property)
+    // let selection: Array<string> = selected;
+    // selection.push(option);
+    // setSelected([...selected, selection]);
   }
 
   const reduceSelection = (option: string) => {

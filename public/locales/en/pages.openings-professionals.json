@@ -5,7 +5,8 @@
     "post-a-job":     "Post a jobs"
   },
   "filters": {
-    "filters":          "Filters",
+    "filter_one":       "Filter",
+    "filter_other":     "Filters",
     "load-more":        "Load More",
     "apply":            "Apply",
     "field":            "Field",
