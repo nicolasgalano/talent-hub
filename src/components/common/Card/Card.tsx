@@ -27,23 +27,23 @@ const Card: FC<CardProps> = ({img, title, company, description, date, location, 
             </div>
           }
           <div className="txt">
-            <Typography element="h3" variant="body1" className="title">{title}</Typography>
+            <Typography element="h3" variant="body-xl" className="title">{title}</Typography>
             {
               company ?
-                <Typography element="h4" variant="body3" className="subtitle">{company}</Typography> :
-                <Typography element="h4" variant="body3" className="subtitle">{location}</Typography>
+                <Typography element="h4" variant="body-m" className="subtitle">{company}</Typography> :
+                <Typography element="h4" variant="body-m" className="subtitle">{location}</Typography>
             }
           </div>
         </div>
         <div className="body">
-          <Typography element="p" variant="body3" className="description">{description}</Typography>
+          <Typography element="p" variant="body-m" className="description">{description}</Typography>
         </div>
         <div className={(date && location) ? 'footer jobs' : 'footer professionals'}>
           {
             (date && location) ?
               <>
-                <Typography element="span" variant="body4" className="date">{date}</Typography>
-                <Typography element="span" variant="body4" className="location">
+                <Typography element="span" variant="body-s" className="date">{date}</Typography>
+                <Typography element="span" variant="body-s" className="location">
                   <img src={locationIcon} alt="location icon" />
                   <span>{location}</span>
                 </Typography>

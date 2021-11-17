@@ -24,13 +24,15 @@ const FeaturedCards: FC<FeaturedCardsProps> = ({title, action, to, data, classNa
   const settings = {
     slidesToShow: 1.5,
     infinite: false,
+    touchThreshold: 20,
     responsive: [
       {
         breakpoint: 5000,
         settings: "unslick"
       },
       {
-        breakpoint: 1024,
+        // breakpoint: 1024,
+        breakpoint: 1200,
         centerMode: false,
         variableWidth: true,
         settings: "slick"
@@ -46,7 +48,7 @@ const FeaturedCards: FC<FeaturedCardsProps> = ({title, action, to, data, classNa
     <div className={clsx('featured-cards', className)}>
       <div className="featured-menu">
         <div className="title">
-          <Typography element="h2" variant="h5">{title}</Typography>
+          <Typography element="h2" variant="heading-xs">{title}</Typography>
         </div>
         <div className="actions">
           <Link to={to}>

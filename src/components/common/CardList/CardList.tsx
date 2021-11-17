@@ -32,20 +32,46 @@ const CardList:FC<CardListProps> = ({data}) => {
   const modalRef = useRef<ModalHandle>(null);
   const {width: widthBrowser} = useWindowSize();
   const { t } = useTranslation(namespaces.pages.openingsProfessionals);
+  const [activeFilters, setActiveFilters] = useState({});
+  const [countFilters, setCountFilters] = useState(null);
+
+  const handleActiveFilters = (filter: Array<string>, key: string) => {
+    let actFilter: object = activeFilters;
+    actFilter[key] = filter;
+    let size = getActiveFiltersSize(actFilter);
+    // Not working
+    // actFilter['size'] = size;
+    // working
+    setCountFilters(size);
+    setActiveFilters(actFilter);    
+  }
+
+  const getActiveFiltersSize = (arr) => {
+    let size: number = 0;
+    for (let index in arr) {
+      const val = arr[index];
+      if(val.length){
+        size = size + val.length;
+      }
+      // console.log(index + " = " + val + ' ');
+    }
+
+    return size;
+  };
 
   const renderFilters = () => (
     <Fragment>
       <div>
         <Label type="filter">{ t("filters.field") }</Label>
-        <FilterButtons options={filter.field} />
+        <FilterButtons options={filter.field} callback={(filters: Array<string>) => handleActiveFilters(filters, 'field')}/>
       </div>
       <div>
         <Label type="filter">{ t("filters.type-of-contract") }</Label>
-        <FilterButtons options={filter.contract} />
+        <FilterButtons options={filter.contract} callback={(filters: Array<string>) => handleActiveFilters(filters, 'contract')}/>
       </div>
       <div>
         <Label type="filter">{ t("filters.working.schedule") }</Label>
-        <FilterButtons options={filter.schedule} />
+        <FilterButtons options={filter.schedule} callback={(filters: Array<string>) => handleActiveFilters(filters, 'schedule')}/>
       </div>
       <div>
         <Label type="filter">{ t("filters.experience") }</Label>
@@ -105,11 +131,19 @@ const CardList:FC<CardListProps> = ({data}) => {
           </div>
           <div className="actions">
             <Button basic className="btn-filters" onClick={() => handleOpenFilter()}>
-              <Typography variant="label" element="span" >{ t("filters.filters")}</Typography>
+              <Typography variant="label" element="span">
+                {
+                  countFilters > 0 && countFilters + ' '
+                }
+                { 
+                  // Print "Filter" or "Filters"
+                  t("filters.filter", {count: countFilters}) 
+                }
+              </Typography>
               {
-                !openFilter ?
-                  <img src={filterInactive} alt="btn filters inactive"/> :
-                  <img src={filterActive} alt="btn filters active"/>
+                openFilter || countFilters ?
+                  <img src={filterActive} alt="btn filters active"/> :
+                  <img src={filterInactive} alt="btn filters inactive"/>
               }
             </Button>
             <Dropdown
