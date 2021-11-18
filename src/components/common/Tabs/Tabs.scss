@@ -15,13 +15,15 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    @include media-breakpoint-down(xs){
+    @include media-breakpoint-down(sm){
       align-items: flex-start;
     }
     .tabs{
       .tab{
+        font-weight: 600;
         margin-right: 40px;
         @include media-breakpoint-down(sm){
+          line-height: 1.5rem;
           margin-bottom: 16px;
         }
       }
