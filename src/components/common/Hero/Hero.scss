@@ -1,0 +1,58 @@
+@import '../../../assets/scss/utils/Mixins.scss';
+
+.heroContent{
+  height: 100%;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap:30px;
+  margin-bottom: 70px;
+
+  @include media-breakpoint-down(md) {
+    min-height: 0px;
+    grid-template-columns: 1fr;
+    gap:0px;
+  }
+  @include media-breakpoint-down(xs) {    
+    margin: 31px 0px 0px 0px;
+    padding:0px 0px 0px 0px;
+  }
+
+  .illustration{
+     padding:0 0 0 13%;
+    
+      img{
+        display: flex;
+        align-items: center;
+        height: 373.59px; 
+      }
+  }
+
+  .info{
+
+    align-items: center;
+    padding:0px 57px 50px 0;
+    margin-top: 92px;
+    
+    
+      @include media-breakpoint-down(md) {
+        padding:0px 40px 40px 40px;
+      }
+      @include media-breakpoint-down(xs) {    
+        margin: 48px 40px 0px 40px;
+        padding:0px 0px 0px 0px;
+      }
+
+      .title{
+        margin-bottom:20px;  
+      }
+
+      .description{
+      margin-bottom:32px;
+
+      @include media-breakpoint-down(xs){
+        margin-bottom: 28px;
+      } 
+    }
+    
+  }
+}
