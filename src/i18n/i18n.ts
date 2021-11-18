@@ -13,7 +13,7 @@ const createI18n = (language: string): i18nInstance => {
     .init({
       load: 'languageOnly',
       backend: {
-        loadPath: "./locales/{{lng}}/{{ns}}.json",
+        loadPath: "/locales/{{lng}}/{{ns}}.json",
       },
       // debug: true,
       fallbackLng: language,

@@ -1,5 +1,6 @@
 import Home from "../pages/Home/Home";
 import Openings from "../pages/Openings/Openings";
+import PostAJobs from "../pages/PostAJobs/PostAJobs";
 import Professionals from "../pages/Professionals/Professionals";
 
 export interface RouteInterface {
@@ -26,6 +27,7 @@ const openingsRoutes: RouteInterface = {
     {
       path: '/openings/create',
       name: 'Post a job',
+      component: PostAJobs,
     },
   ]
 }
