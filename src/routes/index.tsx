@@ -1,5 +1,6 @@
 import Home from "../pages/Home/Home";
 import Openings from "../pages/Openings/Openings";
+import Professionals from "../pages/Professionals/Professionals";
 
 export interface RouteInterface {
   path: string;
@@ -45,6 +46,19 @@ const jobsRoutes: RouteInterface = {
   ]
 }
 
+const professionalsRoutes: RouteInterface = {
+  path: '/professionals',
+  name: 'Professionals',
+  component: Professionals,
+  exact: true,
+  children: [
+    {
+      path: '/professionals/create',
+      name: 'Create a profile',
+    },
+  ]
+}
+
 // Flatten the list of all nested routes
 const flattenRoutes = (routes: Array<RouteInterface>) => {
   let flatRoutes: Array<RouteInterface> = [];
@@ -65,6 +79,7 @@ const allRoutes: Array<RouteInterface> = [
   rootRoute,
   openingsRoutes,
   jobsRoutes,
+  professionalsRoutes,
 ];
 
 const allFlattenRoutes = flattenRoutes(allRoutes);
