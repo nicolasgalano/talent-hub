@@ -36,7 +36,7 @@ const Home:FC = () => {
               imgSrc={professionals3D}
               title={ t("professionals.title") }
               description={ t("professionals.description") }
-              to="#"
+              to="/professionals"
               color="pink"
             />
           </div>

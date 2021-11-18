@@ -1,4 +1,5 @@
 import React, { FC, Fragment, useEffect, useRef, useState } from "react";
+import { useRouteMatch } from "react-router";
 import clsx from 'clsx';
 
 // UI Decentraland
@@ -34,6 +35,28 @@ const CardList:FC<CardListProps> = ({data}) => {
   const { t } = useTranslation(namespaces.pages.openingsProfessionals);
   const [activeFilters, setActiveFilters] = useState({});
   const [countFilters, setCountFilters] = useState(null);
+  let {path} = useRouteMatch();
+
+  const getPage = (path: string) => {
+    let url: string = path.toLowerCase();
+    // delete symbol /
+    const urlSplited: Array<string> = path.split('/');
+    url = urlSplited[1];
+    // Capitalize First Letter
+    url = url.charAt(0) + url.slice(1);
+
+    return url;
+  }
+
+  const handlePlaceholderSearch = () => {
+    const url: string = getPage(path);
+    let placeholder: string = '';
+
+    if(url === 'openings') placeholder = 'jobs';
+    if(url === 'professionals') placeholder = 'professionals';
+    
+    return `Search ${placeholder}...`;
+  }
 
   const handleActiveFilters = (filter: Array<string>, key: string) => {
     let actFilter: object = activeFilters;
@@ -125,7 +148,7 @@ const CardList:FC<CardListProps> = ({data}) => {
         <div className="card-list-menu">
           <div className="title">
           <TextFilter
-              placeholder="Search jobs..."
+              placeholder={handlePlaceholderSearch()}
               value=""
               onChange={() => console.log("searching")} />
           </div>
