@@ -21,7 +21,7 @@ const Openings:FC = () => {
       },
       {
         title: t("tabs.professionals"),
-        to: '/'
+        to: '/professionals'
       },
     ],
     cta: {
