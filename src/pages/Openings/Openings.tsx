@@ -10,7 +10,7 @@ import { namespaces } from '../../i18n/i18n.constants';
 import CardList from '../../components/common/CardList/CardList';
 import Tabs from '../../components/common/Tabs/Tabs';
 import HeroPost from '../../components/common/HeroPost/HeroPost';
-import { Openings2 } from '../../assets/illustrations';
+import { openings2 } from '../../assets/illustrations';
 
 const Openings:FC = () => {
   const { t } = useTranslation(namespaces.common);
@@ -34,13 +34,13 @@ const Openings:FC = () => {
 
   return ( 
     <Fragment>
-      <Tabs dataTabs={dataTab} />
       <HeroPost 
-      imgSrc={Openings2}
+      imgSrc={openings2}
       title={ t("Post positions for modellers, developers, designers and more") }
       description={ t("Build a team from scratch or find the missing talent to power your project.") }
       to="/openings"
       />
+      <Tabs dataTabs={dataTab} />
       <div className="ui container">
         <CardList data={dataJobs} />
       </div>
