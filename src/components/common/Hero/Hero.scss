@@ -1,0 +1,79 @@
+@import '../../../assets/scss/utils/Mixins.scss';
+
+.heroContent{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap:30px;
+  margin-bottom: 160px;
+
+  @include media-breakpoint-down(xxl) {    
+    margin-bottom: 120px
+  }
+  @include media-breakpoint-down(md) {
+    min-height: 0px;
+    grid-template-columns: 1fr;
+    gap:0px;
+    padding: 0 64px 0 64px;
+    margin-bottom: 90px
+  }
+  @include media-breakpoint-down(xs) {    
+    padding: 0 0 0 0;
+    margin-top: 10px;
+  }
+  
+
+  .illustration{
+    text-align: center;
+
+    @include media-breakpoint-down(md) {    
+      padding-top:10px;
+    }
+
+      img{
+        height: 373px;
+
+        @include media-breakpoint-down(md) {    
+          height: 450px; 
+        }
+        @include media-breakpoint-down(xs) {    
+          height: auto;
+          width: 65%;
+        }
+      }
+  }
+
+  .info{
+
+    align-items: center;
+    //padding:0px 57px 50px 0;
+    margin-top: 92px;
+    
+    @include media-breakpoint-down(xxl) {    
+      margin-top: 61px;  
+    }
+    @include media-breakpoint-down(md) {
+      margin-top: 26px;
+    }
+    
+
+      .title{
+        margin-bottom: 20px;
+        @include media-breakpoint-down(xs) {    
+          margin-bottom: 16px;
+        }
+      }
+
+      .description{
+        margin-bottom: 32px;
+
+      @include media-breakpoint-down(md){
+        margin-bottom: 28px;
+      }
+      @include media-breakpoint-down(xs) {    
+        margin-bottom: 24px;
+      }
+    }
+    
+  }
+}
