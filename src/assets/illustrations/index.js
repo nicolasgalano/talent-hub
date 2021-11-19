@@ -5,6 +5,7 @@ import subscriptionMailbox from './subscription-mailbox.png';
 import subscriptionSuccess from './subscription-success.png';
 import openings2 from './openings-2.png';
 
+
 export {
  logo,
  professionals3D,
