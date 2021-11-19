@@ -3,6 +3,7 @@ import openings3D from './home-hero-img1.png';
 import professionals3D from './home-hero-img2.png';
 import subscriptionMailbox from './subscription-mailbox.png';
 import subscriptionSuccess from './subscription-success.png';
+import Openings2 from './Openings-2.png';
 
 export {
  logo,
@@ -10,4 +11,5 @@ export {
  openings3D,
  subscriptionMailbox,
  subscriptionSuccess,
+ Openings2
 }
