@@ -5,19 +5,14 @@ import './Openings.scss';
 import dataJobs from '../../data/jobs.json'
 import { useTranslation } from 'react-i18next';
 import { namespaces } from '../../i18n/i18n.constants';
-import { openings3D } from '../../assets/illustrations';
-// UI Custom Component
 
+// UI Custom Component
 import CardList from '../../components/common/CardList/CardList';
 import Tabs from '../../components/common/Tabs/Tabs';
-import Hero from '../../components/common/Hero/Hero';
-
-<<<<<<< HEAD
-const Openings: FC = () => {
-=======
+import HeroPost from '../../components/common/HeroPost/HeroPost';
+import { openings2 } from '../../assets/illustrations';
 
 const Openings:FC = () => {
->>>>>>> feature/12-hero
   const { t } = useTranslation(namespaces.common);
 
   const dataTab = {
@@ -37,21 +32,20 @@ const Openings:FC = () => {
     }
   };
 
-  return (
+  return ( 
     <Fragment>
+      <HeroPost 
+      imgSrc={openings2}
+      title={ t("Post positions for modellers, developers, designers and more") }
+      description={ t("Build a team from scratch or find the missing talent to power your project.") }
+      to="/openings"
+      />
       <Tabs dataTabs={dataTab} />
       <div className="ui container">
-        <Hero
-          imgSrc={openings3D}
-          title={t("The latest opportunities from projects and employers in the metaverse")}
-          description={t("Choose your field of interest, search by date and relevance or simply scroll down to see all the jobs on offer.")}
-          to="/openings"
-          buttonText="post a job"
-        />
         <CardList data={dataJobs} />
       </div>
     </Fragment>
   );
 }
-
+ 
 export default Openings;
