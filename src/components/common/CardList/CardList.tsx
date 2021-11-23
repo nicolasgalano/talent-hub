@@ -32,7 +32,7 @@ const CardList:FC<CardListProps> = ({data}) => {
   const [cards, setCards] = useState(null);
   const modalRef = useRef<ModalHandle>(null);
   const {width: widthBrowser} = useWindowSize();
-  const { t } = useTranslation(namespaces.pages.openingsProfessionals);
+  const { t } = useTranslation(namespaces.common);
   const [activeFilters, setActiveFilters] = useState({});
   const [countFilters, setCountFilters] = useState(null);
   let {path} = useRouteMatch();

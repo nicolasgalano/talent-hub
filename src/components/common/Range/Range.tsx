@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 // Dependence
-import { Handle, Range as RangeRC, SliderTooltip } from "rc-slider";
+import Slider, { createSliderWithTooltip, Handle, Range as RangeRC, SliderTooltip } from "rc-slider";
 import clsx from "clsx";
 
 // Files
@@ -14,6 +14,8 @@ interface RangeProps {
 }
 
 const Range:FC<RangeProps> = ({className, callback}) => {
+
+  const CustomRange = createSliderWithTooltip(Slider.Range); 
 
   const handleChange = (value: Array<number>) => {
     callback && callback(value);

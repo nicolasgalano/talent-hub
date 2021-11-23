@@ -13,7 +13,7 @@ import Tabs from '../../components/common/Tabs/Tabs';
 import Hero from '../../components/common/Hero/Hero';
 
 const Openings: FC = () => {
-  const { t } = useTranslation(namespaces.common);
+  const { t } = useTranslation([namespaces.common, namespaces.pages.openings]);
 
   const dataTab = {
     options: [
@@ -38,10 +38,10 @@ const Openings: FC = () => {
       <div className="ui container">
         <Hero
           imgSrc={openings3D}
-          title={t("The latest opportunities from projects and employers in the metaverse")}
-          description={t("Choose your field of interest, search by date and relevance or simply scroll down to see all the jobs on offer.")}
-          to="/openings"
-          buttonText="post a job"
+          title={t("hero.title", {ns: namespaces.pages.openings})}
+          description={t("hero.description", {ns: namespaces.pages.openings})}
+          to="/openings/post-a-job"
+          buttonText={t("hero.button", {ns: namespaces.pages.openings})}
         />
         <CardList data={dataJobs} />
       </div>
