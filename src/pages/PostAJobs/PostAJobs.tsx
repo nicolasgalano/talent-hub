@@ -14,15 +14,15 @@ import Range from "../../components/common/Range/Range";
 import HeroPost from '../../components/common/HeroPost/HeroPost';
 
 const PostAJobs:FC = () =>{
-  const { t } = useTranslation(namespaces.common);
+  const { t } = useTranslation(namespaces.pages.postajob);
 
   return(
     <div id="post-a-jobs">
       <HeroPost 
         imgSrc={openings2}
-        title={ t("Post positions for modellers, developers, designers and more") }
-        description={ t("Build a team from scratch or find the missing talent to power your project.") }
-        to="/openings"
+        title={ t("hero.title") }
+        description={ t("hero.description") }
+        buttonText={t("hero.button")}
         />
       <div className="ui container">
         {/* Title */}
