@@ -12,12 +12,7 @@ import CardList from '../../components/common/CardList/CardList';
 import Tabs from '../../components/common/Tabs/Tabs';
 import Hero from '../../components/common/Hero/Hero';
 
-<<<<<<< HEAD
 const Openings: FC = () => {
-=======
-
-const Openings:FC = () => {
->>>>>>> feature/12-hero
   const { t } = useTranslation(namespaces.common);
 
   const dataTab = {
