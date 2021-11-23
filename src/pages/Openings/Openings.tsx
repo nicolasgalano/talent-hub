@@ -28,7 +28,7 @@ const Openings: FC = () => {
     ],
     cta: {
       title: t("tabs.post-a-job"),
-      to: '/'
+      to: '/openings/post-a-job'
     }
   };
 

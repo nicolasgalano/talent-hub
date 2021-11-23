@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 // Dependence
-import Slider, { createSliderWithTooltip, Handle, Range as RangeRC, SliderTooltip } from "rc-slider";
+import Slider, { createSliderWithTooltip } from "rc-slider";
 import clsx from "clsx";
 
 // Files
@@ -21,28 +21,21 @@ const Range:FC<RangeProps> = ({className, callback}) => {
     callback && callback(value);
   }
 
-  const handle = props => {
-    const { value, dragging, index, ...restProps } = props;
-    return (
-      <SliderTooltip
-        prefixCls="rc-slider-tooltip"
-        overlay={`${value} Years`}
-        visible={dragging}
-        placement="bottom"
-        key={index}
-      >
-        <Handle value={value} {...restProps} />
-      </SliderTooltip>
-    );
-  };
+  const formatValue = (val: number) => {
+    return val === 1 ? `${val} Year` : `${val} Years`;
+  }
 
   return(
     <div className={clsx('range', className)}>
-      <RangeRC
+      <CustomRange
         min={0} 
         max={20} 
         defaultValue={[0, 10]}
-        handle={handle}
+        tipFormatter={formatValue}
+        tipProps={{
+          placement: 'bottom',
+          prefixCls: 'rc-slider-tooltip',
+        }}
         onAfterChange={handleChange}
         marks={{ 0: '0 Years', 20: '+20 Years' }} />
     </div>
