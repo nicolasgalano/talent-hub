@@ -2,17 +2,28 @@ import { FC, Fragment } from "react";
 
 // Files
 import './PostAJobs.scss';
+import { openings2 } from '../../assets/illustrations'
+import { useTranslation } from 'react-i18next';
+import { namespaces } from '../../i18n/i18n.constants';
 
 // UI Custom Component
 import TextField from "../../components/common/TextField/TextField";
 import Typography from "../../components/common/Typography/Typography";
 import Label from "../../components/common/Label/Label";
 import Range from "../../components/common/Range/Range";
+import HeroPost from '../../components/common/HeroPost/HeroPost';
 
 const PostAJobs:FC = () =>{
+  const { t } = useTranslation(namespaces.pages.postajob);
+
   return(
     <div id="post-a-jobs">
-      <div className="fakeHero"></div>
+      <HeroPost 
+        imgSrc={openings2}
+        title={ t("hero.title") }
+        description={ t("hero.description") }
+        buttonText={t("hero.button")}
+        />
       <div className="ui container">
         {/* Title */}
         <Typography element="p" variant="body-s" className="label-required">*Required information</Typography>

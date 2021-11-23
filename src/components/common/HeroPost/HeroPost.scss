@@ -1,0 +1,77 @@
+@import "../../../assets/scss/utils/Mixins.scss";
+@import "../../../assets/scss/utils/Consts.scss";
+@import "../../../assets/scss/base/reset.scss";
+
+.gridContent {
+  width: 100%;
+  height: 452px;
+  background: $color-grey-300;
+  @include media-breakpoint-down(md) {
+    height: 748px;
+  }
+  @include media-breakpoint-down(xs) {
+    height: 616px;
+  }
+  .heroContent {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    justify-content: space-between;
+    @include media-breakpoint-down(md) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    @include media-breakpoint-down(xs) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    img {
+      width: 360px;
+      @include media-breakpoint-down(md) {
+        width: 320px;
+        margin-top: 30px;
+      }
+      @include media-breakpoint-down(xs) {
+        width: 200px;
+        margin: 0 0 0 0;
+      }
+    }
+    .info {
+      margin-top: 134px;
+      font-weight: 400px;
+      @include media-breakpoint-down(md) {
+        margin: 25px 80px 20px 80px;
+      }
+      @include media-breakpoint-down(xs) {
+        margin: 20px 0 20px 0;
+      }
+      .button {
+        padding: 0;
+      }
+      .title {
+        margin: 27px 0px 20px 0px;
+        // margin-bottom: 20px;
+        font-size: 40px;
+        line-height: 48px;
+        @include media-breakpoint-down(md) {
+          margin: 32px 0px 20px 0px;
+          font-size: 34px;
+          line-height: 42px;
+        }
+        @include media-breakpoint-down(xs) {
+          margin: 39px 0 16px 0;
+
+        }
+      }
+      .description {
+        font-size: 21px;
+        line-height: 30px;
+        @include media-breakpoint-down(md) {
+          font-size: 17px;
+          line-height: 26px;
+        }
+      }
+    }
+  }
+}

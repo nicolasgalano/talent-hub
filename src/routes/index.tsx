@@ -25,7 +25,7 @@ const openingsRoutes: RouteInterface = {
   exact: true,
   children: [
     {
-      path: '/openings/create',
+      path: '/openings/post-a-job',
       name: 'Post a job',
       component: PostAJobs,
     },

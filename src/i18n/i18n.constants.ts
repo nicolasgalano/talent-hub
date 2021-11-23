@@ -1,7 +1,9 @@
 export const namespaces = {
   pages: {
     home: "pages.home",
-    openingsProfessionals: "pages.openings-professionals",
+    openings: "pages.openings",
+    professionals: "pages.professionals",
+    postajob: "pages.postajob",
   },
   common: "common",
   layout: "layout",
