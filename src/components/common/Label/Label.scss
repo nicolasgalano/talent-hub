@@ -1,8 +1,23 @@
 @import '../../../assets/scss/utils/Consts.scss';
 
-.label-filter{
-  color: $color-grey-400;
-  margin-top: 0px;
-  margin-bottom: 12px;
-  text-transform: uppercase;
+
+.label-component{
+  &-filter{
+    color: $color-grey-400;
+    margin-top: 0px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  &-form{
+    color: $color-grey-400;
+    display: flex;
+    width: 100%;
+    text-transform: unset;
+    &:hover {
+      cursor: text;
+    }
+  }
+  .required{
+    color: $color-primary;
+  }
 }

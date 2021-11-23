@@ -1,0 +1,89 @@
+@import '../../../assets/scss/utils/Consts.scss';
+@import '../../../assets/scss/utils/Mixins.scss';
+
+$animation-duration: 0.4s;
+
+@mixin label-active() {
+  transform: translateY(-22px);
+}
+
+@mixin fonts-style {
+  font-family: $font-text;
+  font-size: 1.0625rem;
+  font-weight: 400;
+  line-height: 1.625rem;
+  letter-spacing: -0.2px;
+  @include media-breakpoint-down(md) {
+    font-size: 0.9375rem;
+    line-height: 1.5rem;
+    letter-spacing: 0;
+  }
+}
+
+.form-field {
+  &.active {
+    .control {
+      &::after {
+        border-bottom: 2px solid $color-primary;
+        transform: scaleX(150);
+      }
+    }
+    .label-component-form {
+      color: $color-primary;
+      @include label-active();
+    }
+  }
+  &.filled {
+    .label-component-form {
+      @include label-active();
+    }
+  }
+  .label-component-form {
+    color: $color-grey-400;
+    display: flex;
+    align-items: center;
+    left: 0;
+    margin: 0;
+    padding: 18px 12px 0 0;
+    position: absolute;
+    top: 0;
+    transition: all $animation-duration;
+    width: 100%;
+    &:hover {
+      cursor: text;
+    }
+  }
+  .control {
+    border-radius: 8px 8px 0 0;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    &::after {
+      border-bottom: 2px solid $color-primary;
+      bottom: 0;
+      content: "";
+      display: block;
+      left: 0;
+      margin: 0 auto;
+      position: absolute;
+      right: 0;
+      transform: scaleX(0);
+      transition: all $animation-duration;
+      width: 1%;
+    }
+  }
+  .input,
+  .textarea {
+    @include fonts-style();
+    appearance: none;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid #E0E0E2;
+    color: #333;
+    display: block;
+    margin-top: 24px;
+    outline: 0;
+    padding: 0 12px 8px 0;
+    width: 100%;
+  }
+}

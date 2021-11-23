@@ -93,7 +93,7 @@ const CardList:FC<CardListProps> = ({data}) => {
         <FilterButtons options={filter.contract} callback={(filters: Array<string>) => handleActiveFilters(filters, 'contract')}/>
       </div>
       <div>
-        <Label type="filter">{ t("filters.working.schedule") }</Label>
+        <Label type="filter">{ t("filters.working-schedule") }</Label>
         <FilterButtons options={filter.schedule} callback={(filters: Array<string>) => handleActiveFilters(filters, 'schedule')}/>
       </div>
       <div>

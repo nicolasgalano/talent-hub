@@ -1,0 +1,28 @@
+@import '../../assets/scss/utils/Consts.scss';
+@import '../../assets/scss/utils/Mixins.scss';
+
+#post-a-jobs{
+  padding-bottom: 227px;
+  .fakeHero{
+    height: 452px;
+    width: 100%;
+    background-color: $color-grey-300;
+    margin-bottom: 32px;
+  }
+  .label-required{
+    color: $color-primary;
+    font-weight: 600;
+    margin-bottom: 33px;
+  }
+  .row{
+    display: flex;
+    align-items: flex-start;
+    column-gap: 72px;
+    .col{
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      row-gap: 52px;
+    }
+  }
+}
