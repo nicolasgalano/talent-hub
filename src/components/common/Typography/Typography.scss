@@ -100,6 +100,13 @@ html, body {
   font-size: 16px !important;
 }
 
+// Start Reset
+h1, h2, h3, h4, h5, h6, p, label{
+  margin-top: 0;
+  margin-bottom: 0;
+}
+// End Reset
+
 .heading-xl{
   font-family: $font-display;
   font-size: 4rem;
@@ -205,6 +212,7 @@ html, body {
   line-height: 1rem;
 }
 .label{
+  display: block;
   font-family: $font-text;
   font-size: 0.8125rem;
   font-weight: 600;
