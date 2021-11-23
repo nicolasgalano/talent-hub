@@ -5,7 +5,7 @@ import './Professionals.scss';
 import dataProfessionals from '../../data/professionals.json'
 import { useTranslation } from 'react-i18next';
 import { namespaces } from '../../i18n/i18n.constants';
-import { openings3D } from '../../assets/illustrations';
+import { professionals3D } from '../../assets/illustrations';
 
 // UI Custom Component
 import CardList from '../../components/common/CardList/CardList';
@@ -37,11 +37,11 @@ const Professionals:FC = () => {
       <Tabs dataTabs={dataTab} />
       <div className="ui container">
         <Hero
-          imgSrc={openings3D}
-          title={t("The latest opportunities from projects and employers in the metaverse")}
-          description={t("Choose your field of interest, search by date and relevance or simply scroll down to see all the jobs on offer.")}
+          imgSrc={professionals3D}
+          title={t("The most skilled professionals can be found in the metaverse")}
+          description={t("Find the missing talent you need or create your own profile.")}
           to="/openings"
-          buttonText="post a job"
+          buttonText="CREATE PROFILE"
           />
         <CardList data={dataProfessionals} />
       </div>
