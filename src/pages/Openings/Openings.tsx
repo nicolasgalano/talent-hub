@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { namespaces } from '../../i18n/i18n.constants';
 import { openings3D } from '../../assets/illustrations';
 
+
 // UI Custom Component
 import CardList from '../../components/common/CardList/CardList';
 import Tabs from '../../components/common/Tabs/Tabs';

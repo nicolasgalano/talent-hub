@@ -24,7 +24,7 @@ const HeroPost: FC<HeroProps> = ({ imgSrc, title, description, buttonText }) => 
 
     <div className="gridContent">
       <div className="ui container">
-        <div className="heroContent">
+        <div className="heroPost">
           <div className="info">
             <Button basic size="small" onClick={() => goBack()}>
                 <Icon name="chevron left" />
