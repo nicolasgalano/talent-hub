@@ -61,12 +61,12 @@ const Home:FC = () => {
 
       <div className="ui container" id="subscription-box">
         <SubscriptionBox
-          title="Get the latest updates"
-          description="Stay up to date with the latest developments in the metaverse."
-          thankyou_title="Thank you for subscribing!"
-          thankyou_description="You will be up to date with every Decentraland news!"
-          placeholder="mail@domain.com"
-          buttonText="SUBSCRIBE"
+          title={t("suscription.title")}
+          description={t("suscription.description")}
+          thankyou_title={t("suscription.thankyou-title")}
+          thankyou_description={t("suscription.thankyou-description")}
+          placeholder={t("suscription.placeholder")}
+          buttonText={t("suscription.buttonText")}
         />
       </div>
 

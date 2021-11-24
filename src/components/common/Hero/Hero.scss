@@ -1,3 +1,4 @@
+@import '../../../assets/scss/utils/Consts.scss';
 @import '../../../assets/scss/utils/Mixins.scss';
 
 .heroContent{
@@ -66,6 +67,7 @@
 
       .description{
         margin-bottom: 32px;
+        color: $color-grey-400;
 
       @include media-breakpoint-down(md){
         margin-bottom: 28px;

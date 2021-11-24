@@ -14,5 +14,13 @@
   "featured": {
     "jobs":        "jobs",
     "professionals":  "professionals"
+  },
+  "suscription": {
+    "title": "Get the latest updates",
+    "description": "Stay up to date with the latest developments in the metaverse.",
+    "thankyou-title": "Thank you for subscribing!",
+    "thankyou-description": "You will be up to date with every Decentraland news!",
+    "placeholder": "mail@domain.com",
+    "buttonText": "Suscribe"
   }
 }

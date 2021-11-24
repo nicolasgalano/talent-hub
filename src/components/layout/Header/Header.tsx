@@ -3,19 +3,16 @@ import { Navbar } from 'decentraland-ui/dist/components/Navbar/Navbar';
 import Menu from 'semantic-ui-react/dist/commonjs/collections/Menu';
 import { useTranslation } from "react-i18next";
 import { namespaces } from "../../../i18n/i18n.constants";
-import { useHistory, useRouteMatch } from "react-router";
+import { useHistory } from "react-router";
 
 import './Header.scss';
 
 const Header:FC = () => {
   const { t } = useTranslation(namespaces.layout);
-  let {path} = useRouteMatch();
-  path = path.toLowerCase();
   const history = useHistory();
-
-
+  
   const goToHome = () => {
-    // TODO: Not working property
+    const path = window.location.pathname;
     path !== '/' && history.push('/');
   }
 
@@ -25,7 +22,6 @@ const Header:FC = () => {
       activePage="Talent Hub"
       leftMenu={
         <>
-          {/* <Menu.Item>{t("buttons.save", {ns: namespaces.common})}</Menu.Item> */}
           <Menu.Item>{t("header.marketplace")}</Menu.Item>
           <Menu.Item>{t("header.builder")}</Menu.Item>
           <Menu.Item>{t("header.docs")}</Menu.Item>

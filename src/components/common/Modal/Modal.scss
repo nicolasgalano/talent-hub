@@ -4,7 +4,7 @@
 .ui.dimmer{
   background-color: rgba(22, 20, 25, 0.25) !important;
   .modal-theme-grey{
-    width: 100%;
+    width: calc(100% - 2rem);
     max-width: 440px;
     border-radius: 8px;
     overflow: hidden;

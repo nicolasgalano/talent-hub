@@ -3,7 +3,7 @@ import clsx from 'clsx';
 
 import './Typography.scss';
 
-type Variant = 
+export type Variant = 
   | 'heading-xl'
   | 'heading-l'
   | 'heading-m'
@@ -34,31 +34,16 @@ type Weight =
 | '600'
 | '700';
 
-//DEPRECATED
-const variantsMapping = {
-  h1: "heading-xl",
-  h2: "heading-l",
-  h3: "heading-m",
-  h4: "heading-s",
-  h5: "heading-xs",
-  h6: "heading-xxs",
-  body1: "body-xl",
-  body2: "body-l",
-  body3: "body-m",
-  body4: "body-s",
-  body5: "body-xs",
-  label: "label",
-};
-
 interface TypographyProps {
   variant: Variant;
   element: Element;
   weight?: Weight;
   className?: object | string;
   children: React.ReactNode;
+  [x:string]: any; // with this, "...rest" working property
 }
 
-const Typography:FC<TypographyProps> = ({ variant, element, weight, children, className }) => {
+const Typography:FC<TypographyProps> = ({ variant, element, weight, children, className, ...rest }) => {
 
   const Component: Element = element ? element : 'p';
   const variantClass = variant ? variant : 'body-xl';
@@ -66,7 +51,8 @@ const Typography:FC<TypographyProps> = ({ variant, element, weight, children, cl
   return (
     <Component className={clsx(variantClass, className, {
       ['fw-' + weight]: weight
-    })}>
+    })}
+    {...rest}>
       {children}
     </Component>
   );  
