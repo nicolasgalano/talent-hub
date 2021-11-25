@@ -124,8 +124,9 @@
       margin-bottom: 120px;
     }
     .button{
-      font-size: 0.9375rem;
-      line-height: 1.5rem;
+      @include media-breakpoint-down(md){
+        padding: 14px 55px !important;
+      } 
     }
   }
 }

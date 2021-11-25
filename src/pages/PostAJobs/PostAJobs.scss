@@ -1,28 +1,163 @@
 @import '../../assets/scss/utils/Consts.scss';
 @import '../../assets/scss/utils/Mixins.scss';
 
-#post-a-jobs{
+#post-a-job{
   padding-bottom: 227px;
-  .fakeHero{
-    height: 452px;
-    width: 100%;
-    background-color: $color-grey-300;
-    margin-bottom: 32px;
-  }
   .label-required{
     color: $color-primary;
     font-weight: 600;
+    margin-top: 32px;
     margin-bottom: 33px;
   }
   .row{
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     align-items: flex-start;
     column-gap: 72px;
+    @include media-breakpoint-down(md){
+      grid-template-columns: 1fr;
+    }
     .col{
-      width: 50%;
       display: flex;
       flex-direction: column;
       row-gap: 52px;
+      .checkbox-container{
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: flex-start;
+        margin-top: 16px;
+        > div{
+          display: flex;
+          flex-direction: column;
+          flex: auto;
+          gap: 20px;
+          &:first-child{
+            max-width: 192px;
+            @include media-breakpoint-down(md){
+              max-width: 152px;
+            }
+          }
+        }
+      }
+      .checkbox-inline{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-top: 16px;
+        @include media-breakpoint-down(md){
+          margin-top: 20px;
+        }
+        > div{
+          margin-right: 24px;
+          @include media-breakpoint-down(md){
+            margin-right: 28px;
+          }
+        }
+      }
+      .salary{
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        margin-top: 16px;
+        > div{
+          margin-right: 32px;
+          @include media-breakpoint-down(md){
+            margin-right: 23px;
+            &:nth-child(2){
+              margin-right: 92px;
+            }
+            &:nth-child(3){
+              margin-right: 31px;
+            }
+          }
+          @include media-breakpoint-down(xs){
+            &:nth-child(2){
+              margin-right: 24px;
+            }
+          }
+        }
+        .form-field{
+          max-width: 96px;
+          @include media-breakpoint-down(md){
+            max-width: 72px;
+          }
+        }
+      }
+      .start-date{
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        margin-top: 16px;
+        > div{
+          margin-right: 36px;
+        }
+      }
+      .dropdown{
+        margin-bottom: 12px;
+        > .text{
+          color: $color-grey-700;
+          font-family: $font-text;
+          font-size: 0.8125rem;
+          font-weight: 600;
+          line-height: 1.125rem;
+          text-transform: uppercase;
+        }
+        > .icon{
+          color: $color-grey-700;
+          margin-left: 7px;
+        }
+        .menu{
+          padding: 12px 0;
+          margin-top: 8px;
+          .item{
+            padding: 12px 32px;
+            @include media-breakpoint-down(xs){
+              min-width: 180px;
+            }
+          }
+        }
+      }
+      .project-logo{
+        > label{
+          margin-bottom: 12px;
+        }
+        .recomended{
+          color: $color-grey-400;
+          margin-bottom: 24px;
+        }
+        .btn-upload{
+          @include media-breakpoint-down(md){
+            padding: 14px 45px;
+          }
+        }
+      }
+    }
+  }
+  .actions{
+    display: flex;
+    margin-top: 77px;
+    @include media-breakpoint-down(md){
+      flex-direction: column;
+      justify-content: center;
+      margin-top: 64px;
+    }
+    @include media-breakpoint-down(xs){
+      margin-top: 60px;
+    }
+    .button{
+      &.primary{
+        margin-right: 12px;
+        @include media-breakpoint-down(md){
+          margin-bottom: 20px;
+        }
+      }
+      @include media-breakpoint-down(md){
+        width: 100%;
+        max-width: 200px;
+        margin-right: auto !important;
+        margin-left: auto !important;
+      }
     }
   }
 }
