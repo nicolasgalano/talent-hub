@@ -2,12 +2,12 @@
 @import '../../assets/scss/utils/Mixins.scss';
 
 .home-hero{
-  margin-bottom: 606px;
+  margin-bottom: calc(606px / 2);
   @include media-breakpoint-down(xxl) {
-    margin-bottom: 394px;
+    margin-bottom: calc(394px / 2);
   }
   @include media-breakpoint-down(md) {
-    margin-bottom: 56px;
+    margin-bottom: calc(56px / 2);
   }
   .hero-top{
     max-width:696px;
@@ -49,33 +49,33 @@
 }
 
 #featured-jobs{
-  margin-bottom: 659px;
+  margin-bottom: calc(659px / 2);
   @include media-breakpoint-down(xxl){
-    margin-bottom: 545px;
+    margin-bottom: calc(545px / 2);
   }
   @include media-breakpoint-down(md){
-    margin-bottom: 74px;
+    margin-bottom: calc(74px / 2);
   }
 }
 #featured-professionals{
-  margin-bottom: 634px;
+  margin-bottom: calc(634px / 2);
   @include media-breakpoint-down(xxl){
-    margin-bottom: 534px;
+    margin-bottom: calc(534px / 2);
   }
   @include media-breakpoint-down(md){
-    margin-bottom: 74px;
+    margin-bottom: calc(74px / 2);
   }
 }
 #subscription-box{
-  margin-bottom: 300px;
+  margin-bottom: calc(300px / 2);
   @include media-breakpoint-down(xxl){
-    margin-bottom: 270px;
+    margin-bottom: calc(270px / 2);
   }
   @include media-breakpoint-down(md){
-    margin-bottom: 200px;
+    margin-bottom: calc(200px / 2);
   }
   @include media-breakpoint-down(xs){
-    margin-bottom: 120px;
+    margin-bottom: calc(120px / 2);
   }
 
 }

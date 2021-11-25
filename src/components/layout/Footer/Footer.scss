@@ -28,6 +28,9 @@
         flex-direction: column;
         align-items: center;
       }
+      .language-icon-label{
+        font-weight: 600;
+      }
       nav{
         display: flex;
         flex-direction: row;
@@ -36,7 +39,7 @@
           margin-top: 20px;
           margin-left: 0;
           ul{
-            flex-direction: column;
+            flex-direction: column-reverse;
             row-gap: 16px;
             li{
               text-align: center;
