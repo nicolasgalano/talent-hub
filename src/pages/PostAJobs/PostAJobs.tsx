@@ -21,7 +21,7 @@ import HeroPost from '../../components/common/HeroPost/HeroPost';
 import File from '../../components/common/File/File';
 
 const PostAJobs:FC = () =>{
-  const { t } = useTranslation(namespaces.pages.postajob);
+  const { t } = useTranslation([namespaces.pages.postajob, namespaces.common]);
   const [updateFile, setUploadFile] = useState(false);
 
   return(
@@ -34,7 +34,7 @@ const PostAJobs:FC = () =>{
         />
       <div className="ui container">
         {/* Title */}
-        <Typography element="p" variant="body-s" className="label-required">*Required information</Typography>
+        <Typography element="p" variant="body-s" className="label-required">*{t("form.required-information", {ns: namespaces.common})}</Typography>
         <div className="row">
           {/* First Col */}
           <div className="col">
@@ -43,7 +43,7 @@ const PostAJobs:FC = () =>{
               <TextField 
                 element="input"
                 type="text"
-                label="Position offered"
+                label={t("form.position-offered", {ns: namespaces.common})}
                 htmlFor="position-offered"
                 required />
             </div>
@@ -51,7 +51,7 @@ const PostAJobs:FC = () =>{
             <div>
               <TextField 
                 element="textarea"
-                label="Responsibilities"
+                label={t("form.responsibilities", {ns: namespaces.common})}
                 htmlFor="responsibilities"
                 required />
             </div>
@@ -60,68 +60,68 @@ const PostAJobs:FC = () =>{
               <TextField 
                 element="input"
                 type="text"
-                label="Benefits"
+                label={t("form.benefits", {ns: namespaces.common})}
                 htmlFor="benefits" />
             </div>
             {/* Checkbox's Types of contract */}
             <div>
-              <Label type="form" required>Types of contract</Label>
+              <Label type="form" required>{t("filters.type-of-contract", {ns: namespaces.common})}</Label>
               <div className="checkbox-container">
                 <div>
-                  <Checkbox label='Permanent' />
-                  <Checkbox label='Temporary' />
+                  <Checkbox label={t("form.permanent", {ns: namespaces.common})} />
+                  <Checkbox label={t("form.temporary", {ns: namespaces.common})} />
                 </div>
                 <div>
-                  <Checkbox label='Freelance' />
-                  <Checkbox label='Intership' />
+                  <Checkbox label={t("form.freelance", {ns: namespaces.common})} />
+                  <Checkbox label={t("form.intership", {ns: namespaces.common})} />
                 </div>
               </div>
             </div>
             {/* Checkbox's Fields */}
             <div>
-              <Label type="form" required>Fields</Label>
+              <Label type="form" required>{t("filters.fields", {ns: namespaces.common})}</Label>
               <div className="checkbox-container">
                 <div>
-                  <Checkbox label='Design' />
-                  <Checkbox label='Development' />
-                  <Checkbox label='Engineering' />
-                  <Checkbox label='Modelling' />
+                  <Checkbox label={t("form.design", {ns: namespaces.common})} />
+                  <Checkbox label={t("form.development", {ns: namespaces.common})} />
+                  <Checkbox label={t("form.engineering", {ns: namespaces.common})} />
+                  <Checkbox label={t("form.modelling", {ns: namespaces.common})} />
                 </div>
                 <div>
-                  <Checkbox label='Project Management' />
-                  <Checkbox label='Marketing' />
-                  <Checkbox label='Art Direction' />
-                  <Checkbox label='Data Analytics' />
+                  <Checkbox label={t("form.project-management", {ns: namespaces.common})} />
+                  <Checkbox label={t("form.marketing", {ns: namespaces.common})} />
+                  <Checkbox label={t("form.art-direction", {ns: namespaces.common})} />
+                  <Checkbox label={t("form.data-analytics", {ns: namespaces.common})} />
                 </div>
               </div>
             </div>
             {/* Input Experience */}
             <div>
-              <Label type="form" required>Experience required</Label>
+              <Label type="form" required>{t("form.experience-required", {ns: namespaces.common})}</Label>
               <Range />
             </div>
             {/* Checkbox's Working schedule */}
             <div>
-              <Label type="form" required>Working schedule</Label>
+              <Label type="form" required>{t("filters.working-schedule", {ns: namespaces.common})}</Label>
               <div className="checkbox-inline">
-                <Checkbox label='Full-Time' />
-                <Checkbox label='Part-Time' />
-                <Checkbox label='Per-Hour' />
+                <Checkbox label={t("form.full-time", {ns: namespaces.common})} />
+                <Checkbox label={t("form.part-time", {ns: namespaces.common})} />
+                <Checkbox label={t("form.per-hour", {ns: namespaces.common})} />
               </div>
             </div>
             {/* Input Salary */}
             <div>
-              <Label type="form">Salary</Label>
+              <Label type="form">{t("form.salary", {ns: namespaces.common})}</Label>
               <div className="salary">
                 <TextField 
                   element="input"
                   type="text"
-                  label="From"
+                  label={t("form.from", {ns: namespaces.common})}
                   htmlFor="from" />
                 <TextField 
                   element="input"
                   type="text"
-                  label="To"
+                  label={t("form.to", {ns: namespaces.common})}
                   htmlFor="to" />
                 <Dropdown text="USD" direction="left">
                   <Dropdown.Menu>
@@ -139,22 +139,22 @@ const PostAJobs:FC = () =>{
             </div>
             {/* Select Start date */}
             <div>
-              <Label type="form">Start date</Label>
+              <Label type="form">{t("form.start-date", {ns: namespaces.common})}</Label>
               <div className="start-date">
                 <Dropdown text="September" direction="right">
                   <Dropdown.Menu>
-                    <Dropdown.Item text="January" />
-                    <Dropdown.Item text="Febrary" />
-                    <Dropdown.Item text="March" />
-                    <Dropdown.Item text="April" />
-                    <Dropdown.Item text="May" />
-                    <Dropdown.Item text="June" />
-                    <Dropdown.Item text="July" />
-                    <Dropdown.Item text="August" />
-                    <Dropdown.Item text="September" />
-                    <Dropdown.Item text="October" />
-                    <Dropdown.Item text="November" />
-                    <Dropdown.Item text="Decenber" />
+                    <Dropdown.Item text={t("months.january", {ns: namespaces.common})} />
+                    <Dropdown.Item text={t("months.febrary", {ns: namespaces.common})} />
+                    <Dropdown.Item text={t("months.march", {ns: namespaces.common})} />
+                    <Dropdown.Item text={t("months.april", {ns: namespaces.common})} />
+                    <Dropdown.Item text={t("months.may", {ns: namespaces.common})} />
+                    <Dropdown.Item text={t("months.june", {ns: namespaces.common})} />
+                    <Dropdown.Item text={t("months.july", {ns: namespaces.common})} />
+                    <Dropdown.Item text={t("months.august", {ns: namespaces.common})} />
+                    <Dropdown.Item text={t("months.september", {ns: namespaces.common})} />
+                    <Dropdown.Item text={t("months.october", {ns: namespaces.common})} />
+                    <Dropdown.Item text={t("months.november", {ns: namespaces.common})} />
+                    <Dropdown.Item text={t("months.decenber", {ns: namespaces.common})} />
                   </Dropdown.Menu>
                 </Dropdown>
                 <Dropdown text="2021" direction="right">
@@ -173,7 +173,7 @@ const PostAJobs:FC = () =>{
               <TextField 
                 element="input"
                 type="text"
-                label="Organization or project name"
+                label={t("form.organization", {ns: namespaces.common})}
                 htmlFor="project-name"
                 required />
             </div>
@@ -182,7 +182,7 @@ const PostAJobs:FC = () =>{
               <TextField 
                 element="input"
                 type="email"
-                label="Email"
+                label={t("form.email", {ns: namespaces.common})}
                 htmlFor="email"
                 required />
             </div>
@@ -190,16 +190,16 @@ const PostAJobs:FC = () =>{
             <div>
               <TextField 
                 element="textarea"
-                label="About"
+                label={t("form.about", {ns: namespaces.common})}
                 htmlFor="about"
                 required />
             </div>
             {/* Input logo */}
             <div className="project-logo">
-              <Label type="form">Company or project logo</Label>
-              <Typography variant="body-s" element="p" className="recomended">Recommended size: 100 x 100px</Typography>
+              <Label type="form">{t("form.company", {ns: namespaces.common})}</Label>
+              <Typography variant="body-s" element="p" className="recomended">{t("form.recomended-size", {ns: namespaces.common})}</Typography>
               { updateFile && <File title="CompanyLogo.png" className="companyLogo" /> }
-              <Button secondary className="btn-upload" onClick={() => setUploadFile(!updateFile)}>Upload logo</Button>
+              <Button secondary className="btn-upload" onClick={() => setUploadFile(!updateFile)}>{t("form.upload-logo", {ns: namespaces.common})}</Button>
             </div>
           </div>
         </div>
@@ -209,12 +209,12 @@ const PostAJobs:FC = () =>{
           <Button 
             disabled={!updateFile}
             primary >
-              Submit
+              {t("buttons.submit", {ns: namespaces.common})}
           </Button>
           <Button 
             disabled={!updateFile}
             secondary >
-              Preview
+              {t("buttons.preview", {ns: namespaces.common})}
           </Button>
         </div>
       </div>
