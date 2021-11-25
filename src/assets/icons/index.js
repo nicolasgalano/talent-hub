@@ -8,6 +8,7 @@ import filterActive from './filter-active.svg';
 import filterInactive from './filter-inactive.svg';
 import close from './close.svg';
 import plus from './plus.svg';
+import deleteFile from './delete-file.svg';
 
 export {
   discord,
@@ -20,4 +21,5 @@ export {
   filterInactive,
   close,
   plus,
+  deleteFile,
 }

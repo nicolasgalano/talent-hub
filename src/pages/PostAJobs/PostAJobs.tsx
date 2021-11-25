@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 
 // UI Semantic
 import { Checkbox, Dropdown } from "semantic-ui-react";
@@ -18,9 +18,11 @@ import Typography from "../../components/common/Typography/Typography";
 import Label from "../../components/common/Label/Label";
 import Range from "../../components/common/Range/Range";
 import HeroPost from '../../components/common/HeroPost/HeroPost';
+import File from '../../components/common/File/File';
 
 const PostAJobs:FC = () =>{
   const { t } = useTranslation(namespaces.pages.postajob);
+  const [updateFile, setUploadFile] = useState(false);
 
   return(
     <div id="post-a-job">
@@ -196,15 +198,24 @@ const PostAJobs:FC = () =>{
             <div className="project-logo">
               <Label type="form">Company or project logo</Label>
               <Typography variant="body-s" element="p" className="recomended">Recommended size: 100 x 100px</Typography>
-              <Button secondary className="btn-upload">Upload logo</Button>
+              { updateFile && <File title="CompanyLogo.png" className="companyLogo" /> }
+              <Button secondary className="btn-upload" onClick={() => setUploadFile(!updateFile)}>Upload logo</Button>
             </div>
           </div>
         </div>
       </div>
       <div className="ui container">
         <div className="actions">
-          <Button primary disabled>Submit</Button>
-          <Button secondary disabled>Preview</Button>
+          <Button 
+            disabled={!updateFile}
+            primary >
+              Submit
+          </Button>
+          <Button 
+            disabled={!updateFile}
+            secondary >
+              Preview
+          </Button>
         </div>
       </div>
     </div>

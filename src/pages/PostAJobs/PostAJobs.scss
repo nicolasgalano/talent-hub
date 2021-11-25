@@ -126,6 +126,9 @@
           color: $color-grey-400;
           margin-bottom: 24px;
         }
+        .companyLogo{
+          margin-bottom: 32px;
+        }
         .btn-upload{
           @include media-breakpoint-down(md){
             padding: 14px 45px;
