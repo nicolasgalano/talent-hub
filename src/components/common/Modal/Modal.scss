@@ -44,6 +44,10 @@
     background-color: #FFFFFF;
     border-radius: 12px;
     overflow: hidden;
+    @include media-breakpoint-down(md){
+      width: calc(100% - 32px);
+      max-width: 480px;
+    }
     .modal-header{
       height: 112px;
       display: flex;
@@ -55,6 +59,10 @@
         height: 118px;
         padding-left: 35px;
         padding-right: 35px;
+      }
+      @include media-breakpoint-down(xs){
+        padding-left: 24px;
+        padding-right: 24px;
       }
       h3{
         color: $color-grey-700;
