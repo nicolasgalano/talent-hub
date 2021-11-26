@@ -17,7 +17,7 @@ import { namespaces } from "../../../i18n/i18n.constants";
 import Typography from "../Typography/Typography";
 import Card, { CardProps } from "../Card/Card";
 import Dropdown from "../Dropdown/Dropdown";
-import Modal, { ModalHandle } from "../Modal/Modal";
+import Modal, { ModalBody, ModalHandle } from "../Modal/Modal";
 import { useWindowSize } from "../../hooks/useWindowsSize";
 import Range from "../Range/Range";
 import Label from "../Label/Label";
@@ -198,10 +198,12 @@ const CardList:FC<CardListProps> = ({data}) => {
         </div>
       </div>
       <Modal ref={modalRef} theme="grey" >
-        { renderFilters() }
-        <div className="apply">
-          <Button primary size="large">{ t("filters.apply") }</Button>
-        </div>
+        <ModalBody>
+          { renderFilters() }
+          <div className="apply">
+            <Button primary size="large">{ t("filters.apply") }</Button>
+          </div>
+        </ModalBody>
       </Modal>
     </Fragment>
   );

@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useRef, useState } from "react";
 
 // UI Semantic
 import { Checkbox, Dropdown } from "semantic-ui-react";
@@ -19,10 +19,15 @@ import Label from "../../components/common/Label/Label";
 import Range from "../../components/common/Range/Range";
 import HeroPost from '../../components/common/HeroPost/HeroPost';
 import File from '../../components/common/File/File';
+import Modal, { ModalBody, ModalFooter, ModalHandle, ModalHeader } from "../../components/common/Modal/Modal";
+import JobDetails from "../../components/common/JobDetails/JobDetails";
 
 const PostAJobs:FC = () =>{
   const { t } = useTranslation([namespaces.pages.postajob, namespaces.common]);
   const [updateFile, setUploadFile] = useState(false);
+  const modalRef = useRef<ModalHandle>(null);
+
+  const handleCloseModal = () => modalRef.current.closeModal();
 
   return(
     <div id="post-a-job">
@@ -213,11 +218,22 @@ const PostAJobs:FC = () =>{
           </Button>
           <Button 
             disabled={!updateFile}
+            onClick={() => updateFile && modalRef.current.openModal() }
             secondary >
               {t("buttons.preview", {ns: namespaces.common})}
           </Button>
         </div>
       </div>
+      <Modal theme="light" ref={modalRef}>
+        <ModalHeader>Review your job</ModalHeader>
+        <ModalBody className="review-job">
+          <JobDetails />
+        </ModalBody>
+        <ModalFooter>
+          <Button secondary onClick={() => handleCloseModal()}>Edit</Button>
+          <Button primary onClick={() => handleCloseModal()}>Submit</Button>
+        </ModalFooter>
+      </Modal>
     </div>
   );
 }
