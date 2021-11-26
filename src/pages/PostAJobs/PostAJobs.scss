@@ -169,7 +169,9 @@
 }
 .review-job{
   #job-details{
-    gap: 0;
+    @include media-breakpoint-down(md){
+      gap: 0;
+    }
     .bio{
       p{
         margin-bottom: 32px;
