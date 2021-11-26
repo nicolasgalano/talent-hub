@@ -51,12 +51,20 @@
       padding-left: 80px;
       padding-right: 80px;
       border-bottom: 1px solid #E0E0E2;
+      @include media-breakpoint-down(md){
+        height: 118px;
+        padding-left: 35px;
+        padding-right: 35px;
+      }
       h3{
         color: $color-grey-700;
       }
     }
     .content{
       padding: 47px 80px 54px;
+      @include media-breakpoint-down(md){
+        padding: 33px 40px 48px;
+      }
     }
     .modal-footer{
       height: 116px;
@@ -69,6 +77,21 @@
       padding-left: 80px;
       padding-right: 80px;
       border-top: 1px solid #E0E0E2;
+      @include media-breakpoint-down(md){
+        flex-direction: column;
+        border-top: unset;
+        .button{
+          width: 100%;
+          max-width: 357px;
+          gap: 20px;
+          &:nth-child(1){
+            order: 2;
+          }
+          &:nth-child(2){
+            order: 1;
+          }
+        }
+      }
     }
     .close-icon{
       width: 24px;

@@ -226,7 +226,7 @@ const PostAJobs:FC = () =>{
       </div>
       <Modal theme="light" ref={modalRef}>
         <ModalHeader>Review your job</ModalHeader>
-        <ModalBody>
+        <ModalBody className="review-job">
           <JobDetails />
         </ModalBody>
         <ModalFooter>

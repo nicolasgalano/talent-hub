@@ -70,11 +70,12 @@ export const ModalHeader:FC <ModalHeaderProps> = ({children}) => {
 // Modal Body
 interface ModalBodyProps {
   children: React.ReactNode;
+  className?: string;
 }
 
-export const ModalBody:FC <ModalBodyProps> = ({children}) => {
+export const ModalBody:FC <ModalBodyProps> = ({children, className}) => {
   return (
-    <ModalSemantic.Content>
+    <ModalSemantic.Content className={className}>
       {children}
     </ModalSemantic.Content>
   );
