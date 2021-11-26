@@ -7,6 +7,7 @@ import { Modal as ModalSemantic } from "semantic-ui-react";
 // Files
 import { close } from "../../../assets/icons";
 import './Modal.scss';
+import Typography from "../Typography/Typography";
 
 interface ModalProps {
   theme: "grey" | "light";
@@ -47,10 +48,47 @@ const Modal: React.ForwardRefRenderFunction<ModalHandle, ModalProps> = ({childre
           alt="close" />
       }
       >
-        <ModalSemantic.Content>
-          {children}
-        </ModalSemantic.Content>
+        {children}
     </ModalSemantic>
   );
 }
 export default forwardRef(Modal);
+
+// Modal Header
+interface ModalHeaderProps {
+  children: React.ReactNode;
+}
+
+export const ModalHeader:FC <ModalHeaderProps> = ({children}) => {
+  return (
+    <div className="modal-header">
+      <Typography variant="heading-xxs" element="h3">{children}</Typography>
+    </div>
+  );
+}
+
+// Modal Body
+interface ModalBodyProps {
+  children: React.ReactNode;
+}
+
+export const ModalBody:FC <ModalBodyProps> = ({children}) => {
+  return (
+    <ModalSemantic.Content>
+      {children}
+    </ModalSemantic.Content>
+  );
+}
+
+// Modal Footer
+interface ModalFooterProps {
+  children: React.ReactNode;
+}
+
+export const ModalFooter:FC <ModalFooterProps> = ({children}) => {
+  return (
+    <div className="modal-footer">
+      {children}
+    </div>
+  );
+}

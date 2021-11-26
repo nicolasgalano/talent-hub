@@ -1,0 +1,78 @@
+@import '../../../assets/scss/utils/Consts.scss';
+@import '../../../assets/scss/utils/Mixins.scss';
+
+#job-details{
+  display: flex;
+  gap: 44px;
+  @include media-breakpoint-down(md){
+    flex-direction: column;
+  }
+  .extract{
+    width: 100%;
+    max-width: 420px;
+    margin-top: 4px;
+    @include media-breakpoint-down(md){
+      max-width: unset;
+      order: 3;
+    }
+    .company-or-project{
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-direction: row;
+      gap: 20px;
+      margin-bottom: 48px;
+      @include media-breakpoint-down(md){
+        margin-bottom: 24px;
+      }
+      img{
+        width: 60px;
+        height: 60px;
+        aspect-ratio: 1/1;
+      }
+    }
+  }
+  .bio{
+    width: 100%;
+    @include media-breakpoint-down(md){
+      order: 1;
+    }
+    h1{
+      margin-bottom: 56px;
+      @include media-breakpoint-down(md){
+        margin-bottom: 36px;
+      }
+    }
+    p{
+      margin-bottom: 56px;
+      @include media-breakpoint-down(md){
+        margin-bottom: 48px;
+      }
+      @include media-breakpoint-down(xs){
+        margin-bottom: 24px;
+      }
+    }
+    .more-info{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      @include media-breakpoint-down(xs){
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+  .divider{
+    display: none;
+    width: 100%;
+    height: 0px;
+    margin: -19px 0 -12px;
+    border: 0;
+    border-top: 1px solid #E0E0E2;
+    @include media-breakpoint-down(md){
+      display: block;
+      order: 2;
+    }
+    @include media-breakpoint-down(xs){
+      margin: -16px 0 -12px;
+    }
+  }
+}
