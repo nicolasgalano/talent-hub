@@ -65,6 +65,9 @@
       @include media-breakpoint-down(md){
         padding: 33px 40px 48px;
       }
+      @include media-breakpoint-down(xs){
+        padding-top: 33px !important;
+      }
     }
     .modal-footer{
       height: 116px;
@@ -74,10 +77,13 @@
       flex-direction: row;
       flex-wrap: nowrap;
       gap: 12px;
-      padding-left: 80px;
-      padding-right: 80px;
+      padding-left: 32px;
+      padding-right: 32px;
       border-top: 1px solid #E0E0E2;
       @include media-breakpoint-down(md){
+        height: unset;
+        margin-top: 32px;
+        margin-bottom: 64px;
         flex-direction: column;
         border-top: unset;
         .button{
@@ -92,6 +98,12 @@
           }
         }
       }
+      @include media-breakpoint-down(xs){
+        margin-top: 36px;
+        padding-left: 24px;
+        padding-right: 24px;
+        padding-bottom: 86px;
+      }
     }
     .close-icon{
       width: 24px;
@@ -104,7 +116,9 @@
       &:hover{
         cursor: pointer;
       }
-      @include media-breakpoint-down(xs){
+      @include media-breakpoint-down(md){
+        width: 14px;
+        height: 14px;
         right: 23px;
         top: 23px;
       }
