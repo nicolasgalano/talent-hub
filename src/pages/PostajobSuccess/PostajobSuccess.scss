@@ -8,6 +8,7 @@
     width: 100%;
     img {
       width: 438px;
+      padding: 20px;
       @include media-breakpoint-down(md) { 
         width: 275px;
       }
