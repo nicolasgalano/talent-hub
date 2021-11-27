@@ -1,3 +1,4 @@
+import JobDetails from "../components/common/JobDetails/JobDetails";
 import Home from "../pages/Home/Home";
 import Openings from "../pages/Openings/Openings";
 import PostAJobs from "../pages/PostAJobs/PostAJobs";
@@ -47,6 +48,7 @@ const jobsRoutes: RouteInterface = {
     {
       path: '/job/organization',
       name: 'Organization',
+      component: JobDetails,
     },
     {
       path: '/job/project',
