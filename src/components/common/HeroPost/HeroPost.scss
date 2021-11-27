@@ -19,9 +19,9 @@
       align-items: center;
     }
     img {
-      width: 360px;
+      width: 320px;
+      margin: 17px 0  36px 0;
       @include media-breakpoint-down(md) {
-        width: 320px;
         margin: 48px 0  27px 0;
       }
       @include media-breakpoint-down(xs) {
@@ -30,20 +30,19 @@
       }
     }
     .info {
-      margin-top: 134px;
-      font-weight: 400px;
+      margin-top: 132px;
       @include media-breakpoint-down(md) {
         margin: 25px 80px 0 80px;
       }
       @include media-breakpoint-down(xs) {
-        margin: 20px 0 33px 0;
+        margin: 22.5px 0 33px 0;
       }
       .button {
         padding: 0;
       }
       .title {
         margin: 27px 0px 20px 0px;
-        // margin-bottom: 20px;
+        font-weight: 400px;
         font-size: 40px;
         line-height: 48px;
         @include media-breakpoint-down(md) {
