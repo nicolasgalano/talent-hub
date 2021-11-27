@@ -1,6 +1,7 @@
 import Home from "../pages/Home/Home";
 import Openings from "../pages/Openings/Openings";
 import PostAJobs from "../pages/PostAJobs/PostAJobs";
+import Success from "../pages/PostajobSuccess/PostajobSuccess";
 import Professionals from "../pages/Professionals/Professionals";
 
 export interface RouteInterface {
@@ -28,6 +29,12 @@ const openingsRoutes: RouteInterface = {
       path: '/openings/post-a-job',
       name: 'Post a job',
       component: PostAJobs,
+      exact: true
+    },
+    {
+      path: '/openings/post-a-job/success',
+      name: 'Success',
+      component: Success,
     },
   ]
 }
