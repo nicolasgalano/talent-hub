@@ -1,0 +1,15 @@
+@import '../../../assets/scss/utils/Consts.scss';
+
+.button.tag{
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.125rem;
+  min-width: unset;
+  padding: 5px 16px;
+  border-radius: 16px;
+  overflow: hidden;
+  &.secondary{
+    color: $color-grey-500;
+    background-color: $color-grey-300;
+  }
+}

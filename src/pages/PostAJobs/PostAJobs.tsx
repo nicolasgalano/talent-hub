@@ -20,7 +20,7 @@ import Range from "../../components/common/Range/Range";
 import HeroPost from '../../components/common/HeroPost/HeroPost';
 import File from '../../components/common/File/File';
 import Modal, { ModalBody, ModalFooter, ModalHandle, ModalHeader } from "../../components/common/Modal/Modal";
-import JobDetails from "../../components/common/JobDetails/JobDetails";
+import Single from "../../components/common/Single/Single";
 
 const PostAJobs:FC = () =>{
   const { t } = useTranslation([namespaces.pages.postajob, namespaces.common]);
@@ -227,7 +227,7 @@ const PostAJobs:FC = () =>{
       <Modal theme="light" ref={modalRef}>
         <ModalHeader>Review your job</ModalHeader>
         <ModalBody className="review-job">
-          <JobDetails />
+          <Single />
         </ModalBody>
         <ModalFooter>
           <Button secondary onClick={() => handleCloseModal()}>Edit</Button>
