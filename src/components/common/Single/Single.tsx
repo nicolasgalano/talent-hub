@@ -1,14 +1,46 @@
 import React, { FC } from 'react'
 
 // Files
-import './JobDetails.scss';
+import './Single.scss';
 import { company } from '../../../assets/images';
 
 // Custom component
 import Typography from '../Typography/Typography';
 import Label from '../Label/Label';
+import Tag from '../Tag/Tag';
 
-const JobDetails:FC = () => {
+// Interface
+interface Commom {
+  company_project_candidate: string;
+  image?: string;
+  about: string;
+  profession_job_name: string;
+  workgin_shedule: string;
+  type_of_contract: string;
+  fields: Array<string>;
+}
+
+export interface OrganizationAndProject extends Commom {
+  responsabilities: string;
+  benefits: string;
+  experience: string;
+  start_date: string;
+  salary: string;
+}
+
+export interface Profile extends Commom {
+  email: string;
+  portfolio: string;
+  linkeding: string;
+}
+
+interface SingleProps {
+  // TODO: delete optional simbol
+  data?: OrganizationAndProject | Profile;
+}
+
+const Single:FC <SingleProps> = ({data}) => {
+
   return (
     <div id="job-details">
       {/* Extract */}
@@ -72,9 +104,7 @@ const JobDetails:FC = () => {
           <div>
             {/* Field */}
             <Label type="review">Field</Label>
-            <Typography variant="body-l" element="p">
-              Test porpose
-            </Typography>
+            <Tag>Design</Tag>
           </div>
           <div>
             {/* Salary */}
@@ -89,4 +119,4 @@ const JobDetails:FC = () => {
     </div>
   )
 }
-export default JobDetails;
+export default Single;
