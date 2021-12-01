@@ -79,6 +79,11 @@ const professionalsRoutes: RouteInterface = {
       name: 'Profile details without pic ',
       component: ProfileDetails,
     },
+    {
+      path: '/professional/withgallery',
+      name: 'Profile details with gallery ',
+      component: ProfileDetails,
+    },
   ]
 }
 

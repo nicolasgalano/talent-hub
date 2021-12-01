@@ -1,8 +1,5 @@
 import React, { FC } from 'react'
 
-// UI Decentraland
-import { Button } from 'decentraland-ui/dist/components/Button/Button'
-
 // Files
 import './Tag.scss';
 
