@@ -10,10 +10,11 @@ import { useHistory } from 'react-router';
 
 interface DetailProps {
   children: React.ReactNode;
+  btnText: string;
   applyCallback?: Function;
 }
 
-const Detail: FC <DetailProps> = ({children, applyCallback}) => {
+const Detail: FC <DetailProps> = ({children, applyCallback, btnText}) => {
   const history = useHistory();
 
   const handleClickBack = () => history.goBack(); 
@@ -33,7 +34,7 @@ const Detail: FC <DetailProps> = ({children, applyCallback}) => {
       { children }
       {/* Actions */}
       <div className="cta">
-        <Button primary onClick={() => handleClickApply()}>Apply</Button>
+        <Button primary onClick={() => handleClickApply()}>{btnText}</Button>
       </div>
     </div>
   )

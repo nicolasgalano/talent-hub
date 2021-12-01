@@ -16,6 +16,7 @@
       order: 3;
     }
     .company-or-project{
+      height: 60px;
       display: flex;
       justify-content: flex-start;
       align-items: center;
@@ -31,6 +32,14 @@
         aspect-ratio: 1/1;
       }
     }
+    .feature{
+      display: flex;
+      flex-direction: column;
+      gap: 44px;
+      a p{
+        color: $color-primary;
+      }
+    }
   }
   .bio{
     width: 100%;
@@ -42,6 +51,10 @@
       @include media-breakpoint-down(md){
         margin-bottom: 36px;
       }
+    }
+    .profession{
+      margin-top: -36px;
+      margin-bottom: 33px;
     }
     p{
       margin-bottom: 56px;
@@ -55,8 +68,24 @@
     .more-info{
       display: grid;
       grid-template-columns: 1fr 1fr;
+      row-gap: 56px;
+      margin-bottom: 56px;
+      @include media-breakpoint-down(md){
+        row-gap: 48px;
+        margin-bottom: 48px;
+      }
       @include media-breakpoint-down(xs){
         grid-template-columns: 1fr;
+        row-gap: 24px;
+        margin-bottom: 24px;
+      }
+      .fields{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+      p{
+        margin-bottom: unset;
       }
     }
   }

@@ -12,9 +12,9 @@ interface TagProps {
 
 const Tag: FC <TagProps> = ({ children }) => {
   return (
-    <Button className="tag" secondary>
+    <div className="button tag">
       { children }
-    </Button>
+    </div>
   )
 }
 export default Tag
