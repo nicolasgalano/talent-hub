@@ -1,9 +1,9 @@
 import Home from "../pages/Home/Home";
-import JobDetailsOrganization from "../pages/JobDetailsOrganization/JobDetailsOrganization";
-import JobDetailsProject from "../pages/JobDetailsProject/JobDetailsProject";
+import JobDetails from "../pages/JobDetails/JobDetails";
 import Openings from "../pages/Openings/Openings";
 import PostAJobs from "../pages/PostAJobs/PostAJobs";
 import Success from "../pages/PostajobSuccess/PostajobSuccess";
+import ProfileDetails from "../pages/ProfileDetails/ProfileDetails";
 import Professionals from "../pages/Professionals/Professionals";
 
 export interface RouteInterface {
@@ -49,12 +49,12 @@ const jobsRoutes: RouteInterface = {
     {
       path: '/job/organization',
       name: 'Organization',
-      component: JobDetailsOrganization,
+      component: JobDetails
     },
     {
       path: '/job/project',
       name: 'Project',
-      component: JobDetailsProject,
+      component: JobDetails,
     },
   ]
 }
@@ -68,6 +68,16 @@ const professionalsRoutes: RouteInterface = {
     {
       path: '/professionals/create',
       name: 'Create a profile',
+    },
+    {
+      path: '/professional/withphoto',
+      name: 'Profile details with pic ',
+      component: ProfileDetails,
+    },
+    {
+      path: '/professional/withoutphoto',
+      name: 'Profile details without pic ',
+      component: ProfileDetails,
     },
   ]
 }

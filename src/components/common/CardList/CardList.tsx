@@ -85,19 +85,19 @@ const CardList:FC<CardListProps> = ({data}) => {
   const renderFilters = () => (
     <Fragment>
       <div>
-        <Label type="filter">{ t("filters.field") }</Label>
+        <Label type="filter">{ t("general.field") }</Label>
         <FilterButtons options={filter.field} callback={(filters: Array<string>) => handleActiveFilters(filters, 'field')}/>
       </div>
       <div>
-        <Label type="filter">{ t("filters.type-of-contract") }</Label>
+        <Label type="filter">{ t("general.type-of-contract") }</Label>
         <FilterButtons options={filter.contract} callback={(filters: Array<string>) => handleActiveFilters(filters, 'contract')}/>
       </div>
       <div>
-        <Label type="filter">{ t("filters.working-schedule") }</Label>
+        <Label type="filter">{ t("general.working-schedule") }</Label>
         <FilterButtons options={filter.schedule} callback={(filters: Array<string>) => handleActiveFilters(filters, 'schedule')}/>
       </div>
       <div>
-        <Label type="filter">{ t("filters.experience") }</Label>
+        <Label type="filter">{ t("general.experience") }</Label>
         <Range />
       </div>
     </Fragment>
@@ -160,7 +160,7 @@ const CardList:FC<CardListProps> = ({data}) => {
                 }
                 { 
                   // Print "Filter" or "Filters"
-                  t("filters.filter", {count: countFilters}) 
+                  t("general.filter", {count: countFilters}) 
                 }
               </Typography>
               {
@@ -194,14 +194,14 @@ const CardList:FC<CardListProps> = ({data}) => {
           }
         </div>
         <div className="load-more">
-          <Button secondary >{ t("filters.load-more") }</Button>
+          <Button secondary >{ t("general.load-more") }</Button>
         </div>
       </div>
       <Modal ref={modalRef} theme="grey" >
         <ModalBody>
           { renderFilters() }
           <div className="apply">
-            <Button primary size="large">{ t("filters.apply") }</Button>
+            <Button primary size="large">{ t("general.apply") }</Button>
           </div>
         </ModalBody>
       </Modal>

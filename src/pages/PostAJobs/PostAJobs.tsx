@@ -39,7 +39,7 @@ const PostAJobs:FC = () =>{
         />
       <div className="ui container">
         {/* Title */}
-        <Typography element="p" variant="body-s" className="label-required">*{t("form.required-information", {ns: namespaces.common})}</Typography>
+        <Typography element="p" variant="body-s" className="label-required">*{t("general.required-information", {ns: namespaces.common})}</Typography>
         <div className="row">
           {/* First Col */}
           <div className="col">
@@ -48,7 +48,7 @@ const PostAJobs:FC = () =>{
               <TextField 
                 element="input"
                 type="text"
-                label={t("form.position-offered", {ns: namespaces.common})}
+                label={t("general.position-offered", {ns: namespaces.common})}
                 htmlFor="position-offered"
                 required />
             </div>
@@ -56,7 +56,7 @@ const PostAJobs:FC = () =>{
             <div>
               <TextField 
                 element="textarea"
-                label={t("form.responsibilities", {ns: namespaces.common})}
+                label={t("general.responsibilities", {ns: namespaces.common})}
                 htmlFor="responsibilities"
                 required />
             </div>
@@ -65,68 +65,68 @@ const PostAJobs:FC = () =>{
               <TextField 
                 element="input"
                 type="text"
-                label={t("form.benefits", {ns: namespaces.common})}
+                label={t("general.benefits", {ns: namespaces.common})}
                 htmlFor="benefits" />
             </div>
             {/* Checkbox's Types of contract */}
             <div>
-              <Label type="form" required>{t("filters.type-of-contract", {ns: namespaces.common})}</Label>
+              <Label type="form" required>{t("general.type-of-contract", {ns: namespaces.common})}</Label>
               <div className="checkbox-container">
                 <div>
-                  <Checkbox label={t("form.permanent", {ns: namespaces.common})} />
-                  <Checkbox label={t("form.temporary", {ns: namespaces.common})} />
+                  <Checkbox label={t("general.permanent", {ns: namespaces.common})} />
+                  <Checkbox label={t("general.temporary", {ns: namespaces.common})} />
                 </div>
                 <div>
-                  <Checkbox label={t("form.freelance", {ns: namespaces.common})} />
-                  <Checkbox label={t("form.intership", {ns: namespaces.common})} />
+                  <Checkbox label={t("general.freelance", {ns: namespaces.common})} />
+                  <Checkbox label={t("general.intership", {ns: namespaces.common})} />
                 </div>
               </div>
             </div>
             {/* Checkbox's Fields */}
             <div>
-              <Label type="form" required>{t("filters.fields", {ns: namespaces.common})}</Label>
+              <Label type="form" required>{t("general.fields", {ns: namespaces.common})}</Label>
               <div className="checkbox-container">
                 <div>
-                  <Checkbox label={t("form.design", {ns: namespaces.common})} />
-                  <Checkbox label={t("form.development", {ns: namespaces.common})} />
-                  <Checkbox label={t("form.engineering", {ns: namespaces.common})} />
-                  <Checkbox label={t("form.modelling", {ns: namespaces.common})} />
+                  <Checkbox label={t("general.design", {ns: namespaces.common})} />
+                  <Checkbox label={t("general.development", {ns: namespaces.common})} />
+                  <Checkbox label={t("general.engineering", {ns: namespaces.common})} />
+                  <Checkbox label={t("general.modelling", {ns: namespaces.common})} />
                 </div>
                 <div>
-                  <Checkbox label={t("form.project-management", {ns: namespaces.common})} />
-                  <Checkbox label={t("form.marketing", {ns: namespaces.common})} />
-                  <Checkbox label={t("form.art-direction", {ns: namespaces.common})} />
-                  <Checkbox label={t("form.data-analytics", {ns: namespaces.common})} />
+                  <Checkbox label={t("general.project-management", {ns: namespaces.common})} />
+                  <Checkbox label={t("general.marketing", {ns: namespaces.common})} />
+                  <Checkbox label={t("general.art-direction", {ns: namespaces.common})} />
+                  <Checkbox label={t("general.data-analytics", {ns: namespaces.common})} />
                 </div>
               </div>
             </div>
             {/* Input Experience */}
             <div>
-              <Label type="form" required>{t("form.experience-required", {ns: namespaces.common})}</Label>
+              <Label type="form" required>{t("general.experience-required", {ns: namespaces.common})}</Label>
               <Range />
             </div>
             {/* Checkbox's Working schedule */}
             <div>
-              <Label type="form" required>{t("filters.working-schedule", {ns: namespaces.common})}</Label>
+              <Label type="form" required>{t("general.working-schedule", {ns: namespaces.common})}</Label>
               <div className="checkbox-inline">
-                <Checkbox label={t("form.full-time", {ns: namespaces.common})} />
-                <Checkbox label={t("form.part-time", {ns: namespaces.common})} />
-                <Checkbox label={t("form.per-hour", {ns: namespaces.common})} />
+                <Checkbox label={t("general.full-time", {ns: namespaces.common})} />
+                <Checkbox label={t("general.part-time", {ns: namespaces.common})} />
+                <Checkbox label={t("general.per-hour", {ns: namespaces.common})} />
               </div>
             </div>
             {/* Input Salary */}
             <div>
-              <Label type="form">{t("form.salary", {ns: namespaces.common})}</Label>
+              <Label type="form">{t("general.salary", {ns: namespaces.common})}</Label>
               <div className="salary">
                 <TextField 
                   element="input"
                   type="text"
-                  label={t("form.from", {ns: namespaces.common})}
+                  label={t("general.from", {ns: namespaces.common})}
                   htmlFor="from" />
                 <TextField 
                   element="input"
                   type="text"
-                  label={t("form.to", {ns: namespaces.common})}
+                  label={t("general.to", {ns: namespaces.common})}
                   htmlFor="to" />
                 <Dropdown text="USD" direction="left">
                   <Dropdown.Menu>
@@ -144,7 +144,7 @@ const PostAJobs:FC = () =>{
             </div>
             {/* Select Start date */}
             <div>
-              <Label type="form">{t("form.start-date", {ns: namespaces.common})}</Label>
+              <Label type="form">{t("general.start-date", {ns: namespaces.common})}</Label>
               <div className="start-date">
                 <Dropdown text="September" direction="right">
                   <Dropdown.Menu>
@@ -178,7 +178,7 @@ const PostAJobs:FC = () =>{
               <TextField 
                 element="input"
                 type="text"
-                label={t("form.organization", {ns: namespaces.common})}
+                label={t("general.organization", {ns: namespaces.common})}
                 htmlFor="project-name"
                 required />
             </div>
@@ -187,7 +187,7 @@ const PostAJobs:FC = () =>{
               <TextField 
                 element="input"
                 type="email"
-                label={t("form.email", {ns: namespaces.common})}
+                label={t("general.email", {ns: namespaces.common})}
                 htmlFor="email"
                 required />
             </div>
@@ -195,16 +195,16 @@ const PostAJobs:FC = () =>{
             <div>
               <TextField 
                 element="textarea"
-                label={t("form.about", {ns: namespaces.common})}
+                label={t("general.about", {ns: namespaces.common})}
                 htmlFor="about"
                 required />
             </div>
             {/* Input logo */}
             <div className="project-logo">
-              <Label type="form">{t("form.company", {ns: namespaces.common})}</Label>
-              <Typography variant="body-s" element="p" className="recomended">{t("form.recomended-size", {ns: namespaces.common})}</Typography>
+              <Label type="form">{t("general.company", {ns: namespaces.common})}</Label>
+              <Typography variant="body-s" element="p" className="recomended">{t("general.recomended-size", {ns: namespaces.common})}</Typography>
               { updateFile && <File title="CompanyLogo.png" className="companyLogo" /> }
-              <Button secondary className="btn-upload" onClick={() => setUploadFile(!updateFile)}>{t("form.upload-logo", {ns: namespaces.common})}</Button>
+              <Button secondary className="btn-upload" onClick={() => setUploadFile(!updateFile)}>{t("general.upload-logo", {ns: namespaces.common})}</Button>
             </div>
           </div>
         </div>
