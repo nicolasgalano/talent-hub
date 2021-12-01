@@ -2,9 +2,12 @@ import React, { FC } from 'react'
 
 // Files
 import './Single.scss';
-import { flordaniele } from '../../../assets/images';
+import { flordaniele, gallery } from '../../../assets/images';
 import { useTranslation } from 'react-i18next';
 import { namespaces } from '../../../i18n/i18n.constants';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 
 // Custom component
 import Typography from '../Typography/Typography';
@@ -17,6 +20,7 @@ export type SingleProfileType = {
   email: string;
   portfolio: string;
   linkedin: string;
+  gallery?: Array<string>;
   // Common
   company_project_candidate: string;
   image?: string;
@@ -33,9 +37,13 @@ interface SingleProfileProps {
 const SingleProfile:FC <SingleProfileProps> = ({data}) => {
   const { t } = useTranslation(namespaces.common);
 
-  // we get the name of the URL to use in the title of About
-  let path = window.location.pathname;
-  path = path.split('/').at(-1);
+  const settings = {
+    slidesToShow: 1,
+    infinite: true,
+    touchThreshold: 20,
+    dots: true,
+    autoplay: true,
+  };
 
   return (
     <div id="job-details">
@@ -43,7 +51,7 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
       <div className="extract">
         {
           data.image &&
-            <div className="company-or-project">
+            <div className="company-or-project desktop">
               <img src={flordaniele} alt="logo" />
               <Typography variant="heading-xxs" element="h2">
                 {data.profession_job_name}
@@ -82,6 +90,40 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
                 </Link>
               </div>
           }
+          {
+            (data.gallery && data.type_of_contract) &&
+              <div>
+                {/* Type of contract */}
+                <Label type="review">{t("general.type-of-contract")}</Label>
+                <Typography variant="body-l" element="p">
+                  {data.type_of_contract}
+                </Typography>
+              </div>
+          }
+          {
+            (data.gallery && data.workgin_shedule) &&
+              <div>
+                {/* Working schedule */}
+                <Label type="review">{t("general.working-schedule")}</Label>
+                <Typography variant="body-l" element="p">
+                  {data.workgin_shedule}
+                </Typography>
+              </div>
+          }
+          {
+            (data.gallery && data.fields) &&
+              <div>
+                {/* Field */}
+                <Label type="review">Field</Label>
+                <div className="fields">
+                {
+                  data.fields.map((field) => (
+                    <Tag>{field}</Tag>
+                  ))
+                }
+                </div>
+              </div>
+          }
         </div>
       </div>
       {/* Bio */}
@@ -89,6 +131,15 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
         <Typography variant="heading-m" element="h1">
           { data.company_project_candidate }
         </Typography>
+        {
+          data.image &&
+            <div className="company-or-project mobile">
+              <img src={flordaniele} alt="logo" />
+              <Typography variant="heading-xxs" element="h2">
+                {data.profession_job_name}
+              </Typography>
+            </div>
+        }
         {
           !data.image &&
             <Typography variant="heading-xxs" element="h2" className="profession">
@@ -105,45 +156,59 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
               </Typography>
             </>
         }
+        {
+          data.gallery &&
+            <Slider className="slide-gallery" {...settings}>
+              {/* TODO: Only for testing porpuse */}
+              <img src={gallery} alt="gallery-1" />
+              <img src={gallery} alt="gallery-2" />
+              <img src={gallery} alt="gallery-3" />
+              <img src={gallery} alt="gallery-4" />
+              <img src={gallery} alt="gallery-5" />
+            </Slider>
+        }
         {/* Template Grid */}
-          <div className="more-info">
-            {
-              data.type_of_contract &&
-                <div>
-                  {/* Type of contract */}
-                  <Label type="review">{t("general.type-of-contract")}</Label>
-                  <Typography variant="body-l" element="p">
-                    {data.type_of_contract}
-                  </Typography>
-                </div>
-            }
-            {
-              data.workgin_shedule &&
-                <div>
-                  {/* Working schedule */}
-                  <Label type="review">{t("general.working-schedule")}</Label>
-                  <Typography variant="body-l" element="p">
-                    {data.workgin_shedule}
-                  </Typography>
-                </div>
-            }
-            {
-              data.fields &&
-                <div>
-                  {/* Field */}
-                  <Label type="review">Field</Label>
-                  <div className="fields">
-                  {
-                    data.fields.map((field) => (
-                      <Tag>{field}</Tag>
-                    ))
-                  }
+        {
+          !data.gallery &&
+            <div className="more-info">
+              {
+                data.type_of_contract &&
+                  <div>
+                    {/* Type of contract */}
+                    <Label type="review">{t("general.type-of-contract")}</Label>
+                    <Typography variant="body-l" element="p">
+                      {data.type_of_contract}
+                    </Typography>
                   </div>
-                </div>
-            }
-          </div>
+              }
+              {
+                data.workgin_shedule &&
+                  <div>
+                    {/* Working schedule */}
+                    <Label type="review">{t("general.working-schedule")}</Label>
+                    <Typography variant="body-l" element="p">
+                      {data.workgin_shedule}
+                    </Typography>
+                  </div>
+              }
+              {
+                data.fields &&
+                  <div>
+                    {/* Field */}
+                    <Label type="review">Field</Label>
+                    <div className="fields">
+                    {
+                      data.fields.map((field) => (
+                        <Tag>{field}</Tag>
+                      ))
+                    }
+                    </div>
+                  </div>
+              }
+            </div>
+        }
       </div>
-      <hr className="divider" />
+      { !data.gallery && <hr className="divider" /> }
     </div>
   )
 }

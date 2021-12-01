@@ -11,6 +11,7 @@ import './PostAJobs.scss';
 import { openings2 } from '../../assets/illustrations'
 import { useTranslation } from 'react-i18next';
 import { namespaces } from '../../i18n/i18n.constants';
+import dataModal from '../../data/single.json';
 
 // UI Custom Component
 import TextField from "../../components/common/TextField/TextField";
@@ -20,7 +21,7 @@ import Range from "../../components/common/Range/Range";
 import HeroPost from '../../components/common/HeroPost/HeroPost';
 import File from '../../components/common/File/File';
 import Modal, { ModalBody, ModalFooter, ModalHandle, ModalHeader } from "../../components/common/Modal/Modal";
-import Single from "../../components/common/Single/Single";
+import SingleOrganizationAndProject from "../../components/common/Single/SingleOrganizationAndProject";
 
 const PostAJobs:FC = () =>{
   const { t } = useTranslation([namespaces.pages.postajob, namespaces.common]);
@@ -227,7 +228,7 @@ const PostAJobs:FC = () =>{
       <Modal theme="light" ref={modalRef}>
         <ModalHeader>Review your job</ModalHeader>
         <ModalBody className="review-job">
-          <Single />
+          <SingleOrganizationAndProject data={dataModal.organization} />
         </ModalBody>
         <ModalFooter>
           <Button secondary onClick={() => handleCloseModal()}>Edit</Button>

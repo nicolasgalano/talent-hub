@@ -22,6 +22,9 @@ const ProfileDetails: FC = () => {
     case 'withoutphoto':
       doc = detailData.candidate_without_photo
       break;
+    case 'withgallery':
+      doc = detailData.candidate_with_gallery
+      break;
     default:
       doc = detailData.candidate_with_photo
       break;
