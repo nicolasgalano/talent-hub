@@ -1,20 +1,16 @@
 @import '../../../assets/scss/utils/Consts.scss';
 @import '../../../assets/scss/utils/Mixins.scss';
 
-#job-details{
-  display: flex;
+.single{
+  display: grid;
+  grid-template-columns: 352px 1fr;
   gap: 32px;
   @include media-breakpoint-down(md){
-    flex-direction: column;
-    gap: 0;
+    grid-template-columns: 1fr;
   }
   .extract{
-    flex: 0 0 auto;
-    width: auto;
-    min-width: 352px;
     margin-top: 4px;
     @include media-breakpoint-down(md){
-      min-width: unset;
       order: 3;
     }
     .feature{
@@ -30,9 +26,6 @@
     }
   }
   .bio{
-    width: 100%;
-    max-width: 736px;
-    display: block;
     @include media-breakpoint-down(md){
       order: 1;
     }
@@ -45,6 +38,14 @@
     .profession{
       margin-top: -36px;
       margin-bottom: 33px;
+      @include media-breakpoint-down(md){
+        margin-top: 11px;
+        margin-bottom: 47px;
+      }
+      @include media-breakpoint-down(xs){
+        margin-top: 4px;
+        margin-bottom: 40px;
+      }
     }
     p{
       margin-bottom: 56px;
@@ -165,18 +166,27 @@
     }
   }
   .divider{
-    display: none;
     width: 100%;
     height: 0px;
     margin: -19px 0 -12px;
     border: 0;
     border-top: 1px solid #E0E0E2;
     @include media-breakpoint-down(md){
-      display: block;
       order: 2;
     }
     @include media-breakpoint-down(xs){
       margin: -16px 0 -12px;
+    }
+  }
+  &.single-profile{
+    @include media-breakpoint-down(md){
+      gap: 0;
+    }
+    .divider{
+      display: none;
+      @include media-breakpoint-down(md){
+        display: block;
+      }
     }
   }
 }

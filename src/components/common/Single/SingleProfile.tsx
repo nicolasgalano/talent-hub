@@ -45,8 +45,47 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
     autoplay: true,
   };
 
+  const renderMoreInfo = () => (
+    <>
+      {
+        data.type_of_contract &&
+          <div>
+            {/* Type of contract */}
+            <Label type="review">{t("general.type-of-contract")}</Label>
+            <Typography variant="body-l" element="p">
+              {data.type_of_contract}
+            </Typography>
+          </div>
+      }
+      {
+        data.workgin_shedule &&
+          <div>
+            {/* Working schedule */}
+            <Label type="review">{t("general.working-schedule")}</Label>
+            <Typography variant="body-l" element="p">
+              {data.workgin_shedule}
+            </Typography>
+          </div>
+      }
+      {
+        data.fields &&
+          <div>
+            {/* Field */}
+            <Label type="review">Field</Label>
+            <div className="fields">
+            {
+              data.fields.map((field) => (
+                <Tag>{field}</Tag>
+              ))
+            }
+            </div>
+          </div>
+      }
+    </>
+  );
+
   return (
-    <div id="job-details">
+    <div className="single single-profile">
       {/* Extract / Sidebar */}
       <div className="extract">
         {
@@ -91,38 +130,7 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
               </div>
           }
           {
-            (data.gallery && data.type_of_contract) &&
-              <div>
-                {/* Type of contract */}
-                <Label type="review">{t("general.type-of-contract")}</Label>
-                <Typography variant="body-l" element="p">
-                  {data.type_of_contract}
-                </Typography>
-              </div>
-          }
-          {
-            (data.gallery && data.workgin_shedule) &&
-              <div>
-                {/* Working schedule */}
-                <Label type="review">{t("general.working-schedule")}</Label>
-                <Typography variant="body-l" element="p">
-                  {data.workgin_shedule}
-                </Typography>
-              </div>
-          }
-          {
-            (data.gallery && data.fields) &&
-              <div>
-                {/* Field */}
-                <Label type="review">Field</Label>
-                <div className="fields">
-                {
-                  data.fields.map((field) => (
-                    <Tag>{field}</Tag>
-                  ))
-                }
-                </div>
-              </div>
+            data.gallery && renderMoreInfo()
           }
         </div>
       </div>
@@ -168,47 +176,13 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
             </Slider>
         }
         {/* Template Grid */}
-        {
-          !data.gallery &&
+        { 
+          !data.gallery && 
             <div className="more-info">
-              {
-                data.type_of_contract &&
-                  <div>
-                    {/* Type of contract */}
-                    <Label type="review">{t("general.type-of-contract")}</Label>
-                    <Typography variant="body-l" element="p">
-                      {data.type_of_contract}
-                    </Typography>
-                  </div>
-              }
-              {
-                data.workgin_shedule &&
-                  <div>
-                    {/* Working schedule */}
-                    <Label type="review">{t("general.working-schedule")}</Label>
-                    <Typography variant="body-l" element="p">
-                      {data.workgin_shedule}
-                    </Typography>
-                  </div>
-              }
-              {
-                data.fields &&
-                  <div>
-                    {/* Field */}
-                    <Label type="review">Field</Label>
-                    <div className="fields">
-                    {
-                      data.fields.map((field) => (
-                        <Tag>{field}</Tag>
-                      ))
-                    }
-                    </div>
-                  </div>
-              }
+              { renderMoreInfo() }
             </div>
         }
       </div>
-      { !data.gallery && <hr className="divider" /> }
     </div>
   )
 }

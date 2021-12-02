@@ -188,7 +188,7 @@ const CardList:FC<CardListProps> = ({data}) => {
                   description={doc.description}
                   date={doc.date}
                   location={doc.location}
-                  to="#"
+                  to={doc.to}
                   key={`card-doc-${key}`}/>
               ))
           }

@@ -39,7 +39,7 @@ const SingleOrganizationAndProject:FC <SingleOrganizationAndProjectProps> = ({da
   path = path.split('/').at(-1);
 
   return (
-    <div id="job-details">
+    <div className="single">
       {/* Extract / Sidebar */}
       <div className="extract">
         <div className="company-or-project">
