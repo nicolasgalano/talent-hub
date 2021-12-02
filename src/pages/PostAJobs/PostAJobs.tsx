@@ -53,12 +53,12 @@ const PostAJobs:FC = () =>{
                 htmlFor="position-offered"
                 required />
             </div>
-            {/* Textarea Responsibilities */}
+            {/* Textarea responsabilities */}
             <div>
               <TextField 
                 element="textarea"
-                label={t("general.responsibilities", {ns: namespaces.common})}
-                htmlFor="responsibilities"
+                label={t("general.responsabilities", {ns: namespaces.common})}
+                htmlFor="responsabilities"
                 required />
             </div>
             {/* Benefits */}
