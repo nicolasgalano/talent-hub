@@ -5,7 +5,8 @@
     "company": "Digibox project",
     "description": "We’re looking for someone with at least 3 years of experience with Python and PHP to join our team. Advanced english is required. Salary in euros.",
     "date": "4 days ago",
-    "location": "remote"
+    "location": "remote",
+    "to": "./job/organization"
   },
   {
     "title": "Ssr. UX Designer",
@@ -13,13 +14,41 @@
     "company": "Lexus",
     "description": "Are you a UX Designer with experience in the fintech field? we’re looking for you! Applications without a portfolio won’t be taken into consideration.",
     "date": "2 days ago",
-    "location": "Miami, USA"
+    "location": "Miami, USA",
+    "to": "./job/project"
   },
   {
     "title": "Project Manager",
     "company": "Ruelle",
     "description": "We’re a creative agency dedicated mainly to the gaming industry. We need a PM who has experience handling projects for the europan market. An advance level of spanish is a plus.",
     "date": "5 days ago",
-    "location": "Madrid, Spain"
+    "location": "Madrid, Spain",
+    "to": "./job/organization"
+  },
+  {
+    "title": "Sr. Back-end dev",
+    "img": "https://picsum.photos/id/1005/120/120",
+    "company": "Digibox project",
+    "description": "We’re looking for someone with at least 3 years of experience with Python and PHP to join our team. Advanced english is required. Salary in euros.",
+    "date": "4 days ago",
+    "location": "remote",
+    "to": "./job/organization"
+  },
+  {
+    "title": "Ssr. UX Designer",
+    "img": "https://picsum.photos/id/1024/120/120",
+    "company": "Lexus",
+    "description": "Are you a UX Designer with experience in the fintech field? we’re looking for you! Applications without a portfolio won’t be taken into consideration.",
+    "date": "2 days ago",
+    "location": "Miami, USA",
+    "to": "./job/project"
+  },
+  {
+    "title": "Project Manager",
+    "company": "Ruelle",
+    "description": "We’re a creative agency dedicated mainly to the gaming industry. We need a PM who has experience handling projects for the europan market. An advance level of spanish is a plus.",
+    "date": "5 days ago",
+    "location": "Madrid, Spain",
+    "to": "./job/organization"
   }
 ]

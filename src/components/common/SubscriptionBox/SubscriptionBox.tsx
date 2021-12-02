@@ -1,9 +1,7 @@
 import { FC, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Input } from 'semantic-ui-react'
 import { Button } from 'decentraland-ui/dist/components/Button/Button';
 import { subscriptionSuccess, subscriptionMailbox } from '../../../assets/illustrations';
-import { namespaces } from '../../../i18n/i18n.constants';
 import Typography from '../Typography/Typography';
 
 import './SubscriptionBox.scss';
@@ -22,7 +20,6 @@ interface Subscription {
 }
 
 const SubscriptionBox:FC<SubscriptionBoxProps> = ({title, description, thankyou_title, thankyou_description, placeholder, buttonText}) => {
-  const { t } = useTranslation(namespaces.common);
 
   const [subscription, setSubscription] = useState<Subscription>({success: false});
   const onClick = () => setSubscription({ success: true });

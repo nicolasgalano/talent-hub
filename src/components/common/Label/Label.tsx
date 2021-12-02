@@ -23,7 +23,7 @@ type variantsMappingType = {
 
 const variantsMapping: variantsMappingType = {
   form: "body-l",
-  review: "body-s",
+  review: "body-xl",
   filter: "label",
 };
 

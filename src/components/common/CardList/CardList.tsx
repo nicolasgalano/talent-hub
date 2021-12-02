@@ -17,7 +17,7 @@ import { namespaces } from "../../../i18n/i18n.constants";
 import Typography from "../Typography/Typography";
 import Card, { CardProps } from "../Card/Card";
 import Dropdown from "../Dropdown/Dropdown";
-import Modal, { ModalHandle } from "../Modal/Modal";
+import Modal, { ModalBody, ModalHandle } from "../Modal/Modal";
 import { useWindowSize } from "../../hooks/useWindowsSize";
 import Range from "../Range/Range";
 import Label from "../Label/Label";
@@ -85,19 +85,19 @@ const CardList:FC<CardListProps> = ({data}) => {
   const renderFilters = () => (
     <Fragment>
       <div>
-        <Label type="filter">{ t("filters.field") }</Label>
+        <Label type="filter">{ t("general.field") }</Label>
         <FilterButtons options={filter.field} callback={(filters: Array<string>) => handleActiveFilters(filters, 'field')}/>
       </div>
       <div>
-        <Label type="filter">{ t("filters.type-of-contract") }</Label>
+        <Label type="filter">{ t("general.type-of-contract") }</Label>
         <FilterButtons options={filter.contract} callback={(filters: Array<string>) => handleActiveFilters(filters, 'contract')}/>
       </div>
       <div>
-        <Label type="filter">{ t("filters.working-schedule") }</Label>
+        <Label type="filter">{ t("general.working-schedule") }</Label>
         <FilterButtons options={filter.schedule} callback={(filters: Array<string>) => handleActiveFilters(filters, 'schedule')}/>
       </div>
       <div>
-        <Label type="filter">{ t("filters.experience") }</Label>
+        <Label type="filter">{ t("general.experience") }</Label>
         <Range />
       </div>
     </Fragment>
@@ -160,7 +160,7 @@ const CardList:FC<CardListProps> = ({data}) => {
                 }
                 { 
                   // Print "Filter" or "Filters"
-                  t("filters.filter", {count: countFilters}) 
+                  t("general.filter", {count: countFilters}) 
                 }
               </Typography>
               {
@@ -188,20 +188,22 @@ const CardList:FC<CardListProps> = ({data}) => {
                   description={doc.description}
                   date={doc.date}
                   location={doc.location}
-                  to="#"
+                  to={doc.to}
                   key={`card-doc-${key}`}/>
               ))
           }
         </div>
         <div className="load-more">
-          <Button secondary >{ t("filters.load-more") }</Button>
+          <Button secondary >{ t("general.load-more") }</Button>
         </div>
       </div>
       <Modal ref={modalRef} theme="grey" >
-        { renderFilters() }
-        <div className="apply">
-          <Button primary size="large">{ t("filters.apply") }</Button>
-        </div>
+        <ModalBody>
+          { renderFilters() }
+          <div className="apply">
+            <Button primary size="large">{ t("general.apply") }</Button>
+          </div>
+        </ModalBody>
       </Modal>
     </Fragment>
   );

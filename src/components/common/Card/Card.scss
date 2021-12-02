@@ -3,14 +3,11 @@
 
 .card{
   display: flex;
-  padding: 33px 32px;
+  padding: 24px 32px;
   border: 1.26471px solid rgba(0, 0, 0, 0.04);
   box-shadow: 0px 1.94878px 3.89756px rgba(0, 0, 0, 0.08);
   border-radius: 8px;
   overflow: hidden;
-  @include media-breakpoint-down(xl){
-    padding: 24px 32px;
-  }
   > a {
     display: flex;
     flex-direction: column;

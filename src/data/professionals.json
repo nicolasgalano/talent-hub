@@ -3,17 +3,40 @@
     "title": "Paul Leroy",
     "img": "https://picsum.photos/id/1/120/120",
     "location": "Paris, France",
-    "description": "I’m Motion Designer with 6 years of experience in big companies in the advertising industry and 8 as a freelancer."
+    "description": "I’m Motion Designer with 6 years of experience in big companies in the advertising industry and 8 as a freelancer.",
+    "to": "./professional/withphoto"
   },
   {
     "title": "Martin Morales",
     "location": "Barcelona, Spain",
-    "description": "I’m a UX Designer with experience as an independent usability consultant. I worked for small and medium companies in the tech sector."
+    "description": "I’m a UX Designer with experience as an independent usability consultant. I worked for small and medium companies in the tech sector.",
+    "to": "./professional/withoutphoto"
   },
   {
     "title": "Ashley Jones",
     "img": "https://picsum.photos/id/1010/120/120",
     "location": "San Francisco, USA",
-    "description": "I’m a Front-End dev with 3 years of experience in Javascript and React. I’ve built android apps and websites. I’m open to freelance and remote jobs."
+    "description": "I’m a Front-End dev with 3 years of experience in Javascript and React. I’ve built android apps and websites. I’m open to freelance and remote jobs.",
+    "to": "./professional/withgallery"
+  },
+  {
+    "title": "Paul Leroy",
+    "img": "https://picsum.photos/id/1/120/120",
+    "location": "Paris, France",
+    "description": "I’m Motion Designer with 6 years of experience in big companies in the advertising industry and 8 as a freelancer.",
+    "to": "./professional/withphoto"
+  },
+  {
+    "title": "Martin Morales",
+    "location": "Barcelona, Spain",
+    "description": "I’m a UX Designer with experience as an independent usability consultant. I worked for small and medium companies in the tech sector.",
+    "to": "./professional/withoutphoto"
+  },
+  {
+    "title": "Ashley Jones",
+    "img": "https://picsum.photos/id/1010/120/120",
+    "location": "San Francisco, USA",
+    "description": "I’m a Front-End dev with 3 years of experience in Javascript and React. I’ve built android apps and websites. I’m open to freelance and remote jobs.",
+    "to": "./professional/withgallery"
   }
 ]

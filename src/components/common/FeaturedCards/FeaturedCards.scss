@@ -20,10 +20,8 @@
   .slide-cards{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    column-gap: 44px;
-    @include media-breakpoint-down(xl){
-      column-gap: 32px;
-    }
+    column-gap: 32px;
+    row-gap: 24px;
     @include media-breakpoint-down(lg){
       display: flex;
       .slick-list{
@@ -38,10 +36,13 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      row-gap: 24px;
       .card{
         width: 100%;
         max-width: 380px;
+        &:nth-child(odd){
+          // TODO: Only for testing porpuse
+          display: none;
+        }
       }
     }
   }
