@@ -2,9 +2,10 @@ import Home from "../pages/Home/Home";
 import JobDetails from "../pages/JobDetails/JobDetails";
 import Openings from "../pages/Openings/Openings";
 import PostAJobs from "../pages/PostAJobs/PostAJobs";
-import Success from "../pages/PostajobSuccess/PostajobSuccess";
 import ProfileDetails from "../pages/ProfileDetails/ProfileDetails";
 import Professionals from "../pages/Professionals/Professionals";
+import PostajobSuccess from "../pages/PostajobSuccess/PostajobSuccess";
+import JobDetailsSuccess from "../pages/JobDetailsSuccess/JobDetailsSuccess";
 
 export interface RouteInterface {
   path: string;
@@ -36,7 +37,7 @@ const openingsRoutes: RouteInterface = {
     {
       path: '/openings/post-a-job/success',
       name: 'Success',
-      component: Success,
+      component: PostajobSuccess,
     },
   ]
 }
@@ -55,6 +56,11 @@ const jobsRoutes: RouteInterface = {
       path: '/job/project',
       name: 'Project',
       component: JobDetails,
+    },
+    {
+      path: '/job/success',
+      name: 'Success',
+      component: JobDetailsSuccess,
     },
   ]
 }
