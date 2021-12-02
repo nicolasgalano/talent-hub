@@ -14,6 +14,7 @@ import Typography from '../Typography/Typography';
 import Label from '../Label/Label';
 import Tag from '../Tag/Tag';
 import { Link } from 'react-router-dom';
+import { useWindowSize } from '../../hooks/useWindowsSize';
 
 export type SingleProfileType = {
   introduction: string;
@@ -36,6 +37,8 @@ interface SingleProfileProps {
 
 const SingleProfile:FC <SingleProfileProps> = ({data}) => {
   const { t } = useTranslation(namespaces.common);
+
+  const {width} = useWindowSize();
 
   const settings = {
     slidesToShow: 1,
@@ -130,7 +133,10 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
               </div>
           }
           {
-            data.gallery && renderMoreInfo()
+            // data.gallery && renderMoreInfo()
+          }
+          { 
+            width < 1024  && renderMoreInfo()
           }
         </div>
       </div>
@@ -177,7 +183,7 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
         }
         {/* Template Grid */}
         { 
-          !data.gallery && 
+          (!data.gallery && width >= 1024 ) &&
             <div className="more-info">
               { renderMoreInfo() }
             </div>
