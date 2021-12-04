@@ -1,0 +1,60 @@
+@import '../../../assets/scss/utils/Consts.scss';
+@import '../../../assets/scss/utils/Mixins.scss';
+
+#succes {
+  .illustration {
+    text-align: center;
+    background: $color-grey-300;
+    width: 100%;
+    img {
+      width: 438px;
+      padding: 20px;
+      @include media-breakpoint-down(md) { 
+        width: 275px;
+      }
+      @include media-breakpoint-down(xs) { 
+        width: 262px;
+      }
+    }
+  }
+  .info {
+    margin: 72px 0 104px 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .title { 
+      font-weight: 400;
+      font-size: 34px;
+      line-height: 42px;
+      @include media-breakpoint-down(md) { 
+        font-weight: 400;
+        font-size: 34px;
+        line-height: 42px;
+      }
+      @include media-breakpoint-down(xs) { 
+        font-weight: 400;
+      }
+    }
+    .description {
+      width: 544px;
+      margin: 24px 0 32px 0;
+      font-weight: 600;
+      font-size: 17px;
+      line-height: 26px;
+      @include media-breakpoint-down(md) { 
+        margin-bottom:40px;
+        width: 418px;
+        font-weight: 600;
+        font-size: 15px;
+        line-height: 24px;
+      }
+      @include media-breakpoint-down(xs) { 
+        margin-bottom:32px;
+        width: 343px;
+        
+      }
+      
+    }
+  }
+}

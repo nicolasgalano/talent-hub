@@ -1,6 +1,11 @@
 import Home from "../pages/Home/Home";
+import JobDetails from "../pages/JobDetails/JobDetails";
 import Openings from "../pages/Openings/Openings";
+import PostAJobs from "../pages/PostAJobs/PostAJobs";
+import ProfileDetails from "../pages/ProfileDetails/ProfileDetails";
 import Professionals from "../pages/Professionals/Professionals";
+import PostajobSuccess from "../pages/PostajobSuccess/PostajobSuccess";
+import JobDetailsSuccess from "../pages/JobDetailsSuccess/JobDetailsSuccess";
 
 export interface RouteInterface {
   path: string;
@@ -24,8 +29,15 @@ const openingsRoutes: RouteInterface = {
   exact: true,
   children: [
     {
-      path: '/openings/create',
+      path: '/openings/post-a-job',
       name: 'Post a job',
+      component: PostAJobs,
+      exact: true
+    },
+    {
+      path: '/openings/post-a-job/success',
+      name: 'Success',
+      component: PostajobSuccess,
     },
   ]
 }
@@ -38,10 +50,17 @@ const jobsRoutes: RouteInterface = {
     {
       path: '/job/organization',
       name: 'Organization',
+      component: JobDetails
     },
     {
       path: '/job/project',
       name: 'Project',
+      component: JobDetails,
+    },
+    {
+      path: '/job/success',
+      name: 'Success',
+      component: JobDetailsSuccess,
     },
   ]
 }
@@ -55,6 +74,21 @@ const professionalsRoutes: RouteInterface = {
     {
       path: '/professionals/create',
       name: 'Create a profile',
+    },
+    {
+      path: '/professional/withphoto',
+      name: 'Profile details with pic ',
+      component: ProfileDetails,
+    },
+    {
+      path: '/professional/withoutphoto',
+      name: 'Profile details without pic ',
+      component: ProfileDetails,
+    },
+    {
+      path: '/professional/withgallery',
+      name: 'Profile details with gallery ',
+      component: ProfileDetails,
     },
   ]
 }

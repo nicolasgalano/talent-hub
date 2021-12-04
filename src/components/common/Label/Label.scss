@@ -1,8 +1,35 @@
 @import '../../../assets/scss/utils/Consts.scss';
+@import '../../../assets/scss/utils/Mixins.scss';
 
-.label-filter{
-  color: $color-grey-400;
-  margin-top: 0px;
-  margin-bottom: 12px;
-  text-transform: uppercase;
+.label-component{
+  &-filter{
+    color: $color-grey-400;
+    margin-top: 0px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  &-form{
+    color: $color-grey-400;
+    display: flex;
+    width: 100%;
+    text-transform: unset;
+    &:hover {
+      cursor: text;
+    }
+  }
+  &-review{
+    font-weight: 600;
+    color: $color-primary;
+    display: block;
+    margin-top: 0px;
+    margin-bottom: 16px;
+    @include media-breakpoint-down(md){
+      font-size: 1.0625rem;
+      line-height: 1.625rem;
+      letter-spacing: -0.2px;
+    }
+  }
+  .required{
+    color: $color-primary;
+  }
 }

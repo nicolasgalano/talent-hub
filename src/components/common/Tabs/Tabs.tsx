@@ -33,7 +33,7 @@ const Tabs:FC<TabsProps> = ({dataTabs}) => {
         <div className="tabs">
           {
             dataTabs.options.map((data) => (
-              <Link to={data.to}>
+              <Link to={data.to} key={`tab-${data.title}`}>
                 <TabsDecentraland.Tab
                   active={ path === data.to }>
                   {data.title}

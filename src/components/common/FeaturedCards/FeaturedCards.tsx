@@ -38,7 +38,7 @@ const FeaturedCards: FC<FeaturedCardsProps> = ({title, action, to, data, classNa
         settings: "slick"
       },
       {
-        breakpoint: 641,
+        breakpoint: 640,
         settings: "unslick"
       }
     ]
@@ -69,7 +69,7 @@ const FeaturedCards: FC<FeaturedCardsProps> = ({title, action, to, data, classNa
               description={job.description}
               date={job.date}
               location={job.location}
-              to="#"
+              to={job.to}
               key={`featured-card-${index}`} />
           ))
         }

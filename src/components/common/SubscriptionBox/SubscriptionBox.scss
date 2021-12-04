@@ -6,7 +6,7 @@
   display: grid;
   grid-template-columns: 2fr 3fr;
   gap:0px;
-
+  text-align: center;
   @include media-breakpoint-down(md) {
     min-height: 0px;
     grid-template-columns: 1fr;
@@ -20,15 +20,19 @@
     align-items: center;
     background: linear-gradient(180deg, #AEF3E5 0%, #54D8BD 99.99%, #54D8BD 100%);
     border-radius: 8px 0px 0px 8px;
-
+    
     img{
-      width:100%;
+      width: 373px;
+      @include media-breakpoint-down(md) {
+        width: 400px;
+        border-radius: 8px 8px 0px 0px;
+        padding: 20px;
+      }
+      @include media-breakpoint-down(xs) {
+        width: 258px;
+        padding: 20px;
+      }
     }
-
-    @include media-breakpoint-down(md) {
-      border-radius: 8px 8px 0px 0px;
-    }
-
   }
 
   .info{
@@ -38,19 +42,19 @@
     padding:48px;
     background: #F3F2F5;
     border-radius: 0px 8px 8px 0px;
-
     .heading-s{
       margin-bottom:28px;
     }
     .body-xl{
       margin-bottom:28px;
       color: #736E7D;
+      margin-bottom: 84px;
     }
 
     @include media-breakpoint-down(md) {
 
       display: block;
-      padding: 64px 24px 32px;
+      padding: 64px 24px 116px;
       border-radius: 0px 0px 8px 8px;
 
       .heading-s{
@@ -66,7 +70,7 @@
 
     @include media-breakpoint-down(xs) {
 
-      padding: 32px 24px;
+      padding: 32px 32px 108px 24px;
 
     }
 

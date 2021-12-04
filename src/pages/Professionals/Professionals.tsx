@@ -5,13 +5,15 @@ import './Professionals.scss';
 import dataProfessionals from '../../data/professionals.json'
 import { useTranslation } from 'react-i18next';
 import { namespaces } from '../../i18n/i18n.constants';
+import { professionals3D } from '../../assets/illustrations';
 
 // UI Custom Component
 import CardList from '../../components/common/CardList/CardList';
 import Tabs from '../../components/common/Tabs/Tabs';
+import Hero from '../../components/common/Hero/Hero';
 
 const Professionals:FC = () => {
-  const { t } = useTranslation(namespaces.common);
+  const { t } = useTranslation([namespaces.common, namespaces.pages.professionals]);
 
   const dataTab = {
     options: [
@@ -34,6 +36,13 @@ const Professionals:FC = () => {
     <Fragment>
       <Tabs dataTabs={dataTab} />
       <div className="ui container">
+        <Hero
+          imgSrc={professionals3D}
+          title={t("hero.title", { ns: namespaces.pages.professionals})}
+          description={t("hero.description", { ns: namespaces.pages.professionals})}
+          to="/openings"
+          buttonText={t("hero.button", { ns: namespaces.pages.professionals})}
+          />
         <CardList data={dataProfessionals} />
       </div>
     </Fragment>

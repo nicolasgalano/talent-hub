@@ -6,7 +6,10 @@
   flex-wrap: wrap;
   column-gap: 8px;
   row-gap: 16px;
-  .button{
+  .ui.button{
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.125rem;
     min-width: unset;
     padding: 5px 16px;
     border-radius: 16px;

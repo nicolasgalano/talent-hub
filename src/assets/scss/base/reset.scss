@@ -1,13 +1,22 @@
 @import '../utils/Consts.scss';
 
-@media only screen and (min-width: 1200px){
+@media only screen and (max-width: 768px){
   .ui.container{
-    width: 1120px;
+    max-width: 480px !important;
+    width: 100% !important;
+    margin-right: auto !important;
+    margin-left: auto !important;
   }
 }
-@media only screen and (min-width: 1440px){
+@media only screen and (max-width: 640px){
   .ui.container{
-    width: 1348px;
+    width: calc(100% - 32px) !important;
+  }
+}
+
+@media only screen and (min-width: 1200px){
+  .ui.container{
+    width: 1124px;
   }
 }
 .ui.button{

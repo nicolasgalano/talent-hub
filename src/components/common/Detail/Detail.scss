@@ -1,0 +1,49 @@
+@import '../../../assets/scss/utils/Consts.scss';
+@import '../../../assets/scss/utils/Mixins.scss';
+
+#detail{
+  .back{
+    margin-top: 59px;
+    margin-bottom: 63px;
+    @include media-breakpoint-down(md){
+      margin-top: 29px;
+      margin-bottom: 37px;
+    }
+    .button{
+      font-weight: 600;
+      font-size: 0.8125rem;
+      line-height: 1.125rem;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+  }
+  .cta{
+    margin-bottom: 156px;
+    margin-left: 377px;
+    @include media-breakpoint-down(md){
+      margin-top: 64px;
+      margin-bottom: 228px;
+      margin-left: unset;
+    }
+    @include media-breakpoint-down(xs){
+      margin-top: 48px;
+      margin-bottom: 120px;
+    }
+    .button{
+      font-weight: 600;
+      font-size: 0.9375rem;
+      line-height: 1.5rem;
+      padding: 14px 36px;
+      min-width: 121px;
+      @include media-breakpoint-down(md){
+        display: flex;
+        width: 100%;
+        max-width: 343px;
+        justify-content: center;
+        margin-right: auto;
+        margin-left: auto;
+      }
+    }
+  }
+}

@@ -3,9 +3,13 @@
 
 .ui.dimmer{
   background-color: rgba(22, 20, 25, 0.25) !important;
+  .content{
+    background-color: transparent;
+  }
   .modal-theme-grey{
-    width: 100%;
+    width: calc(100% - 2rem);
     max-width: 440px;
+    background-color: $color-grey-300;
     border-radius: 8px;
     overflow: hidden;
     .content{
@@ -20,29 +24,112 @@
         width: 100%;
       }
     }
-  }
-  .ui.modal,
-   .ui.modal > .content,
-   .ui.modal > .header,
-   .ui.modal > .description,
-   .ui.modal > .actions,
-   .ui.modal > .ui.form > .content,
-   .ui.modal > .ui.form > .header,
-   .ui.modal > .ui.form > .description,
-   .ui.modal > .ui.form > .actions{
-    background-color: $color-grey-300;
-  }
-  .close-icon{
-    position: absolute;
-    right: 34px;
-    top: 25px;
-    padding: 10px;
-    &:hover{
-      cursor: pointer;
+    .close-icon{
+      position: absolute;
+      right: 34px;
+      top: 25px;
+      padding: 10px;
+      &:hover{
+        cursor: pointer;
+      }
+      @include media-breakpoint-down(xs){
+        right: 23px;
+        top: 23px;
+      }
     }
-    @include media-breakpoint-down(xs){
-      right: 23px;
-      top: 23px;
+  }
+  .modal-theme-light{
+    width: calc(100% - 160px);
+    max-width: 1280px;
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    overflow: hidden;
+    @include media-breakpoint-down(md){
+      width: calc(100% - 32px);
+      max-width: 480px;
+    }
+    .modal-header{
+      height: 112px;
+      display: flex;
+      align-items: center;
+      padding-left: 80px;
+      padding-right: 80px;
+      border-bottom: 1px solid #E0E0E2;
+      @include media-breakpoint-down(md){
+        height: 118px;
+        padding-left: 35px;
+        padding-right: 35px;
+      }
+      @include media-breakpoint-down(xs){
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+      h3{
+        color: $color-grey-700;
+      }
+    }
+    .content{
+      padding: 47px 80px 54px;
+      @include media-breakpoint-down(md){
+        padding: 33px 40px 48px;
+      }
+      @include media-breakpoint-down(xs){
+        padding-top: 33px !important;
+      }
+    }
+    .modal-footer{
+      height: 116px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 12px;
+      padding-left: 32px;
+      padding-right: 32px;
+      border-top: 1px solid #E0E0E2;
+      @include media-breakpoint-down(md){
+        height: unset;
+        margin-top: 32px;
+        margin-bottom: 64px;
+        flex-direction: column;
+        border-top: unset;
+        .button{
+          width: 100%;
+          max-width: 357px;
+          gap: 20px;
+          &:nth-child(1){
+            order: 2;
+          }
+          &:nth-child(2){
+            order: 1;
+          }
+        }
+      }
+      @include media-breakpoint-down(xs){
+        margin-top: 36px;
+        padding-left: 24px;
+        padding-right: 24px;
+        padding-bottom: 86px;
+      }
+    }
+    .close-icon{
+      width: 24px;
+      height: 24px;
+      position: absolute;
+      right: 34px;
+      top: 34px;
+      padding: 10px;
+      box-sizing: content-box;
+      &:hover{
+        cursor: pointer;
+      }
+      @include media-breakpoint-down(md){
+        width: 14px;
+        height: 14px;
+        right: 23px;
+        top: 23px;
+      }
     }
   }
 }
