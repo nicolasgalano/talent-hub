@@ -6,6 +6,7 @@ import ProfileDetails from "../pages/ProfileDetails/ProfileDetails";
 import Professionals from "../pages/Professionals/Professionals";
 import PostajobSuccess from "../pages/PostajobSuccess/PostajobSuccess";
 import JobDetailsSuccess from "../pages/JobDetailsSuccess/JobDetailsSuccess";
+import JobDetailsContact from "../pages/JobDetailsContact/JobDetailsContact";
 
 export interface RouteInterface {
   path: string;
@@ -61,6 +62,11 @@ const jobsRoutes: RouteInterface = {
       path: '/job/success',
       name: 'Success',
       component: JobDetailsSuccess,
+    },
+    {
+      path: '/job/contact',
+      name: 'Contact',
+      component: JobDetailsContact,
     },
   ]
 }
