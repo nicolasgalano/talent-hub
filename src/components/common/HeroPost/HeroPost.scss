@@ -3,25 +3,30 @@
 
 .gridContent {
   width: 100%;
-  background: $color-grey-300;
+  background-color: $color-grey-300;
   .heroPost {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    align-items: center;
+    height: 452px;
     @include media-breakpoint-down(md) {
       flex-direction: column;
       align-items: center;
+      flex-wrap: nowrap;
+      height: auto;
     }
     .info {
       flex: 0 0 auto;
       width: 66%;
       max-width: 734px;
-      margin-top: 132px;
+      margin-top: 3px;
       @include media-breakpoint-down(md) {
-        margin: 25px 80px 0 80px;
+        width: 100%;
+        margin-top: 21px;
       }
       @include media-breakpoint-down(xs) {
-        margin: 22.5px 0 33px 0;
+        margin-bottom: 33px;
       }
       .button {
         padding: 0;
@@ -44,6 +49,7 @@
       .description {
         font-size: 21px;
         line-height: 30px;
+        color: $color-grey-400;
         @include media-breakpoint-down(md) {
           font-size: 17px;
           line-height: 26px;
@@ -53,18 +59,44 @@
     .illustration{
       flex: 0 0 auto;
       width: auto;
+      margin-right: -48px;
+      @include media-breakpoint-down(md) {
+        margin-right: unset;
+      }
       img {
         width: 100%;
         max-width: 320px;
         height: auto;
-        margin: 17px 0  36px 0;
+        margin-bottom: 19px;
         @include media-breakpoint-down(md) {
-          margin: 48px 0  27px 0;
+          margin-top: 48px;
+          margin-bottom: 27px;
         }
         @include media-breakpoint-down(xs) {
-          width: 200px;
-          margin: 0 0 20px 0;
+          max-width: 200px;
+          margin-top: 0;
+          margin-bottom: 20px;
         }
+      }
+    }
+  }
+  &.withoutImg{
+    background-color: $color-white;
+    .heroPost {
+      display: block;
+      flex-wrap: unset;
+      justify-content: unset;
+      align-items: unset;
+      height: auto;
+      margin-top: 80px;
+      margin-bottom: 72px;
+      @include media-breakpoint-down(md) {
+        margin-top: 29px;
+        margin-bottom: 64px;
+      }
+      @include media-breakpoint-down(xs) {
+        margin-top: 21px;
+        margin-bottom: 48px;
       }
     }
   }
