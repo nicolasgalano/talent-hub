@@ -22,13 +22,17 @@ import HeroPost from '../../components/common/HeroPost/HeroPost';
 import File from '../../components/common/File/File';
 import Modal, { ModalBody, ModalFooter, ModalHandle, ModalHeader } from "../../components/common/Modal/Modal";
 import SingleOrganizationAndProject from "../../components/common/Single/SingleOrganizationAndProject";
+import { useHistory } from "react-router";
 
 const PostAJobs:FC = () =>{
   const { t } = useTranslation([namespaces.pages.postajob, namespaces.common]);
   const [updateFile, setUploadFile] = useState(false);
   const modalRef = useRef<ModalHandle>(null);
+  const history = useHistory();
 
   const handleCloseModal = () => modalRef.current.closeModal();
+
+  const handleSubmit = () => history.push('/openings/post-a-job/success');
 
   return(
     <div id="post-a-job">
@@ -214,7 +218,8 @@ const PostAJobs:FC = () =>{
         <div className="actions">
           <Button 
             disabled={!updateFile}
-            primary >
+            primary 
+            onClick={() => handleSubmit()}>
               {t("buttons.submit", {ns: namespaces.common})}
           </Button>
           <Button 
@@ -232,7 +237,7 @@ const PostAJobs:FC = () =>{
         </ModalBody>
         <ModalFooter>
           <Button secondary onClick={() => handleCloseModal()}>Edit</Button>
-          <Button primary onClick={() => handleCloseModal()}>Submit</Button>
+          <Button primary onClick={() => handleSubmit()}>Submit</Button>
         </ModalFooter>
       </Modal>
     </div>
