@@ -69,12 +69,12 @@
       }
     }
     .content{
-      padding: 47px 80px 54px;
+      padding: 47px 80px 54px !important;
       @include media-breakpoint-down(md){
-        padding: 33px 40px 48px;
+        padding: 33px 40px 48px !important;
       }
       @include media-breakpoint-down(xs){
-        padding-top: 33px !important;
+        padding: 33px 24px 48px !important;
       }
     }
     .modal-footer{
@@ -90,8 +90,7 @@
       border-top: 1px solid #E0E0E2;
       @include media-breakpoint-down(md){
         height: unset;
-        margin-top: 32px;
-        margin-bottom: 64px;
+        margin-top: 0;
         flex-direction: column;
         border-top: unset;
         .button{
@@ -107,7 +106,6 @@
         }
       }
       @include media-breakpoint-down(xs){
-        margin-top: 36px;
         padding-left: 24px;
         padding-right: 24px;
         padding-bottom: 86px;
