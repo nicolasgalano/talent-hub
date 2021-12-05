@@ -11,15 +11,15 @@ import { useHistory } from 'react-router';
 interface DetailProps {
   children: React.ReactNode;
   btnText: string;
-  applyCallback?: Function;
+  onClickAction?: Function;
 }
 
-const Detail: FC <DetailProps> = ({children, applyCallback, btnText}) => {
+const Detail: FC <DetailProps> = ({children, onClickAction, btnText}) => {
   const history = useHistory();
 
   const handleClickBack = () => history.goBack(); 
 
-  const handleClickApply = () => applyCallback;
+  const handleClickApply = () => onClickAction();
 
   return (
     <div className="ui container" id="detail">

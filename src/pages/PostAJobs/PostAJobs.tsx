@@ -30,6 +30,7 @@ const PostAJobs:FC = () =>{
   const modalRef = useRef<ModalHandle>(null);
   const history = useHistory();
 
+  const handleOpenModal = () => modalRef.current.openModal();
   const handleCloseModal = () => modalRef.current.closeModal();
 
   const handleSubmit = () => history.push('/openings/post-a-job/success');
@@ -224,7 +225,7 @@ const PostAJobs:FC = () =>{
           </Button>
           <Button 
             disabled={!updateFile}
-            onClick={() => updateFile && modalRef.current.openModal() }
+            onClick={() => handleOpenModal() }
             secondary >
               {t("buttons.preview", {ns: namespaces.common})}
           </Button>
@@ -236,8 +237,8 @@ const PostAJobs:FC = () =>{
           <SingleOrganizationAndProject data={dataModal.organization} />
         </ModalBody>
         <ModalFooter>
-          <Button secondary onClick={() => handleCloseModal()}>Edit</Button>
-          <Button primary onClick={() => handleSubmit()}>Submit</Button>
+          <Button secondary onClick={() => handleCloseModal()}>{t("buttons.edit", {ns: namespaces.common})}</Button>
+          <Button primary onClick={() => handleSubmit()}>{t("buttons.submit", {ns: namespaces.common})}</Button>
         </ModalFooter>
       </Modal>
     </div>

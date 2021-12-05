@@ -140,8 +140,8 @@ const SingleOrganizationAndProject:FC <SingleOrganizationAndProjectProps> = ({da
                   <Label type="review">Field</Label>
                   <div className="fields">
                   {
-                    data.fields.map((field) => (
-                      <Tag>{field}</Tag>
+                    data.fields.map((field, key) => (
+                      <Tag key={key}>{field}</Tag>
                     ))
                   }
                   </div>
