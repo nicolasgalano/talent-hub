@@ -4,7 +4,8 @@
     "cancel":       "Cancel",
     "view-all":     "View All",
     "submit":       "Submit",
-    "preview":      "Preview"
+    "preview":      "Preview",
+    "edit":         "Edit"
   },
   "tabs": {
     "openings":       "Openings",

@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { namespaces } from '../../i18n/i18n.constants';
 import '../../assets/scss/base/form.scss';
 import './JobDetailsContact.scss';
+import detailData from '../../data/single.json';
 
 // UI Decentraland
 import { Button } from 'decentraland-ui/dist/components/Button/Button';
@@ -16,7 +17,8 @@ import Typography from '../../components/common/Typography/Typography';
 import TextField from '../../components/common/TextField/TextField';
 import Label from "../../components/common/Label/Label";
 import File from '../../components/common/File/File';
-import { ModalHandle } from '../../components/common/Modal/Modal';
+import Modal, { ModalBody, ModalFooter, ModalHandle, ModalHeader } from '../../components/common/Modal/Modal';
+import SingleProfile from '../../components/common/Single/SingleProfile';
 
 const JobDetailsContact:FC = () => {
   const { t } = useTranslation([namespaces.pages.detailcontact, namespaces.common]);
@@ -24,6 +26,7 @@ const JobDetailsContact:FC = () => {
   const modalRef = useRef<ModalHandle>(null);
   const history = useHistory();
 
+  const handleOpenModal = () => modalRef.current.openModal();
   const handleCloseModal = () => modalRef.current.closeModal();
 
   const handleSubmit = () => history.push('/job/contact/success');
@@ -140,12 +143,22 @@ const JobDetailsContact:FC = () => {
           </Button>
           <Button 
             disabled={!updateFile}
-            // onClick={() => updateFile && modalRef.current.openModal() }
+            onClick={() => handleOpenModal() }
             secondary >
               {t("buttons.preview", {ns: namespaces.common})}
           </Button>
         </div>
       </div>
+      <Modal theme="light" ref={modalRef}>
+        <ModalHeader>Apply to Sr. UI Designer</ModalHeader>
+        <ModalBody className="review-modal">
+          <SingleProfile data={detailData.candidate_with_gallery} />
+        </ModalBody>
+        <ModalFooter>
+          <Button secondary onClick={() => handleCloseModal()}>{t("buttons.edit", {ns: namespaces.common})}</Button>
+          <Button primary onClick={() => handleSubmit()}>{t("buttons.submit", {ns: namespaces.common})}</Button>
+        </ModalFooter>
+      </Modal>
     </div>
   )
 }
