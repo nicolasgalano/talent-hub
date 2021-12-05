@@ -1,0 +1,10 @@
+@import '../../assets/scss/utils/Consts.scss';
+@import '../../assets/scss/utils/Mixins.scss';
+
+#job-details-contact{
+  .uploads{
+    @include media-breakpoint-down(md){
+      margin-top: 48px;
+    }
+  }
+}
