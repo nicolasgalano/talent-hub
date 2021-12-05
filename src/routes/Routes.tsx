@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import ScrollToTop from "../components/common/ScrollToTop/ScrollToTop";
 import HorizontalLayout from "../components/layout/HorizontalLayout";
 import { allFlattenRoutes as routes, RouteInterface } from './index';
 
@@ -14,20 +15,22 @@ const Routes:FC = () => {
 
   return (
     <BrowserRouter>
-      <Switch>
-        <Layout>
-          {routes.map((route: RouteInterface, index: number) => {
-            return (
-              <Route
-                exact={route.exact}
-                path={route.path}
-                component={route.component}
-                key={index}
-                />
-            );
-          })}
-        </Layout>
-      </Switch>
+      <ScrollToTop>
+        <Switch>
+          <Layout>
+            {routes.map((route: RouteInterface, index: number) => {
+              return (
+                <Route
+                  exact={route.exact}
+                  path={route.path}
+                  component={route.component}
+                  key={index}
+                  />
+              );
+            })}
+          </Layout>
+        </Switch>
+      </ScrollToTop>
     </BrowserRouter>
   );
 }
