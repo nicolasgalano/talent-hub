@@ -203,3 +203,17 @@
     }
   }
 }
+
+.review-modal{
+  .single-profile .feature{
+    @media screen and (min-width: 640px) and (max-width: 1024px) {
+      flex-direction: column;
+      flex-wrap: wrap;
+      gap: unset;
+      row-gap: 48px;
+      > div {
+        width: 100%;
+      }
+    }
+  }
+}
