@@ -59,14 +59,15 @@ const jobsRoutes: RouteInterface = {
       component: JobDetails,
     },
     {
-      path: '/job/success',
-      name: 'Success',
-      component: JobDetailsSuccess,
-    },
-    {
       path: '/job/contact',
       name: 'Contact',
       component: JobDetailsContact,
+      exact: true,
+    },
+    {
+      path: '/job/contact/success',
+      name: 'Success',
+      component: JobDetailsSuccess,
     },
   ]
 }

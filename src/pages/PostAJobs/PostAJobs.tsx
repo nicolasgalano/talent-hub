@@ -7,7 +7,7 @@ import { Checkbox, Dropdown } from "semantic-ui-react";
 import { Button } from 'decentraland-ui/dist/components/Button/Button';
 
 // Files
-import './PostAJobs.scss';
+import '../../assets/scss/base/form.scss';
 import { openings2 } from '../../assets/illustrations'
 import { useTranslation } from 'react-i18next';
 import { namespaces } from '../../i18n/i18n.constants';
@@ -35,7 +35,7 @@ const PostAJobs:FC = () =>{
   const handleSubmit = () => history.push('/openings/post-a-job/success');
 
   return(
-    <div id="post-a-job">
+    <div className="custom-form" id="post-a-job">
       <HeroPost 
         imgSrc={openings2}
         title={ t("hero.title") }
@@ -205,10 +205,10 @@ const PostAJobs:FC = () =>{
                 required />
             </div>
             {/* Input logo */}
-            <div className="project-logo">
+            <div className="upload-box">
               <Label type="form">{t("general.company", {ns: namespaces.common})}</Label>
-              <Typography variant="body-s" element="p" className="recomended">{t("general.recomended-size", {ns: namespaces.common})}</Typography>
-              { updateFile && <File title="CompanyLogo.png" className="companyLogo" /> }
+              <Typography variant="body-s" element="p" className="recomended">{t("general.recomended-size", {ns: namespaces.common})} 100 x 100px</Typography>
+              { updateFile && <File title="CompanyLogo.png" className="file" /> }
               <Button secondary className="btn-upload" onClick={() => setUploadFile(!updateFile)}>{t("general.upload-logo", {ns: namespaces.common})}</Button>
             </div>
           </div>
@@ -232,7 +232,7 @@ const PostAJobs:FC = () =>{
       </div>
       <Modal theme="light" ref={modalRef}>
         <ModalHeader>Review your job</ModalHeader>
-        <ModalBody className="review-job">
+        <ModalBody className="review-modal">
           <SingleOrganizationAndProject data={dataModal.organization} />
         </ModalBody>
         <ModalFooter>
