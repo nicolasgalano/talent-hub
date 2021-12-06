@@ -19,7 +19,7 @@ const Detail: FC <DetailProps> = ({children, onClickAction, btnText}) => {
 
   const handleClickBack = () => history.goBack(); 
 
-  const handleClickApply = () => onClickAction();
+  const handleClickAction = () => onClickAction();
 
   return (
     <div className="ui container" id="detail">
@@ -34,7 +34,7 @@ const Detail: FC <DetailProps> = ({children, onClickAction, btnText}) => {
       { children }
       {/* Actions */}
       <div className="cta">
-        <Button primary onClick={() => handleClickApply()}>{btnText}</Button>
+        <Button primary onClick={() => handleClickAction()}>{btnText}</Button>
       </div>
     </div>
   )

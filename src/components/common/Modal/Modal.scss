@@ -2,7 +2,10 @@
 @import '../../../assets/scss/utils/Mixins.scss';
 
 .ui.dimmer{
-  background-color: rgba(22, 20, 25, 0.25) !important;
+  background-color: rgba(115, 110, 125, 0.5) !important;
+  @include media-breakpoint-down(md){
+    background-color: rgba(22, 20, 25, 0.25) !important;
+  }
   .content{
     background-color: transparent;
   }
@@ -93,6 +96,7 @@
         margin-top: 0;
         flex-direction: column;
         border-top: unset;
+        padding-bottom: 74px;
         .button{
           width: 100%;
           max-width: 357px;

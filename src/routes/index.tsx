@@ -9,6 +9,7 @@ import JobDetailsSuccess from "../pages/JobDetailsSuccess/JobDetailsSuccess";
 import JobDetailsContact from "../pages/JobDetailsContact/JobDetailsContact";
 import CreateAProfile from "../pages/CreateAProfile/CreateAProfile";
 import CreateAProfileSuccess from "../pages/CreateAProfileSuccess/CreateAProfileSuccess";
+import ProfileDetailsSuccess from "../pages/ProfileDetailsSuccess/ProfileDetailsSuccess";
 
 export interface RouteInterface {
   path: string;
@@ -104,6 +105,11 @@ const professionalsRoutes: RouteInterface = {
       path: '/professional/create/success',
       name: 'Success',
       component: CreateAProfileSuccess,
+    },
+    {
+      path: '/professional/success',
+      name: 'Success',
+      component: ProfileDetailsSuccess,
     },
   ]
 }

@@ -1,0 +1,44 @@
+@import '../../assets/scss/utils/Mixins.scss';
+
+.ui.dimmer{
+  .modal.modal-theme-light{
+    max-width: 864px;
+    .modal-header,
+    .modal-footer{
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+    .content{
+      padding: 48px 72px 61px !important;
+      @include media-breakpoint-down(md){
+        padding: 32px 40px 49px !important;
+      }
+    }
+    .custom-form{
+      padding-bottom: 0;
+      .row{
+        display: flex;
+        flex-wrap: wrap;
+        grid-template-columns: unset;
+        align-items: unset;
+        column-gap: 48px;
+        margin-bottom: 60px;
+        @include media-breakpoint-down(md){
+          flex-direction: column;
+          margin-bottom: 32px;
+          row-gap: 32px;
+          column-gap: unset;
+        }
+        &:last-child{
+          margin-bottom: 0;
+        }
+        .col{
+          flex: 1 0 0%;
+          width: 100%;
+          max-width: 100%;
+        }
+      }
+    }
+  }
+
+}
