@@ -67,7 +67,9 @@
     "picture":                "Profile picture",
     "cv":                     "CV",
     "file-types-accepted":    "File types accepted:",
-    "upload-showcase":        "Upload up to 6 images to showcase your best work"
+    "upload-showcase":        "Upload up to 6 images to showcase your best work",
+    "company-or-project-name":"Company or project name",
+    "message":                "Message"
   },
   "months": {
     "january":    "January",
