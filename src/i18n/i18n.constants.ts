@@ -5,6 +5,7 @@ export const namespaces = {
     professionals: "pages.professionals",
     postajob: "pages.postajob",
     detailcontact: "pages.detailcontact",
+    createaprofile: "pages.createaprofile"
   },
   common: "common",
   layout: "layout",

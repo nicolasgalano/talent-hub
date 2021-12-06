@@ -5,7 +5,7 @@ import subscriptionMailbox from './subscription-mailbox.png';
 import subscriptionSuccess from './subscription-success.png';
 import openings2 from './openings-2.png';
 import subscriptionPost from './subscription-post.png';
-
+import createAProfile from './create-a-profile.png';
 
 
 export {
@@ -15,5 +15,6 @@ export {
  subscriptionMailbox,
  subscriptionSuccess,
  openings2,
- subscriptionPost
+ subscriptionPost,
+ createAProfile
 }
