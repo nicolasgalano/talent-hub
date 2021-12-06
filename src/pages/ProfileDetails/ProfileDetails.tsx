@@ -57,7 +57,7 @@ const ProfileDetails: FC = () => {
       <Detail btnText="Contact" onClickAction={handleClick}>
         <SingleProfile data={doc} />
       </Detail>
-      <Modal theme="light" ref={modalRef}>
+      <Modal theme="light" ref={modalRef} className="modal-profile-details">
         <ModalHeader>
           Contact Florencia Daniele
         </ModalHeader>
@@ -110,7 +110,7 @@ const ProfileDetails: FC = () => {
           <Button 
             primary
             onClick={() => handleSubmit()} >
-              Send
+              {t("buttons.send", {ns: namespaces.common})}
           </Button>
         </ModalFooter>
       </Modal>
