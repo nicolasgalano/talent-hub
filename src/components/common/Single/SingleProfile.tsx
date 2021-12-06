@@ -26,9 +26,9 @@ export type SingleProfileType = {
   company_project_candidate: string;
   image?: string;
   profession_job_name: string;
-  workgin_shedule: string;
-  type_of_contract: string;
-  fields: Array<string>;
+  workgin_shedule?: string;
+  type_of_contract?: string;
+  fields?: Array<string>;
 }
 
 interface SingleProfileProps {
@@ -133,7 +133,7 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
               </div>
           }
           {
-            // data.gallery && renderMoreInfo()
+            (data.gallery && width >= 1024) && renderMoreInfo()
           }
           { 
             width < 1024  && renderMoreInfo()

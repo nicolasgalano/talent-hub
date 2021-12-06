@@ -61,5 +61,15 @@
     "portfolio": "behance.net/flordaniele",
     "linkedin": "linkedin.com/flordaniele",
     "gallery": [ "URL", "URL" ]
+  },
+  "create_a_profile": {
+    "company_project_candidate": "Florencia Daniele",
+    "image": "URL",
+    "introduction": "I’m a UX/UI Designer with a background in Digital Marketing. I work with Figma, Adobe XD, Miro, Optimal Workshop, Google Analytics and I also know the basics of HTML/CSS/SASS. I love designing and optimizing digital interfaces, especially the UX stages of wireframes and prototypes.",
+    "profession_job_name": "UX/UI Designer",
+    "email": "flordaniele@gmail.com",
+    "portfolio": "behance.net/flordaniele",
+    "linkedin": "linkedin.com/flordaniele",
+    "gallery": [ "URL", "URL" ]
   }
 }

@@ -1,27 +1,30 @@
-import React, { FC, useRef, useState } from 'react'
+import { FC, useRef, useState } from "react";
 
-// Files
-import { useHistory } from 'react-router';
-import { useTranslation } from 'react-i18next';
-import { namespaces } from '../../i18n/i18n.constants';
-import '../../assets/scss/base/form.scss';
-import './JobDetailsContact.scss';
-import detailData from '../../data/single.json';
+// UI Semantic
+import { Checkbox } from "semantic-ui-react";
 
 // UI Decentraland
 import { Button } from 'decentraland-ui/dist/components/Button/Button';
 
-// Custom component
-import HeroPost from '../../components/common/HeroPost/HeroPost'
-import Typography from '../../components/common/Typography/Typography';
-import TextField from '../../components/common/TextField/TextField';
-import Label from "../../components/common/Label/Label";
-import File from '../../components/common/File/File';
-import Modal, { ModalBody, ModalFooter, ModalHandle, ModalHeader } from '../../components/common/Modal/Modal';
-import SingleProfile from '../../components/common/Single/SingleProfile';
+// Files
+import '../../assets/scss/base/form.scss';
+import { createAProfile } from '../../assets/illustrations'
+import { useTranslation } from 'react-i18next';
+import { namespaces } from '../../i18n/i18n.constants';
+import dataModal from '../../data/single.json';
 
-const JobDetailsContact:FC = () => {
-  const { t } = useTranslation([namespaces.pages.detailcontact, namespaces.common]);
+// UI Custom Component
+import TextField from "../../components/common/TextField/TextField";
+import Typography from "../../components/common/Typography/Typography";
+import Label from "../../components/common/Label/Label";
+import HeroPost from '../../components/common/HeroPost/HeroPost';
+import File from '../../components/common/File/File';
+import Modal, { ModalBody, ModalFooter, ModalHandle, ModalHeader } from "../../components/common/Modal/Modal";
+import { useHistory } from "react-router";
+import SingleProfile from "../../components/common/Single/SingleProfile";
+
+const CreateAProfile:FC = () =>{
+  const { t } = useTranslation([namespaces.pages.createaprofile, namespaces.common]);
   const [updateFile, setUploadFile] = useState(false);
   const modalRef = useRef<ModalHandle>(null);
   const history = useHistory();
@@ -29,11 +32,12 @@ const JobDetailsContact:FC = () => {
   const handleOpenModal = () => modalRef.current.openModal();
   const handleCloseModal = () => modalRef.current.closeModal();
 
-  const handleSubmit = () => history.push('/job/contact/success');
+  const handleSubmit = () => history.push('/professional/create/success');
 
-  return (
-    <div className="custom-form" id="job-details-contact">
-      <HeroPost
+  return(
+    <div className="custom-form" id="create-a-profile">
+      <HeroPost 
+        imgSrc={createAProfile}
         title={ t("hero.title") }
         description={ t("hero.description") }
         buttonText={t("hero.button")}
@@ -93,8 +97,6 @@ const JobDetailsContact:FC = () => {
                 label={t("general.online-portfolio", {ns: namespaces.common})}
                 htmlFor="online-portfolio" />
             </div>
-          </div>
-          <div className="col uploads">
             {/* Input cv */}
             <div className="upload-box">
               <Label type="form">{t("general.cv", {ns: namespaces.common})}</Label>
@@ -109,13 +111,6 @@ const JobDetailsContact:FC = () => {
               { updateFile && <File title="Portfolio_Daniele.pdf" className="file" /> }
               { !updateFile && <Button secondary className="btn-upload" onClick={() => setUploadFile(!updateFile)}>{t("general.upload-portfolio", {ns: namespaces.common})}</Button>}
             </div>
-            {/* Input picture */}
-            <div className="upload-box">
-              <Label type="form">{t("general.picture", {ns: namespaces.common})}</Label>
-              { !updateFile && <Typography variant="body-s" element="p" className="recomended">{t("general.recomended-size", {ns: namespaces.common})} 100 x 100px</Typography>}
-              { updateFile && <File title="ProfilePicture.png" className="file" /> }
-              { !updateFile && <Button secondary className="btn-upload" onClick={() => setUploadFile(!updateFile)}>{t("general.upload-picture", {ns: namespaces.common})}</Button>}
-            </div>
             {/* Input showcase */}
             <div className="upload-box">
               <Label type="form">{t("general.upload-showcase", {ns: namespaces.common})}</Label>
@@ -127,6 +122,56 @@ const JobDetailsContact:FC = () => {
               { updateFile && <File title="Picture5.jpg" className="file" /> }
               { updateFile && <File title="Picture6.jpg" className="file" /> }
               { !updateFile && <Button secondary className="btn-upload" onClick={() => setUploadFile(!updateFile)}>{t("general.upload-pictures", {ns: namespaces.common})}</Button>}
+            </div>
+          </div>
+          <div className="col uploads">
+            {/* Input picture */}
+            <div className="upload-box">
+              <Label type="form">{t("general.picture", {ns: namespaces.common})}</Label>
+              { !updateFile && <Typography variant="body-s" element="p" className="recomended">{t("general.recomended-size", {ns: namespaces.common})} 100 x 100px</Typography>}
+              { updateFile && <File title="ProfilePicture.png" className="file" /> }
+              { !updateFile && <Button secondary className="btn-upload" onClick={() => setUploadFile(!updateFile)}>{t("general.upload-picture", {ns: namespaces.common})}</Button>}
+            </div>
+            {/* Checkbox's Working schedule */}
+            <div>
+              <Label type="form" required>{t("general.working-schedule", {ns: namespaces.common})}</Label>
+              <div className="checkbox-inline">
+                <Checkbox label={t("general.full-time", {ns: namespaces.common})} />
+                <Checkbox label={t("general.part-time", {ns: namespaces.common})} />
+                <Checkbox label={t("general.per-hour", {ns: namespaces.common})} />
+              </div>
+            </div>
+            {/* Checkbox's Types of contract */}
+            <div>
+              <Label type="form" required>{t("general.type-of-contract", {ns: namespaces.common})}</Label>
+              <div className="checkbox-container">
+                <div>
+                  <Checkbox label={t("general.permanent", {ns: namespaces.common})} />
+                  <Checkbox label={t("general.temporary", {ns: namespaces.common})} />
+                </div>
+                <div>
+                  <Checkbox label={t("general.freelance", {ns: namespaces.common})} />
+                  <Checkbox label={t("general.intership", {ns: namespaces.common})} />
+                </div>
+              </div>
+            </div>
+            {/* Checkbox's Fields */}
+            <div>
+              <Label type="form" required>{t("general.fields", {ns: namespaces.common})}</Label>
+              <div className="checkbox-container">
+                <div>
+                  <Checkbox label={t("general.design", {ns: namespaces.common})} />
+                  <Checkbox label={t("general.development", {ns: namespaces.common})} />
+                  <Checkbox label={t("general.engineering", {ns: namespaces.common})} />
+                  <Checkbox label={t("general.modelling", {ns: namespaces.common})} />
+                </div>
+                <div>
+                  <Checkbox label={t("general.project-management", {ns: namespaces.common})} />
+                  <Checkbox label={t("general.marketing", {ns: namespaces.common})} />
+                  <Checkbox label={t("general.art-direction", {ns: namespaces.common})} />
+                  <Checkbox label={t("general.data-analytics", {ns: namespaces.common})} />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -150,7 +195,7 @@ const JobDetailsContact:FC = () => {
       <Modal theme="light" ref={modalRef}>
         <ModalHeader>Apply to Sr. UI Designer</ModalHeader>
         <ModalBody className="review-modal">
-          <SingleProfile data={detailData.create_a_profile} />
+          <SingleProfile data={dataModal.candidate_with_gallery} />
         </ModalBody>
         <ModalFooter>
           <Button secondary onClick={() => handleCloseModal()}>{t("buttons.edit", {ns: namespaces.common})}</Button>
@@ -158,7 +203,6 @@ const JobDetailsContact:FC = () => {
         </ModalFooter>
       </Modal>
     </div>
-  )
+  );
 }
-
-export default JobDetailsContact
+export default CreateAProfile;

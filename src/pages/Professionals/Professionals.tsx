@@ -28,7 +28,7 @@ const Professionals:FC = () => {
     ],
     cta: {
       title: t("tabs.post-a-job"),
-      to: '/'
+      to: '/openings/post-a-job'
     }
   };
 
@@ -40,7 +40,7 @@ const Professionals:FC = () => {
           imgSrc={professionals3D}
           title={t("hero.title", { ns: namespaces.pages.professionals})}
           description={t("hero.description", { ns: namespaces.pages.professionals})}
-          to="/openings"
+          to="/professionals/create"
           buttonText={t("hero.button", { ns: namespaces.pages.professionals})}
           />
         <CardList data={dataProfessionals} />

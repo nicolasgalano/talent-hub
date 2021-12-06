@@ -42,6 +42,22 @@
             }
           }
         }
+        label{
+          font-family: $font-text;
+          font-weight: 400;
+          font-size: 0.8125rem;
+          line-height: 1.125rem;
+          color: $color-grey-700;
+          text-transform: uppercase;
+          padding-left: 25px;
+          &::before{
+            border-color: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+          }
+          &::after{
+            color: $color-primary;
+          }
+        }
       }
       .checkbox-inline{
         display: flex;

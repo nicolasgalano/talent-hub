@@ -101,3 +101,29 @@
     }
   }
 }
+#create-a-profile{
+  .info {
+    @include media-breakpoint-down(md){
+      margin-bottom: 0;
+    }
+  }
+  .illustration {
+    align-self: flex-start;
+    @include media-breakpoint-down(md){
+      align-self: unset;
+    }
+    img{
+      max-width: 333px;
+      margin-top: 21px;
+      margin-bottom: 0;
+      @include media-breakpoint-down(md){
+        margin-top: 51px;
+      }
+      @include media-breakpoint-down(xs){
+        max-width: 246px;
+        margin-top: 21px;
+        margin-bottom: -27px;
+      }
+    }
+  }
+}

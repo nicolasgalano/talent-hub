@@ -7,6 +7,8 @@ import Professionals from "../pages/Professionals/Professionals";
 import PostajobSuccess from "../pages/PostajobSuccess/PostajobSuccess";
 import JobDetailsSuccess from "../pages/JobDetailsSuccess/JobDetailsSuccess";
 import JobDetailsContact from "../pages/JobDetailsContact/JobDetailsContact";
+import CreateAProfile from "../pages/CreateAProfile/CreateAProfile";
+import CreateAProfileSuccess from "../pages/CreateAProfileSuccess/CreateAProfileSuccess";
 
 export interface RouteInterface {
   path: string;
@@ -81,6 +83,7 @@ const professionalsRoutes: RouteInterface = {
     {
       path: '/professionals/create',
       name: 'Create a profile',
+      component: CreateAProfile,
     },
     {
       path: '/professional/withphoto',
@@ -96,6 +99,11 @@ const professionalsRoutes: RouteInterface = {
       path: '/professional/withgallery',
       name: 'Profile details with gallery ',
       component: ProfileDetails,
+    },
+    {
+      path: '/professional/create/success',
+      name: 'Success',
+      component: CreateAProfileSuccess,
     },
   ]
 }
