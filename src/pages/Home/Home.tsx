@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { openings3D, professionals3D } from '../../assets/illustrations';
 import { namespaces } from '../../i18n/i18n.constants';
 import SubscriptionBox from '../../components/common/SubscriptionBox/SubscriptionBox';
-import jobs from '../../data/jobs.json';
+import jobs from '../../data/openings.json';
 import professionals from '../../data/professionals.json';
 import './Home.scss';
 

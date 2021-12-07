@@ -3,7 +3,7 @@ import React, { FC, Fragment, useRef } from 'react'
 // Files
 import detailData from '../../data/single.json';
 import '../../assets/scss/base/form.scss';
-import './ProfileDetails.scss';
+import './ProfessionalDetail.scss';
 import { namespaces } from '../../i18n/i18n.constants';
 import { useTranslation } from 'react-i18next';
 
@@ -17,7 +17,7 @@ import Modal, { ModalBody, ModalFooter, ModalHandle, ModalHeader } from '../../c
 import TextField from '../../components/common/TextField/TextField';
 import { useHistory } from 'react-router';
 
-const ProfileDetails: FC = () => {
+const ProfessionalDetail: FC = () => {
 
   const {t} = useTranslation();
   const history = useHistory();
@@ -117,4 +117,4 @@ const ProfileDetails: FC = () => {
     </Fragment>
   )
 }
-export default ProfileDetails
+export default ProfessionalDetail;
