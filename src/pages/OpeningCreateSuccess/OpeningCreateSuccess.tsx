@@ -14,7 +14,7 @@ const OpeningCreateSuccess: FC = () => {
       title={t('openingcreate.title')}
       description={t('openingcreate.description')}
       btnText={t('openingcreate.button')}
-      to="./"
+      to="../"
       />
   )
 }

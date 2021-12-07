@@ -1,6 +1,25 @@
 @import '../utils/Consts.scss';
 @import '../utils/Mixins.scss';
 
+@mixin label() {
+  label{
+    font-family: $font-text;
+    font-weight: 400;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
+    color: $color-grey-700;
+    text-transform: uppercase;
+    padding-left: 25px;
+    &::before{
+      border-color: rgba(0, 0, 0, 0.2) !important;
+      border-radius: 5px;
+    }
+    &::after{
+      color: $color-primary !important;
+    }
+  }
+}
+
 .custom-form{
   padding-bottom: 227px;
   .label-required{
@@ -42,37 +61,20 @@
             }
           }
         }
-        label{
-          font-family: $font-text;
-          font-weight: 400;
-          font-size: 0.8125rem;
-          line-height: 1.125rem;
-          color: $color-grey-700;
-          text-transform: uppercase;
-          padding-left: 25px;
-          &::before{
-            border-color: rgba(0, 0, 0, 0.2) !important;
-            border-radius: 5px;
-          }
-          &::after{
-            color: $color-primary !important;
-          }
-        }
+        @include label()
       }
       .checkbox-inline{
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         margin-top: 16px;
+        column-gap: 24px;
         @include media-breakpoint-down(md){
           margin-top: 20px;
+          column-gap: 28px;
+          row-gap: 20px;
         }
-        > div{
-          margin-right: 24px;
-          @include media-breakpoint-down(md){
-            margin-right: 28px;
-          }
-        }
+        @include label()
       }
       .salary{
         display: flex;

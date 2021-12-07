@@ -56,7 +56,7 @@ const Home:FC = () => {
           data={professionals}
           title={`Featured ${ t("featured.professionals") }`}
           action={`view all ${ t("featured.professionals") }`}
-          to="/professional" />
+          to="/professionals" />
       </div>
 
       <div className="ui container" id="subscription-box">
