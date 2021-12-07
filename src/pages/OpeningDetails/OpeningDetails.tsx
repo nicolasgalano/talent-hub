@@ -8,7 +8,7 @@ import detailData from '../../data/single.json';
 import Detail from '../../components/common/Detail/Detail'
 import SingleOrganizationAndProject, { SingleOrganizationAndProjectType } from '../../components/common/Single/SingleOrganizationAndProject';
 
-const JobDetails: FC = () => {
+const OpeningDetails: FC = () => {
   const history = useHistory();
 
   // TODO: Only for testing porpuse
@@ -32,4 +32,4 @@ const JobDetails: FC = () => {
     </Detail>
   )
 }
-export default JobDetails
+export default OpeningDetails;

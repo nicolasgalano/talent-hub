@@ -1,15 +1,17 @@
 import Home from "../pages/Home/Home";
-import JobDetails from "../pages/JobDetails/JobDetails";
+// Openings
 import Openings from "../pages/Openings/Openings";
-import PostAJobs from "../pages/PostAJobs/PostAJobs";
-import ProfileDetails from "../pages/ProfileDetails/ProfileDetails";
+import OpeningDetails from "../pages/OpeningDetails/OpeningDetails";
+import OpeningContact from "../pages/OpeningContact/OpeningContact";
+import OpeningContactSuccess from "../pages/OpeningContactSuccess/OpeningContactSuccess";
+import OpeningCreate from "../pages/OpeningCreate/OpeningCreate";
+import OpeningCreateSuccess from "../pages/OpeningCreateSuccess/OpeningCreateSuccess";
+// Professionals
 import Professionals from "../pages/Professionals/Professionals";
-import PostajobSuccess from "../pages/PostajobSuccess/PostajobSuccess";
-import JobDetailsSuccess from "../pages/JobDetailsSuccess/JobDetailsSuccess";
-import JobDetailsContact from "../pages/JobDetailsContact/JobDetailsContact";
-import CreateAProfile from "../pages/CreateAProfile/CreateAProfile";
-import CreateAProfileSuccess from "../pages/CreateAProfileSuccess/CreateAProfileSuccess";
-import ProfileDetailsSuccess from "../pages/ProfileDetailsSuccess/ProfileDetailsSuccess";
+import ProfessionalDetail from "../pages/ProfessionalDetail/ProfessionalDetail";
+import ProfessionalContactSuccess from "../pages/ProfessionalContactSuccess/ProfessionalContactSuccess";
+import ProfessionalCreate from "../pages/ProfessionalCreate/ProfessionalCreate";
+import ProfessionalCreateSuccess from "../pages/ProfessionalCreateSuccess/ProfessionalCreateSuccess";
 
 export interface RouteInterface {
   path: string;
@@ -35,13 +37,13 @@ const openingsRoutes: RouteInterface = {
     {
       path: '/openings/post-a-job',
       name: 'Post a job',
-      component: PostAJobs,
+      component: OpeningCreate,
       exact: true
     },
     {
       path: '/openings/post-a-job/success',
       name: 'Success',
-      component: PostajobSuccess,
+      component: OpeningCreateSuccess,
     },
   ]
 }
@@ -54,23 +56,23 @@ const jobsRoutes: RouteInterface = {
     {
       path: '/job/organization',
       name: 'Organization',
-      component: JobDetails
+      component: OpeningDetails
     },
     {
       path: '/job/project',
       name: 'Project',
-      component: JobDetails,
+      component: OpeningDetails,
     },
     {
       path: '/job/contact',
       name: 'Contact',
-      component: JobDetailsContact,
+      component: OpeningContact,
       exact: true,
     },
     {
       path: '/job/contact/success',
       name: 'Success',
-      component: JobDetailsSuccess,
+      component: OpeningContactSuccess,
     },
   ]
 }
@@ -84,32 +86,32 @@ const professionalsRoutes: RouteInterface = {
     {
       path: '/professionals/create',
       name: 'Create a profile',
-      component: CreateAProfile,
+      component: ProfessionalCreate,
     },
     {
       path: '/professional/withphoto',
       name: 'Profile details with pic ',
-      component: ProfileDetails,
+      component: ProfessionalDetail,
     },
     {
       path: '/professional/withoutphoto',
       name: 'Profile details without pic ',
-      component: ProfileDetails,
+      component: ProfessionalDetail,
     },
     {
       path: '/professional/withgallery',
       name: 'Profile details with gallery ',
-      component: ProfileDetails,
+      component: ProfessionalDetail,
     },
     {
       path: '/professional/create/success',
       name: 'Success',
-      component: CreateAProfileSuccess,
+      component: ProfessionalCreateSuccess,
     },
     {
       path: '/professional/success',
       name: 'Success',
-      component: ProfileDetailsSuccess,
+      component: ProfessionalContactSuccess,
     },
   ]
 }

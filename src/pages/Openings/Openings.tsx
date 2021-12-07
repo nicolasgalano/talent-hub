@@ -2,7 +2,7 @@ import React, { FC, Fragment } from 'react';
 
 // Files
 import './Openings.scss';
-import dataJobs from '../../data/jobs.json'
+import dataJobs from '../../data/openings.json'
 import { useTranslation } from 'react-i18next';
 import { namespaces } from '../../i18n/i18n.constants';
 import { openings3D } from '../../assets/illustrations';

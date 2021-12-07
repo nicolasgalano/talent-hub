@@ -24,8 +24,8 @@ import Modal, { ModalBody, ModalFooter, ModalHandle, ModalHeader } from "../../c
 import SingleOrganizationAndProject from "../../components/common/Single/SingleOrganizationAndProject";
 import { useHistory } from "react-router";
 
-const PostAJobs:FC = () =>{
-  const { t } = useTranslation([namespaces.pages.postajob, namespaces.common]);
+const OpeningCreate:FC = () =>{
+  const { t } = useTranslation([namespaces.pages.openingcreate, namespaces.common]);
   const [updateFile, setUploadFile] = useState(false);
   const modalRef = useRef<ModalHandle>(null);
   const history = useHistory();
@@ -244,4 +244,4 @@ const PostAJobs:FC = () =>{
     </div>
   );
 }
-export default PostAJobs;
+export default OpeningCreate;

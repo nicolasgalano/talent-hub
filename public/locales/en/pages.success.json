@@ -1,0 +1,22 @@
+{
+  "openingcreate": {
+    "title": "Job post submitted",
+    "description": "Your post will be live as soon as the Decentraland Foundation team has assessed and approved the details.",
+    "button": "Take me to my listing"
+  },
+  "openingcontact": {
+    "title": "Application sent",
+    "description": "Your profile has been sent to the company or project that publishd the job offer. You will receive a copy by e-mail.",
+    "button": "Back to home page"
+  },
+  "professionalcreate": {
+    "title": "Profile created",
+    "description": "Your profile will go live once approved by the team at the Decentraland Foundation.",
+    "button": "Back to home page"
+  },
+  "professionalcontact": {
+    "title": "Message sent",
+    "description": "Your message has been sent to the professional. You will receive a copy by e-mail.",
+    "button": "Back to home page"
+  }
+}
