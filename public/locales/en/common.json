@@ -11,7 +11,8 @@
   "tabs": {
     "openings":       "Openings",
     "professionals":  "Professionals",
-    "post-a-job":     "Post a job"
+    "post-a-job":     "Post a job",
+    "create-profile": "Create profile"
   },
   "general": {
     "filter_one":             "Filter",

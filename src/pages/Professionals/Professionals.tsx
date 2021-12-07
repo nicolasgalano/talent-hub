@@ -27,8 +27,8 @@ const Professionals:FC = () => {
       },
     ],
     cta: {
-      title: t("tabs.post-a-job"),
-      to: '/openings/post-a-job'
+      title: t("tabs.create-profile"),
+      to: '/professionals/create'
     }
   };
 
