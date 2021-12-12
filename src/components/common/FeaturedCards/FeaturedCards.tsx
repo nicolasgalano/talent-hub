@@ -38,7 +38,7 @@ const FeaturedCards: FC<FeaturedCardsProps> = ({title, action, to, data, classNa
         settings: "slick"
       },
       {
-        breakpoint: 640,
+        breakpoint: 639,
         settings: "unslick"
       }
     ]

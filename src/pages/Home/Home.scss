@@ -7,7 +7,7 @@
     margin-bottom: calc(394px / 2);
   }
   @include media-breakpoint-down(md) {
-    margin-bottom: calc(56px / 2);
+    margin-bottom: 56px;
   }
   .hero-top{
     max-width:696px;
@@ -54,7 +54,7 @@
     margin-bottom: calc(545px / 2);
   }
   @include media-breakpoint-down(md){
-    margin-bottom: calc(74px / 2);
+    margin-bottom: 74px;
   }
 }
 #featured-professionals{
@@ -63,7 +63,7 @@
     margin-bottom: calc(534px / 2);
   }
   @include media-breakpoint-down(md){
-    margin-bottom: calc(74px / 2);
+    margin-bottom: 74px;
   }
 }
 #subscription-box{
@@ -72,10 +72,10 @@
     margin-bottom: calc(270px / 2);
   }
   @include media-breakpoint-down(md){
-    margin-bottom: calc(200px / 2);
+    margin-bottom: 200px;
   }
   @include media-breakpoint-down(xs){
-    margin-bottom: calc(120px / 2);
+    margin-bottom: 120px;
   }
 
 }
