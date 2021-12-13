@@ -7,7 +7,7 @@
     margin-bottom: calc(394px / 2);
   }
   @include media-breakpoint-down(md) {
-    margin-bottom: calc(56px / 2);
+    margin-bottom: 56px;
   }
   .hero-top{
     max-width:696px;
@@ -15,11 +15,9 @@
     display: flex;
     flex-direction: column;
     @include media-breakpoint-down(md) {
-      padding: 48px 0;
+      padding: 48px 56px;
     }
     @include media-breakpoint-down(xs) {
-      max-width: 480px;
-      margin: 0 auto;
       padding: 8px 0 24px;
     }
     .title{
@@ -42,9 +40,13 @@
 .cards3d{
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 45px;
+  column-gap: 45px;
+  @include media-breakpoint-down(md) {
+    column-gap: 20px;
+  }
   @include media-breakpoint-down(xs) {
     grid-template-columns: 1fr;
+    row-gap: 12px;
   }
 }
 
@@ -54,7 +56,7 @@
     margin-bottom: calc(545px / 2);
   }
   @include media-breakpoint-down(md){
-    margin-bottom: calc(74px / 2);
+    margin-bottom: 74px;
   }
 }
 #featured-professionals{
@@ -63,7 +65,7 @@
     margin-bottom: calc(534px / 2);
   }
   @include media-breakpoint-down(md){
-    margin-bottom: calc(74px / 2);
+    margin-bottom: 74px;
   }
 }
 #subscription-box{
@@ -72,10 +74,10 @@
     margin-bottom: calc(270px / 2);
   }
   @include media-breakpoint-down(md){
-    margin-bottom: calc(200px / 2);
+    margin-bottom: 200px;
   }
   @include media-breakpoint-down(xs){
-    margin-bottom: calc(120px / 2);
+    margin-bottom: 120px;
   }
 
 }

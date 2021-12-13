@@ -5,32 +5,36 @@
   min-height: 402px;
   display: grid;
   grid-template-columns: 2fr 3fr;
-  gap:0px;
-  text-align: center;
+  border-radius: 8px;
+  overflow: hidden;
   @include media-breakpoint-down(md) {
-    min-height: 0px;
-    grid-template-columns: 1fr;
-    gap:0px;
+    min-height: unset;
+    grid-template-columns: 1fr;  
+    margin-left: 56px;
+    margin-right: 56px;
+  }
+  @include media-breakpoint-down(xs) {
+    margin-left: unset;
+    margin-right: unset;
   }
 
   .illustration{
-
-    padding:0 0 0 10%;
     display: flex;
+    justify-content: center;
     align-items: center;
     background: linear-gradient(180deg, #AEF3E5 0%, #54D8BD 99.99%, #54D8BD 100%);
-    border-radius: 8px 0px 0px 8px;
-    
+    overflow: hidden;
     img{
-      width: 373px;
+      width: auto;
+      height: 401px;
       @include media-breakpoint-down(md) {
-        width: 400px;
-        border-radius: 8px 8px 0px 0px;
-        padding: 20px;
+        max-width: 540px;
+        width: 100%;
+        padding: 0;
       }
       @include media-breakpoint-down(xs) {
-        width: 258px;
-        padding: 20px;
+        max-width: 414px;
+        height: auto;
       }
     }
   }
@@ -39,41 +43,32 @@
 
     display: flex;
     align-items: center;
-    padding:48px;
+    padding-left: 40px;
+    padding-right: 40px;
     background: #F3F2F5;
-    border-radius: 0px 8px 8px 0px;
-    .heading-s{
-      margin-bottom:28px;
-    }
-    .body-xl{
-      margin-bottom:28px;
-      color: #736E7D;
-      margin-bottom: 84px;
-    }
-
     @include media-breakpoint-down(md) {
-
-      display: block;
-      padding: 64px 24px 116px;
-      border-radius: 0px 0px 8px 8px;
-
-      .heading-s{
+      padding: 61px 24px 32px;
+      .info-cont{
+        width: 100%;
+      }
+    }
+    @include media-breakpoint-down(xs) {
+      padding: 32px 20px;
+    }
+    .heading-s{
+      margin-top: 12px;
+      margin-bottom: 28px;
+      @include media-breakpoint-down(md) {
         margin-bottom:12px;
       }
-
-      .body-xl{
-        margin-bottom:24px;
-        color: #736E7D;
+    }
+    .body-xl{
+      color: #736E7D;
+      margin-bottom: 28px;
+      @include media-breakpoint-down(md) {
+        margin-bottom: 24px;
       }
-
     }
-
-    @include media-breakpoint-down(xs) {
-
-      padding: 32px 32px 108px 24px;
-
-    }
-
   }
 
   .form{
@@ -89,8 +84,8 @@
     }
 
     .field{
-      max-width: 470px;
-      width: calc(100% - 200px);
+      width: calc(100% - 176px);
+      max-width: 391px;
       input{
         width: 100%;
         border: 0px;

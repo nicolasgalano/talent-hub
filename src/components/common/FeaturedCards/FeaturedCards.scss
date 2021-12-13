@@ -5,6 +5,9 @@
     display: flex;
     align-items: center;
     margin-bottom: 48px;
+    @include media-breakpoint-down(md){
+      margin-bottom: 32px;
+    }
     .title{
       display: flex;
       flex: 1 0 auto;
@@ -21,7 +24,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     column-gap: 32px;
-    row-gap: 24px;
+    row-gap: 34px;
     @include media-breakpoint-down(lg){
       display: flex;
       .slick-list{
@@ -36,6 +39,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      row-gap: 24px;
       .card{
         width: 100%;
         max-width: 380px;

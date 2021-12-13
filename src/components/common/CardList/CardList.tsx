@@ -104,7 +104,7 @@ const CardList:FC<CardListProps> = ({data}) => {
   );
 
   const handleOpenFilter = () => {
-    if(widthBrowser >= 640){
+    if(widthBrowser > 640){
       setOpenFilter(!openFilter);
     }else{
       modalRef.current.openModal();
@@ -128,7 +128,7 @@ const CardList:FC<CardListProps> = ({data}) => {
 
   useEffect(() => {
     // Listener if browser width changed
-    if(widthBrowser >= 640){
+    if(widthBrowser > 640){
       if(modalRef.current.display()){
         modalRef.current.closeModal();
         setOpenFilter(true);

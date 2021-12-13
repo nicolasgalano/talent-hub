@@ -28,6 +28,16 @@
     margin-top: 32px;
     margin-bottom: 33px;
   }
+  .container{
+    @include media-breakpoint-down(md){
+      padding-left: 56px;
+      padding-right: 56px;
+    }
+    @include media-breakpoint-down(xs){
+      padding-left: unset;
+      padding-right: unset;
+    }
+  }
   .row{
     display: grid;
     grid-template-columns: 1fr 1fr;

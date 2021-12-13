@@ -46,6 +46,9 @@
     @include media-breakpoint-down(md) {
       margin-top: 26px;
     }
+    @include media-breakpoint-down(xs) {
+      margin-top: 0;
+    }
       .title{
         margin-bottom: 20px;
         @include media-breakpoint-down(xs) {    
