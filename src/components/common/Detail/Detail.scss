@@ -2,6 +2,14 @@
 @import '../../../assets/scss/utils/Mixins.scss';
 
 #detail{
+  @include media-breakpoint-down(md){
+    padding-left: 64px;
+    padding-right: 64px;
+  }
+  @include media-breakpoint-down(xs){
+    padding-left: unset;
+    padding-right: unset;
+  }
   .back{
     margin-top: 59px;
     margin-bottom: 63px;
