@@ -84,7 +84,15 @@
           column-gap: 28px;
           row-gap: 20px;
         }
-        @include label()
+        @include label();
+        .radio label{
+          &::before{
+            border-radius: 100%;
+          }
+          &::after{
+            background-color: #FF2D55 !important;
+          }
+        }
       }
       .salary{
         display: flex;

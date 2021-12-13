@@ -1,7 +1,7 @@
 import { FC, useRef, useState } from "react";
 
 // UI Semantic
-import { Checkbox, Dropdown } from "semantic-ui-react";
+import { Checkbox, Dropdown, Radio } from "semantic-ui-react";
 
 // UI Decentraland
 import { Button } from 'decentraland-ui/dist/components/Button/Button';
@@ -27,6 +27,7 @@ import { useHistory } from "react-router";
 const OpeningCreate:FC = () =>{
   const { t } = useTranslation([namespaces.pages.openingcreate, namespaces.common]);
   const [updateFile, setUploadFile] = useState(false);
+  const [organizationOrProject, setOrganizationOrProject] = useState('organization');
   const modalRef = useRef<ModalHandle>(null);
   const history = useHistory();
 
@@ -34,6 +35,8 @@ const OpeningCreate:FC = () =>{
   const handleCloseModal = () => modalRef.current.closeModal();
 
   const handleSubmit = () => history.push('/openings/post-a-job/success');
+
+  const handleChangeOrganizationOrProject = (value) => setOrganizationOrProject(value);
 
   return(
     <div className="custom-form" id="post-a-job">
@@ -187,6 +190,21 @@ const OpeningCreate:FC = () =>{
                 label={t("general.organization", {ns: namespaces.common})}
                 htmlFor="project-name"
                 required />
+            </div>
+            {/* Radio button - Organization or project */}
+            <div className="checkbox-inline">
+              <Radio
+                label='Organization'
+                name='radioGroup'
+                value='organization'
+                checked={organizationOrProject === 'organization'}
+                onChange={(event, data) => handleChangeOrganizationOrProject(data.value)} />
+              <Radio
+                label='Project'
+                name='radioGroup'
+                value='project'
+                checked={organizationOrProject === 'project'}
+                onChange={(event, data) => handleChangeOrganizationOrProject(data.value)} />
             </div>
             <div>
               {/* Input Email */}
