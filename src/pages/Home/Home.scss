@@ -15,11 +15,9 @@
     display: flex;
     flex-direction: column;
     @include media-breakpoint-down(md) {
-      padding: 48px 0;
+      padding: 48px 56px;
     }
     @include media-breakpoint-down(xs) {
-      max-width: 480px;
-      margin: 0 auto;
       padding: 8px 0 24px;
     }
     .title{
@@ -42,9 +40,13 @@
 .cards3d{
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 45px;
+  column-gap: 45px;
+  @include media-breakpoint-down(md) {
+    column-gap: 20px;
+  }
   @include media-breakpoint-down(xs) {
     grid-template-columns: 1fr;
+    row-gap: 12px;
   }
 }
 

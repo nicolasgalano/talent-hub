@@ -10,6 +10,12 @@
   @include media-breakpoint-down(md) {
     min-height: unset;
     grid-template-columns: 1fr;  
+    margin-left: 56px;
+    margin-right: 56px;
+  }
+  @include media-breakpoint-down(xs) {
+    margin-left: unset;
+    margin-right: unset;
   }
 
   .illustration{
