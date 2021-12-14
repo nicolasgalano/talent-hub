@@ -24,12 +24,12 @@ $animation-duration: 0.4s;
   &.active {
     .control {
       &::after {
-        border-bottom: 2px solid $color-primary;
+        border-bottom: 2px solid $color-grey-700;
         transform: scaleX(150);
       }
     }
     .label-component-form {
-      color: $color-primary;
+      // color: $color-grey-700;
       @include label-active();
     }
   }
@@ -59,7 +59,7 @@ $animation-duration: 0.4s;
     position: relative;
     width: 100%;
     &::after {
-      border-bottom: 2px solid $color-primary;
+      border-bottom: 2px solid $color-grey-700;
       bottom: 0;
       content: "";
       display: block;
@@ -85,5 +85,6 @@ $animation-duration: 0.4s;
     outline: 0;
     padding: 0 12px 8px 0;
     width: 100%;
+    resize: none;
   }
 }

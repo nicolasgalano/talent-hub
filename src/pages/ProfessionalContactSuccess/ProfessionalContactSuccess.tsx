@@ -12,9 +12,9 @@ const ProfessionalContactSuccess: FC = () => {
 
   return (
     <Success 
-      title={t('openingcontact.title')}
-      description={t('openingcontact.description')}
-      btnText={t('openingcontact.button')}
+      title={t('professionalcontact.title')}
+      description={t('professionalcontact.description')}
+      btnText={t('professionalcontact.button')}
       to="/"
       />
   )
