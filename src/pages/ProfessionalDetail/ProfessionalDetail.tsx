@@ -24,8 +24,9 @@ const ProfessionalDetail: FC = () => {
 
   // TODO: Only for testing porpuse
   // we get the name of the URL to use in the title of About
-  let path = window.location.pathname;
-  path = path.split('/').at(-1);
+  let path: string | string[] = window.location.pathname;
+  path = path.split('/');
+  path = path[path.length - 1];
   
   let doc: SingleProfileType = null;
 
