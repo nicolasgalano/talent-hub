@@ -1,0 +1,30 @@
+.skeleton-element{
+  display: block;
+  background-color: #ddd;
+  border-radius: 4px;
+}
+.skeleton{
+  &-title{
+    width: 80%;
+    height: 20px;
+    margin-bottom: 10px;
+  }
+  &-subtitle{
+    width: 60%;
+    height: 17px;
+  }
+  &-text{
+    width: 100%;
+    height: 16px;
+    margin-bottom: 8px;
+  }
+  &-avatar{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+  }
+  &-thumbnail{
+    width: 100px;
+    height: 100px;
+  }
+}

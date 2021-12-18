@@ -85,28 +85,23 @@ const Home:FC = () => {
         </div>
       </div>
 
-      {
-        (!jobsLoading && !jobsError) &&
-          <div className="ui container" id={`featured-${ t("featured.jobs") }`}>
-            <FeaturedCards 
-              data={jobs}
-              title={`Featured ${ t("featured.jobs") }`}
-              action={`view all ${ t("featured.jobs") }`}
-              to="/openings" />
-          </div>
-      }
+      <div className="ui container" id={`featured-${ t("featured.jobs") }`}>
+        <FeaturedCards 
+          loading={jobsLoading}
+          data={jobs}
+          title={`Featured ${ t("featured.jobs") }`}
+          action={`view all ${ t("featured.jobs") }`}
+          to="/openings" />
+      </div>
 
-
-      {
-        (!professionalsLoading && !professionalsError) &&
-          <div className="ui container" id={`featured-${ t("featured.professionals") }`}>
-            <FeaturedCards 
-              data={professionals}
-              title={`Featured ${ t("featured.professionals") }`}
-              action={`view all ${ t("featured.professionals") }`}
-              to="/professionals" />
-          </div>
-      }
+      <div className="ui container" id={`featured-${ t("featured.professionals") }`}>
+        <FeaturedCards 
+          loading={professionalsLoading}
+          data={professionals}
+          title={`Featured ${ t("featured.professionals") }`}
+          action={`view all ${ t("featured.professionals") }`}
+          to="/professionals" />
+      </div>
 
       <div className="ui container" id="subscription-box">
         <SubscriptionBox
