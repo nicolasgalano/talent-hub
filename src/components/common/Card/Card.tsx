@@ -28,11 +28,8 @@ const Card: FC<CardProps> = ({img, title, company, description, date, location, 
           }
           <div className="txt">
             <Typography element="h3" variant="body-xl" className="title">{title}</Typography>
-            {
-              company ?
-                <Typography element="h4" variant="body-m" className="subtitle">{company}</Typography> :
-                <Typography element="h4" variant="body-m" className="subtitle">{location}</Typography>
-            }
+            { company && <Typography element="h4" variant="body-m" className="subtitle">{company}</Typography> }
+            { location && <Typography element="h4" variant="body-m" className="subtitle">{location}</Typography> } 
           </div>
         </div>
         <div className="body">

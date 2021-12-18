@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import SkeletonsElement from "../SkeletonsElement/SkeletonsElement";
+import Skeleton from "../Skeleton/Skeleton";
 
 interface FeaturedCardsProps {
   title: string;
@@ -17,9 +19,10 @@ interface FeaturedCardsProps {
   to?: string;
   data?: Array<CardProps>;
   className?: object | string;
+  loading?: boolean;
 }
  
-const FeaturedCards: FC<FeaturedCardsProps> = ({title, action, to, data, className}) => {
+const FeaturedCards: FC<FeaturedCardsProps> = ({title, action, to, data, className, loading = false}) => {
 
   const settings = {
     slidesToShow: 1.5,
@@ -61,17 +64,21 @@ const FeaturedCards: FC<FeaturedCardsProps> = ({title, action, to, data, classNa
       </div>
       <Slider className="slide-cards" {...settings}>
         { 
-          data.map((job, index) => (
-            <Card 
-              title={job.title}
-              img={job.img}
-              company={job.company}
-              description={job.description}
-              date={job.date}
-              location={job.location}
-              to={job.to}
-              key={`featured-card-${index}`} />
-          ))
+          loading ?
+            [1,2,3,4,5,6].map(() => (
+              <Skeleton />
+            ))  :
+            data.map((job, index) => (
+              <Card 
+                title={job.title}
+                img={job.img}
+                company={job.company}
+                description={job.description}
+                date={job.date}
+                location={job.location}
+                to={job.to}
+                key={`featured-card-${index}`} />
+            ))
         }
       </Slider>
       <div className="view-all-mobile">
