@@ -1,4 +1,4 @@
-import React, { FC, Fragment } from 'react';
+import React, { FC, Fragment, useEffect } from 'react';
 
 // Files
 import './Openings.scss';
@@ -13,8 +13,27 @@ import CardList from '../../components/common/CardList/CardList';
 import Tabs from '../../components/common/Tabs/Tabs';
 import Hero from '../../components/common/Hero/Hero';
 
+// redux
+import { useAppDispatch, useAppSelector } from '../../components/hooks/hooks';
+import { getAllJobs } from '../../redux/slices/jobsSlices';
+
 const Openings: FC = () => {
   const { t } = useTranslation([namespaces.common, namespaces.pages.openings]);
+
+  // redux
+  const {data: jobs, loading: jobsLoading} = useAppSelector((state) => state.jobs);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    jobs.length !== 0 && dispatch(getAllJobs());
+  }, [])
+
+  useEffect(() => {
+    console.log('fuera data: ', jobs);
+    if(jobs.length !== 0){
+      console.log('data: ', jobs);
+    }
+  }, [jobs])
 
   const dataTab = {
     options: [
@@ -44,7 +63,7 @@ const Openings: FC = () => {
           to="/openings/post-a-job"
           buttonText={t("hero.button", {ns: namespaces.pages.openings})}
         />
-        <CardList data={dataJobs} />
+        <CardList data={jobs} loading={jobsLoading}/>
       </div>
     </Fragment>
   );

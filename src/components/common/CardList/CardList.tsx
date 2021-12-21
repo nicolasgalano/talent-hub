@@ -22,12 +22,14 @@ import { useWindowSize } from "../../hooks/useWindowsSize";
 import Range from "../Range/Range";
 import Label from "../Label/Label";
 import FilterButtons from "../FilterButtons/FilterButtons";
+import Skeleton from "../Skeleton/Skeleton";
 
 interface CardListProps {
   data: Array<object>;
+  loading?: boolean;
 }
 
-const CardList:FC<CardListProps> = ({data}) => {
+const CardList:FC<CardListProps> = ({data, loading}) => {
   const [openFilter, setOpenFilter] = useState(false);
   const [cards, setCards] = useState(null);
   const modalRef = useRef<ModalHandle>(null);
@@ -179,7 +181,10 @@ const CardList:FC<CardListProps> = ({data}) => {
           { renderFilters() }
         </div>
         <div className="cards-container">
-          { cards &&
+          { loading ?
+              [1,2,3,4,5,6].map((key, index) => (
+                <Skeleton key={`skeletor-${index}`} />
+              )) :
               cards.map((doc: CardProps, key: string) => (
                 <Card
                   title={doc.title}

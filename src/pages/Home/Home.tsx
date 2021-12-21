@@ -35,7 +35,7 @@ const Home:FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getAllJobs());
+    !jobs.length && dispatch(getAllJobs());
   }, [])
 
 
