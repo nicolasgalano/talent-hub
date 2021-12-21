@@ -21,26 +21,40 @@ import Card3D from '../../components/common/Card3D/Card3D';
 import Typography from '../../components/common/Typography/Typography';
 import FeaturedCards from '../../components/common/FeaturedCards/FeaturedCards';
 
+// redux
+import { useAppDispatch, useAppSelector } from '../../components/hooks/hooks';
+import { getAllJobs } from '../../redux/slices/jobsSlices';
+// import { setJobs } from '../../redux/slices/jobsSlices';
+
 const Home:FC = () => {
   const { t } = useTranslation(namespaces.pages.home);
-  const [jobs, setJobs] = useState<CardProps[] | null>(null);
   const [professionals, setProfessionals] = useState<CardProps[] | null>(null);
-
-  // Get jobs
-  const { response: jobsResponse, error: jobsError, loading: jobsLoading } = useApi({
-    method: 'GET',
-    url: '/jobs'
-  });
+  
+  // redux
+  const {data: jobs, loading: jobsLoading} = useAppSelector((state) => state.jobs);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    jobsError && console.log('Error on request: ', jobsError.response); // TODO: Only for testing porpuse
+    dispatch(getAllJobs());
+  }, [])
 
-    if(jobsResponse && !jobsError) {
-      let data = jobsResponse.data;
-      data.length && setJobs(formatJobs(data));
-      // console.log('resJobs: ', formatJobs(data));
-    }
-  }, [jobsResponse, jobsError])
+
+  // // Get jobs
+  // const { response: jobsResponse, error: jobsError, loading: jobsLoading } = useApi({
+  //   method: 'GET',
+  //   url: '/jobs'
+  // });
+
+  // useEffect(() => {
+  //   jobsError && console.log('Error on request: ', jobsError.response); // TODO: Only for testing porpuse
+
+  //   if(jobsResponse && !jobsError) {
+  //     let data = jobsResponse.data;
+  //     data.length && dispatch(setJobs(formatJobs(data)));
+  //     // console.log('resJobs: ', formatJobs(data));
+  //   }
+  // }, [jobsResponse, jobsError])
+
 
   // Get professionals
   const { response: professionalsResponse, error: professionalsError, loading: professionalsLoading } = useApi({

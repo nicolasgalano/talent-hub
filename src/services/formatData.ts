@@ -2,7 +2,7 @@ import { CardProps } from "../components/common/Card/Card";
 
 export const formatJobs = (res: any) => {
   let resJobs: CardProps[] = [];
-  res.map((job) => {
+  res.map((job: any) => {
     const resJob: CardProps = {
       title: job.PositionOffered,
       img: job.CompanyLogo && job.CompanyLogo.url,
@@ -18,7 +18,7 @@ export const formatJobs = (res: any) => {
 
 export const formatProfessionals = (res: any) => {
   let resProfessionals: CardProps[] = [];
-  res.map((job) => {
+  res.map((job: any) => {
     const resJob: CardProps = {
       title: job.Fullname,
       img: job.ProfilePicture && job.ProfilePicture.formats.thumbnail.url,
