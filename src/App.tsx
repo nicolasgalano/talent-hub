@@ -1,19 +1,19 @@
 import React from 'react';
 
-import Routes from './routes/Routes';
+// Redux
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
-// import './assets/fonts/SFUIDisplay-Semibold.eot'
-// import './assets/fonts/SFUIDisplay-Semibold.woff2'
-// import './assets/fonts/SFUIDisplay-Semibold.woff'
-// import './assets/fonts/SFUIDisplay-Semibold.ttf'
-// import './assets/fonts/SFUIDisplay-Semibold.svg'
+// Routes
+import Routes from './routes/Routes'; 
 
 function App(): JSX.Element {
   return (
-    <React.Suspense fallback={<></>}>
-      <Routes />
-    </React.Suspense>
+    <Provider store={store}>
+      <React.Suspense fallback={<></>}>
+        <Routes />
+      </React.Suspense>
+    </Provider>
   )
 }
-
 export default App;

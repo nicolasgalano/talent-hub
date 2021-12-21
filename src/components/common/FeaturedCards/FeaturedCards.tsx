@@ -65,8 +65,8 @@ const FeaturedCards: FC<FeaturedCardsProps> = ({title, action, to, data, classNa
       <Slider className="slide-cards" {...settings}>
         { 
           loading ?
-            [1,2,3,4,5,6].map(() => (
-              <Skeleton />
+            [1,2,3,4,5,6].map((key, index) => (
+              <Skeleton key={`skeletor-${index}`} />
             ))  :
             data.map((job, index) => (
               <Card 
