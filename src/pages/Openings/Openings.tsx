@@ -24,7 +24,7 @@ const Openings: FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    data.length === 0 && dispatch(getAllJobs({start: 1, limit: 6}));
+    data.length === 0 && dispatch(getAllJobs({start: 0, limit: 6}));
   }, [])
 
   const dataTab = {
