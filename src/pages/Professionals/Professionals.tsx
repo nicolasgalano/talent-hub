@@ -1,8 +1,7 @@
-import React, { FC, Fragment } from 'react';
+import React, { FC, Fragment, useEffect } from 'react';
 
 // Files
 import './Professionals.scss';
-import dataProfessionals from '../../data/professionals.json'
 import { useTranslation } from 'react-i18next';
 import { namespaces } from '../../i18n/i18n.constants';
 import { professionals3D } from '../../assets/illustrations';
@@ -12,8 +11,20 @@ import CardList from '../../components/common/CardList/CardList';
 import Tabs from '../../components/common/Tabs/Tabs';
 import Hero from '../../components/common/Hero/Hero';
 
+// redux
+import { useAppDispatch, useAppSelector } from '../../components/hooks/hooks';
+import { getAllProfessionals } from '../../redux/slices/professionalsSlices';
+
 const Professionals:FC = () => {
   const { t } = useTranslation([namespaces.common, namespaces.pages.professionals]);
+
+  // redux
+  const {data, loading} = useAppSelector((state) => state.professionals);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    data.length === 0 && dispatch(getAllProfessionals({start: 1, limit: 6}));
+  }, [])
 
   const dataTab = {
     options: [
@@ -43,7 +54,7 @@ const Professionals:FC = () => {
           to="/professionals/create"
           buttonText={t("hero.button", { ns: namespaces.pages.professionals})}
           />
-        <CardList data={dataProfessionals} />
+        <CardList data={data} loading={loading}/>
       </div>
     </Fragment>
   );

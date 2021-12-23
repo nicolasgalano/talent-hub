@@ -25,13 +25,12 @@ import FilterButtons from "../FilterButtons/FilterButtons";
 import Skeleton from "../Skeleton/Skeleton";
 
 interface CardListProps {
-  data: Array<object>;
+  data: CardProps[];
   loading?: boolean;
 }
 
-const CardList:FC<CardListProps> = ({data, loading}) => {
+const CardList:FC<CardListProps> = ({data: cards, loading}) => {
   const [openFilter, setOpenFilter] = useState(false);
-  const [cards, setCards] = useState(null);
   const modalRef = useRef<ModalHandle>(null);
   const {width: widthBrowser} = useWindowSize();
   const { t } = useTranslation(namespaces.common);
@@ -113,21 +112,6 @@ const CardList:FC<CardListProps> = ({data, loading}) => {
     }
   };
 
-  const getCards = () => {
-    let allCards = [];
-    // we increase the data size
-    for (let index = 0; index < 9; index++) {
-      const random = Math.floor(Math.random() * data.length);
-      const doc = data[random];
-      allCards.push(doc);
-    }
-    return allCards;
-  }
-
-  useEffect(() => {
-    setCards(getCards());
-  }, []);
-
   useEffect(() => {
     // Listener if browser width changed
     if(widthBrowser > 640){
@@ -185,17 +169,20 @@ const CardList:FC<CardListProps> = ({data, loading}) => {
               [1,2,3,4,5,6].map((key, index) => (
                 <Skeleton key={`skeletor-${index}`} />
               )) :
-              cards.map((doc: CardProps, key: string) => (
-                <Card
-                  title={doc.title}
-                  img={doc.img}
-                  company={doc.company}
-                  description={doc.description}
-                  date={doc.date}
-                  location={doc.location}
-                  to={doc.to}
-                  key={`card-doc-${key}`}/>
-              ))
+              (cards !== null && cards.length !== 0) ?
+                cards.map((doc: CardProps, key: number) => (
+                  <Card
+                    title={doc.title}
+                    img={doc.img}
+                    company={doc.company}
+                    description={doc.description}
+                    date={doc.date}
+                    location={doc.location}
+                    to={doc.to}
+                    key={`card-doc-${key}`}/>
+                )) 
+                :
+                'No data'
           }
         </div>
         <div className="load-more">

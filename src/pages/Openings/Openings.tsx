@@ -2,7 +2,6 @@ import React, { FC, Fragment, useEffect } from 'react';
 
 // Files
 import './Openings.scss';
-import dataJobs from '../../data/openings.json'
 import { useTranslation } from 'react-i18next';
 import { namespaces } from '../../i18n/i18n.constants';
 import { openings3D } from '../../assets/illustrations';
@@ -21,19 +20,12 @@ const Openings: FC = () => {
   const { t } = useTranslation([namespaces.common, namespaces.pages.openings]);
 
   // redux
-  const {data: jobs, loading: jobsLoading} = useAppSelector((state) => state.jobs);
+  const {data, loading} = useAppSelector((state) => state.jobs);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    jobs.length !== 0 && dispatch(getAllJobs());
+    data.length === 0 && dispatch(getAllJobs({start: 1, limit: 6}));
   }, [])
-
-  useEffect(() => {
-    console.log('fuera data: ', jobs);
-    if(jobs.length !== 0){
-      console.log('data: ', jobs);
-    }
-  }, [jobs])
 
   const dataTab = {
     options: [
@@ -63,7 +55,7 @@ const Openings: FC = () => {
           to="/openings/post-a-job"
           buttonText={t("hero.button", {ns: namespaces.pages.openings})}
         />
-        <CardList data={jobs} loading={jobsLoading}/>
+        <CardList data={data} loading={loading}/>
       </div>
     </Fragment>
   );
