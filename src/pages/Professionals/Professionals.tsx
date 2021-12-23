@@ -23,7 +23,7 @@ const Professionals:FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    data.length === 0 && dispatch(getAllProfessionals({start: 1, limit: 6}));
+    data.length === 0 && dispatch(getAllProfessionals({start: 0, limit: 6}));
   }, [])
 
   const dataTab = {
