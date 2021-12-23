@@ -1,17 +1,11 @@
 import { FC, Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-// Services
-import { formatJobs, formatProfessionals } from '../../services/formatData';
-
 // Files
 import { openings3D, professionals3D } from '../../assets/illustrations';
 import { namespaces } from '../../i18n/i18n.constants';
 import SubscriptionBox from '../../components/common/SubscriptionBox/SubscriptionBox';
 import './Home.scss';
-
-// Hooks
-import useApi from '../../components/hooks/useApi';
 
 // Interface
 import { CardProps } from '../../components/common/Card/Card';
@@ -24,53 +18,21 @@ import FeaturedCards from '../../components/common/FeaturedCards/FeaturedCards';
 // redux
 import { useAppDispatch, useAppSelector } from '../../components/hooks/hooks';
 import { getAllJobs } from '../../redux/slices/jobsSlices';
-// import { setJobs } from '../../redux/slices/jobsSlices';
+import { getAllProfessionals } from '../../redux/slices/professionalsSlices';
 
 const Home:FC = () => {
   const { t } = useTranslation(namespaces.pages.home);
-  const [professionals, setProfessionals] = useState<CardProps[] | null>(null);
   
   // redux
-  const {data: jobs, loading: jobsLoading} = useAppSelector((state) => state.jobs);
   const dispatch = useAppDispatch();
+  const {data: jobs, loading: jobsLoading} = useAppSelector((state) => state.jobs);
+  const {data: professionals, loading: professionalsLoading} = useAppSelector((state) => state.professionals);
 
   useEffect(() => {
-    !jobs.length && dispatch(getAllJobs());
+    jobs.length === 0 && dispatch(getAllJobs({start: 0, limit: 6}));
+    professionals.length === 0 && dispatch(getAllProfessionals({start: 0, limit: 6}));
   }, [])
 
-
-  // // Get jobs
-  // const { response: jobsResponse, error: jobsError, loading: jobsLoading } = useApi({
-  //   method: 'GET',
-  //   url: '/jobs'
-  // });
-
-  // useEffect(() => {
-  //   jobsError && console.log('Error on request: ', jobsError.response); // TODO: Only for testing porpuse
-
-  //   if(jobsResponse && !jobsError) {
-  //     let data = jobsResponse.data;
-  //     data.length && dispatch(setJobs(formatJobs(data)));
-  //     // console.log('resJobs: ', formatJobs(data));
-  //   }
-  // }, [jobsResponse, jobsError])
-
-
-  // Get professionals
-  const { response: professionalsResponse, error: professionalsError, loading: professionalsLoading } = useApi({
-    method: 'GET',
-    url: '/professionals'
-  });
-
-  useEffect(() => {
-    professionalsError && console.log('Error on request: ', professionalsError.response); // TODO: Only for testing porpuse
-
-    if(professionalsResponse && !professionalsError) {
-      let data = professionalsResponse.data;
-      data.length && setProfessionals(formatProfessionals(data));
-      // console.log('resProfessionals: ', formatProfessionals(data));
-    }
-  }, [professionalsResponse, professionalsError])
 
   return (
     <Fragment>

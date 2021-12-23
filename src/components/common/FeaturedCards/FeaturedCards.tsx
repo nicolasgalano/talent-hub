@@ -68,17 +68,19 @@ const FeaturedCards: FC<FeaturedCardsProps> = ({title, action, to, data, classNa
             [1,2,3,4,5,6].map((key, index) => (
               <Skeleton key={`skeletor-${index}`} />
             ))  :
-            data.map((job, index) => (
-              <Card 
-                title={job.title}
-                img={job.img}
-                company={job.company}
-                description={job.description}
-                date={job.date}
-                location={job.location}
-                to={job.to}
-                key={`featured-card-${index}`} />
-            ))
+            (data.length !== 0) ?
+              data.map((job, index) => (
+                <Card 
+                  title={job.title}
+                  img={job.img}
+                  company={job.company}
+                  description={job.description}
+                  date={job.date}
+                  location={job.location}
+                  to={job.to}
+                  key={`featured-card-${index}`} />
+              ))  :
+              'No data'
         }
       </Slider>
       <div className="view-all-mobile">
