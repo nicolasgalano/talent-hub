@@ -19,11 +19,11 @@ const Professionals:FC = () => {
   const { t } = useTranslation([namespaces.common, namespaces.pages.professionals]);
 
   // redux
-  const {data, loading} = useAppSelector((state) => state.professionals);
+  const {data, loading} = useAppSelector((state) => state.professionals.allProfessionals);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    data.length === 0 && dispatch(getAllProfessionals({start: 0, limit: 6}));
+    data.length === 0 && dispatch(getAllProfessionals('?_start=0&_limit=6&_sort=id:DESC'));
   }, [])
 
   const dataTab = {

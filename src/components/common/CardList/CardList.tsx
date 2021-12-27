@@ -165,24 +165,32 @@ const CardList:FC<CardListProps> = ({data: cards, loading}) => {
           { renderFilters() }
         </div>
         <div className="cards-container">
-          { loading ?
+          {/* Show result */}
+          {
+            (cards !== null && cards.length !== 0) &&
+              cards.map((doc: CardProps, key: number) => (
+                <Card
+                  title={doc.title}
+                  img={doc.img}
+                  company={doc.company}
+                  description={doc.description}
+                  date={doc.date}
+                  location={doc.location}
+                  to={doc.to}
+                  key={`card-doc-${key}`}/>
+              ))
+          }
+          {/* Show Skeleton while loading */}
+          {
+            loading && 
               [1,2,3,4,5,6].map((key, index) => (
                 <Skeleton key={`skeletor-${index}`} />
-              )) :
-              (cards !== null && cards.length !== 0) ?
-                cards.map((doc: CardProps, key: number) => (
-                  <Card
-                    title={doc.title}
-                    img={doc.img}
-                    company={doc.company}
-                    description={doc.description}
-                    date={doc.date}
-                    location={doc.location}
-                    to={doc.to}
-                    key={`card-doc-${key}`}/>
-                )) 
-                :
-                'No data'
+              ))
+          }
+          {/* Show no result */}
+          {
+            (!loading && (cards === null || cards.length === 0)) &&
+              'No data to show'
           }
         </div>
         <div className="load-more">

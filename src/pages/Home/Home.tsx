@@ -17,20 +17,20 @@ import FeaturedCards from '../../components/common/FeaturedCards/FeaturedCards';
 
 // redux
 import { useAppDispatch, useAppSelector } from '../../components/hooks/hooks';
-import { getAllJobs } from '../../redux/slices/jobsSlices';
-import { getAllProfessionals } from '../../redux/slices/professionalsSlices';
+import { getFeaturedJobs } from '../../redux/slices/jobsSlices';
+import { getFeaturedProfessionals } from '../../redux/slices/professionalsSlices';
 
 const Home:FC = () => {
   const { t } = useTranslation(namespaces.pages.home);
   
   // redux
   const dispatch = useAppDispatch();
-  const {data: jobs, loading: jobsLoading} = useAppSelector((state) => state.jobs);
-  const {data: professionals, loading: professionalsLoading} = useAppSelector((state) => state.professionals);
+  const {data: jobs, loading: jobsLoading} = useAppSelector((state) => state.jobs.featuredJobs);
+  const {data: professionals, loading: professionalsLoading} = useAppSelector((state) => state.professionals.featuredProfessionals);
 
   useEffect(() => {
-    jobs.length === 0 && dispatch(getAllJobs({start: 0, limit: 6}));
-    professionals.length === 0 && dispatch(getAllProfessionals({start: 0, limit: 6}));
+    jobs.length === 0 && dispatch(getFeaturedJobs());
+    professionals.length === 0 && dispatch(getFeaturedProfessionals());
   }, [])
 
 

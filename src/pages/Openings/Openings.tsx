@@ -20,11 +20,11 @@ const Openings: FC = () => {
   const { t } = useTranslation([namespaces.common, namespaces.pages.openings]);
 
   // redux
-  const {data, loading} = useAppSelector((state) => state.jobs);
+  const {data, loading} = useAppSelector((state) => state.jobs.allJobs);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    data.length === 0 && dispatch(getAllJobs({start: 0, limit: 6}));
+    data.length === 0 && dispatch(getAllJobs('?_start=0&_limit=6&_sort=id:DESC'));
   }, [])
 
   const dataTab = {
