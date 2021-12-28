@@ -1,11 +1,15 @@
-import React, { FC, Fragment, useEffect } from 'react';
+import React, { FC, Fragment, useCallback, useEffect, useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 
 // Files
 import './Openings.scss';
+import '../../assets/scss/utils/LoadMore.scss';
 import { useTranslation } from 'react-i18next';
 import { namespaces } from '../../i18n/i18n.constants';
 import { openings3D } from '../../assets/illustrations';
 
+// UI Decentraland
+import { Button } from 'decentraland-ui/dist/components/Button/Button';
 
 // UI Custom Component
 import CardList from '../../components/common/CardList/CardList';
@@ -14,18 +18,64 @@ import Hero from '../../components/common/Hero/Hero';
 
 // redux
 import { useAppDispatch, useAppSelector } from '../../components/hooks/hooks';
-import { getAllJobs } from '../../redux/slices/jobsSlices';
+import { getAllJobs, getCountAllJobs } from '../../redux/slices/jobsSlices';
+import { debounce } from '../../utils/debounce';
 
 const Openings: FC = () => {
   const { t } = useTranslation([namespaces.common, namespaces.pages.openings]);
+  const searchParams = useLocation().search;
+  const order = new URLSearchParams(searchParams).get('order');
+
+  const [query, setQuery] = useState(null);
+  const [queryCount, setQueryCount] = useState(null);
+  const [page, setPage] = useState(1);
+  const [lastPage, setLastPage] = useState(null);
+
+  // arg for query
+  const [queryStart, setQueryStart] = useState(0);
+  const [queryLimit, setQueryLimit] = useState(6);
+  const [querySort, setQuerySort] = useState('DESC');
+  const [querySearch, setQuerySearch] = useState('');
 
   // redux
   const {data, loading} = useAppSelector((state) => state.jobs.allJobs);
+  const countJobs = useAppSelector((state) => state.jobs.allJobs.count);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    data.length === 0 && dispatch(getAllJobs('?_start=0&_limit=6&_sort=id:DESC'));
-  }, [])
+  const createQuery = () => {
+    setQuery(`?PositionOffered_contains=${querySearch}&_start=${queryStart}&_limit=${queryLimit}&_sort=id:${querySort}`);
+    setQueryCount(`/count?PositionOffered_contains=${querySearch}`);
+  };
+
+  const handleSearch = (param: string) => {
+    setQuerySearch(encodeURI(param));
+  }
+
+  const search = useCallback(debounce(handleSearch, 500), []);
+
+  const handleFilter = (param) => {
+    console.log('Filter: ', param);
+  }
+
+  const handleSort = (sort: string) => {
+
+    const url = new URL(window.location.href);
+
+    if(sort === 'Oldest'){
+      setQuerySort('ASC');
+      // history.push('/openings?order=ASC');
+      url.searchParams.set('order', 'ASC');
+      
+    }
+    if(sort === 'Latest'){
+      setQuerySort('DESC');
+      // history.push('/openings?order=DESC');
+      url.searchParams.set('order', 'DESC');
+    }
+    
+    // window.location.search = url.toString();
+    window.history.replaceState(null, null, url);
+  }
 
   const dataTab = {
     options: [
@@ -44,6 +94,33 @@ const Openings: FC = () => {
     }
   };
 
+  useEffect(() => {
+    // data.length === 0 && dispatch(getAllJobs(query));
+    // prevent request until set state
+    if(query !== null && queryCount !== null) {
+      dispatch(getAllJobs(query));
+      dispatch(getCountAllJobs(queryCount));
+    }
+  }, [query]);
+
+  useEffect(() => {
+    createQuery();
+  }, [queryStart,
+      queryLimit,
+      querySort,
+      querySearch]);
+
+  useEffect(() => {
+    setPage(Math.ceil(queryLimit / 6));
+    // We calculate how many pages there are
+    setLastPage(Math.ceil(countJobs / 6));
+  }, [countJobs]);
+
+  useEffect(() => {
+    console.log('order: ', order);
+  }, [order])
+
+
   return ( 
     <Fragment>
       <Tabs dataTabs={dataTab} />
@@ -55,7 +132,19 @@ const Openings: FC = () => {
           to="/openings/post-a-job"
           buttonText={t("hero.button", {ns: namespaces.pages.openings})}
         />
-        <CardList data={data} loading={loading}/>
+        <CardList 
+          data={data} 
+          loading={loading} 
+          placeholderSearch='Search jobs' 
+          onSearch={search}
+          onFilter={handleFilter}
+          onSort={handleSort} />
+        <div className="load-more">
+          {
+            page < lastPage &&
+              <Button secondary >{ t("general.load-more") }</Button>
+          }
+        </div>
       </div>
     </Fragment>
   );

@@ -110,23 +110,4 @@
       }
     }
   }
-  .load-more{
-    display: flex;
-    justify-content: center;
-    margin-bottom: 218px;
-    @include media-breakpoint-down(xxl){
-      margin-bottom: 256px;
-    }
-    @include media-breakpoint-down(md){
-      margin-bottom: 200px;
-    }
-    @include media-breakpoint-down(xs){
-      margin-bottom: 120px;
-    }
-    .button{
-      @include media-breakpoint-down(md){
-        padding: 14px 55px !important;
-      } 
-    }
-  }
 }

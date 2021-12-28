@@ -54,7 +54,10 @@ const Professionals:FC = () => {
           to="/professionals/create"
           buttonText={t("hero.button", { ns: namespaces.pages.professionals})}
           />
-        <CardList data={data} loading={loading}/>
+        <CardList 
+          data={data} 
+          loading={loading} 
+          placeholderSearch='Search professionals' />
       </div>
     </Fragment>
   );

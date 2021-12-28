@@ -13,6 +13,17 @@ export const getAllJobs = createAsyncThunk(`/jobs/getAllJobs`, async (arg: strin
                 ))
 });
 
+export const getCountAllJobs = createAsyncThunk(`/jobs/getCountAllJobs`, async (arg: string, thunkAPI) => {
+  return await apiClient()
+                .get(`/jobs${arg}`)
+                .then((res) => (
+                  res.data
+                ))
+                .catch((err) => (
+                  thunkAPI.rejectWithValue(err.message)
+                ))
+});
+
 export const getFeaturedJobs = createAsyncThunk(`/jobs/getFeaturedJobs`, async (_, thunkAPI) => {
   return await apiClient()
                 .get(`/jobs?IsFeatured=true&_limit=6&_sort=id:DESC`)
@@ -31,6 +42,7 @@ export const jobsSlices = createSlice({
       data: [],
       error: false,
       loading: true,
+      count: 0,
     },
     featuredJobs: {
       data: [],
@@ -51,6 +63,10 @@ export const jobsSlices = createSlice({
     [getAllJobs.rejected.type]: (state, action) => {
       state.allJobs.error = action.payload;
       state.allJobs.loading = false;
+    },
+    // Count all jobs
+    [getCountAllJobs.fulfilled.type]: (state, action) => {
+      state.allJobs.count = action.payload;
     },
     // Featured jobs
     [getFeaturedJobs.pending.type]: (state, action) => {

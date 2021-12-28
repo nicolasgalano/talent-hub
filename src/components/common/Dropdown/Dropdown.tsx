@@ -8,16 +8,16 @@ interface DropDownProps {
   options: Array<string>;
   optionDefault: string;
   className?: string;
-  callback?: Function;
+  onChange?: Function;
 }
 
-const Dropdown: FC<DropDownProps> = ({options, optionDefault, className, callback}) => {
+const Dropdown: FC<DropDownProps> = ({options, optionDefault, className, onChange}) => {
 
   const [selected, setSelected] = useState(optionDefault);
 
   const handleClick = (value: string) => {
     setSelected(value);
-    callback && callback(value);
+    onChange && onChange(value);
   }
 
   return (
