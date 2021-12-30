@@ -1,5 +1,4 @@
 import React, { FC, Fragment, useEffect, useRef, useState } from "react";
-import { useRouteMatch } from "react-router";
 import clsx from 'clsx';
 
 // UI Decentraland
@@ -27,50 +26,36 @@ import Skeleton from "../Skeleton/Skeleton";
 interface CardListProps {
   data: CardProps[];
   loading?: boolean;
+  placeholderSearch: string;
+  onSearch?: Function;
+  onFilter?: Function;
+  onSort?: Function;
 }
 
-const CardList:FC<CardListProps> = ({data: cards, loading}) => {
+const CardList:FC<CardListProps> = ({data: cards, loading, placeholderSearch, onSearch, onFilter, onSort}) => {
   const [openFilter, setOpenFilter] = useState(false);
   const modalRef = useRef<ModalHandle>(null);
   const {width: widthBrowser} = useWindowSize();
   const { t } = useTranslation(namespaces.common);
   const [activeFilters, setActiveFilters] = useState({});
   const [countFilters, setCountFilters] = useState(null);
-  let {path} = useRouteMatch();
 
-  const getPage = (path: string) => {
-    let url: string = path.toLowerCase();
-    // delete symbol /
-    const urlSplited: Array<string> = path.split('/');
-    url = urlSplited[1];
-    // Capitalize First Letter
-    url = url.charAt(0) + url.slice(1);
-
-    return url;
-  }
-
-  const handlePlaceholderSearch = () => {
-    const url: string = getPage(path);
-    let placeholder: string = '';
-
-    if(url === 'openings') placeholder = 'jobs';
-    if(url === 'professionals') placeholder = 'professionals';
-    
-    return `Search ${placeholder}...`;
-  }
+  const handleSearch = (param: string) => onSearch(param);
 
   const handleActiveFilters = (filter: Array<string>, key: string) => {
-    let actFilter: object = activeFilters;
+    let actFilter: object = {...activeFilters};
+    // Not working
+    // let actFilter: object = activeFilters;
     actFilter[key] = filter;
-    let size = getActiveFiltersSize(actFilter);
+    let size = getActiveFiltersLength(actFilter);
     // Not working
     // actFilter['size'] = size;
     // working
     setCountFilters(size);
-    setActiveFilters(actFilter);    
+    setActiveFilters(actFilter);
   }
 
-  const getActiveFiltersSize = (arr) => {
+  const getActiveFiltersLength = (arr) => {
     let size: number = 0;
     for (let index in arr) {
       const val = arr[index];
@@ -127,6 +112,10 @@ const CardList:FC<CardListProps> = ({data: cards, loading}) => {
     }
   }, [widthBrowser])
 
+  useEffect(() => {
+    // onFilter(activeFilters);
+  }, [activeFilters])
+
   return(
     <Fragment>
       <div className="card-list">
@@ -134,9 +123,9 @@ const CardList:FC<CardListProps> = ({data: cards, loading}) => {
         <div className="card-list-menu">
           <div className="title">
           <TextFilter
-              placeholder={handlePlaceholderSearch()}
+              placeholder={placeholderSearch}
               value=""
-              onChange={() => console.log("searching")} />
+              onChange={(val) => handleSearch(val)} />
           </div>
           <div className="actions">
             <Button basic className="btn-filters" onClick={() => handleOpenFilter()}>
@@ -156,8 +145,9 @@ const CardList:FC<CardListProps> = ({data: cards, loading}) => {
               }
             </Button>
             <Dropdown
-              options={Array('Latest', 'Relevance')}
-              optionDefault="Latest" />
+              options={Array('Latest', 'Oldest')}
+              optionDefault="Latest"
+              onChange={(sort) => onSort(sort)} />
           </div>
         </div>
         {/* box */}
@@ -165,28 +155,33 @@ const CardList:FC<CardListProps> = ({data: cards, loading}) => {
           { renderFilters() }
         </div>
         <div className="cards-container">
-          { loading ?
+          {/* Show result */}
+          {
+            (cards !== null && cards.length !== 0) &&
+              cards.map((doc: CardProps, key: number) => (
+                <Card
+                  title={doc.title}
+                  img={doc.img}
+                  company={doc.company}
+                  description={doc.description}
+                  date={doc.date}
+                  location={doc.location}
+                  to={doc.to}
+                  key={`card-doc-${key}`}/>
+              ))
+          }
+          {/* Show Skeleton while loading */}
+          {
+            loading && 
               [1,2,3,4,5,6].map((key, index) => (
                 <Skeleton key={`skeletor-${index}`} />
-              )) :
-              (cards !== null && cards.length !== 0) ?
-                cards.map((doc: CardProps, key: number) => (
-                  <Card
-                    title={doc.title}
-                    img={doc.img}
-                    company={doc.company}
-                    description={doc.description}
-                    date={doc.date}
-                    location={doc.location}
-                    to={doc.to}
-                    key={`card-doc-${key}`}/>
-                )) 
-                :
-                'No data'
+              ))
           }
-        </div>
-        <div className="load-more">
-          <Button secondary >{ t("general.load-more") }</Button>
+          {/* Show no result */}
+          {
+            (!loading && (cards === null || cards.length === 0)) &&
+              'No data to show'
+          }
         </div>
       </div>
       <Modal ref={modalRef} theme="grey" >
