@@ -1,5 +1,5 @@
 import React, { FC, Fragment, useCallback, useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 // Files
 import './Openings.scss';
@@ -7,6 +7,7 @@ import '../../assets/scss/utils/LoadMore.scss';
 import { useTranslation } from 'react-i18next';
 import { namespaces } from '../../i18n/i18n.constants';
 import { openings3D } from '../../assets/illustrations';
+import useWindowLocation from '../../components/hooks/useWindowLocation';
 
 // UI Decentraland
 import { Button } from 'decentraland-ui/dist/components/Button/Button';
@@ -25,6 +26,8 @@ const Openings: FC = () => {
   const { t } = useTranslation([namespaces.common, namespaces.pages.openings]);
   const searchParams = useLocation().search;
   const order = new URLSearchParams(searchParams).get('order');
+
+  const url = useWindowLocation();
 
   const [query, setQuery] = useState(null);
   const [queryCount, setQueryCount] = useState(null);
@@ -63,13 +66,13 @@ const Openings: FC = () => {
 
     if(sort === 'Oldest'){
       setQuerySort('ASC');
-      // history.push('/openings?order=ASC');
+      // history.push('?order=ASC');
       url.searchParams.set('order', 'ASC');
       
     }
     if(sort === 'Latest'){
       setQuerySort('DESC');
-      // history.push('/openings?order=DESC');
+      // history.push('?order=DESC');
       url.searchParams.set('order', 'DESC');
     }
     
@@ -117,9 +120,8 @@ const Openings: FC = () => {
   }, [countJobs]);
 
   useEffect(() => {
-    console.log('order: ', order);
-  }, [order])
-
+    console.log('URL: ', url);
+  }, [url])
 
   return ( 
     <Fragment>
