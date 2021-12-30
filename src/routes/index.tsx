@@ -54,6 +54,11 @@ const jobsRoutes: RouteInterface = {
   exact: true,
   children: [
     {
+      path: '/job/:slug',
+      name: 'Detail',
+      component: OpeningDetails
+    },
+    {
       path: '/job/organization',
       name: 'Organization',
       component: OpeningDetails

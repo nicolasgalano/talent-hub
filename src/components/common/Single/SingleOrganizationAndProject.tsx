@@ -140,11 +140,12 @@ const SingleOrganizationAndProject:FC <SingleOrganizationAndProjectProps> = ({da
                   {/* Field */}
                   <Label type="review">Field</Label>
                   <div className="fields">
-                  {
+                    {/* TODO: Error on backend */}
+                  {/* {
                     data.fields.map((field, key) => (
                       <Tag key={key}>{field}</Tag>
                     ))
-                  }
+                  } */}
                   </div>
                 </div>
             }
