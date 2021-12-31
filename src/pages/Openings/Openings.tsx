@@ -1,5 +1,5 @@
 import React, { FC, Fragment, useCallback, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 
 // Files
 import './Openings.scss';
@@ -26,6 +26,7 @@ const Openings: FC = () => {
   const { t } = useTranslation([namespaces.common, namespaces.pages.openings]);
   const searchParams = useLocation().search;
   const order = new URLSearchParams(searchParams).get('order');
+  const history = useHistory();
 
   const url = useWindowLocation();
 
@@ -62,7 +63,7 @@ const Openings: FC = () => {
 
   const handleSort = (sort: string) => {
 
-    const url = new URL(window.location.href);
+    /*const url = new URL(window.location.href);
 
     if(sort === 'Oldest'){
       setQuerySort('ASC');
@@ -77,7 +78,16 @@ const Openings: FC = () => {
     }
     
     // window.location.search = url.toString();
-    window.history.replaceState(null, null, url);
+    window.history.replaceState(null, null, url);*/
+    const params = new URLSearchParams();
+    if(sort === 'Oldest') {
+      params.append("order", 'ASC');
+    }
+    else if(sort === 'Latest') {
+      params.append("order", 'DESC');
+    }
+
+    history.push({search: params.toString()});
   }
 
   const dataTab = {
