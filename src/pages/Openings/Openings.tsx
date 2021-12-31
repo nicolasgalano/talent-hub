@@ -1,4 +1,4 @@
-import React, { FC, Fragment, useCallback, useEffect, useState } from 'react';
+import React, { FC, Fragment, useCallback, useEffect, useState, useLayoutEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 
 // Files
@@ -25,7 +25,7 @@ import { debounce } from '../../utils/debounce';
 const Openings: FC = () => {
   const { t } = useTranslation([namespaces.common, namespaces.pages.openings]);
   const searchParams = useLocation().search;
-  const order = new URLSearchParams(searchParams).get('order');
+  // const order = new URLSearchParams(searchParams).get('order');
   const history = useHistory();
 
   const url = useWindowLocation();
@@ -38,7 +38,7 @@ const Openings: FC = () => {
   // arg for query
   const [queryStart, setQueryStart] = useState(0);
   const [queryLimit, setQueryLimit] = useState(6);
-  const [querySort, setQuerySort] = useState('DESC');
+  const [querySort, setQuerySort] = useState('');
   const [querySearch, setQuerySearch] = useState('');
 
   // redux
@@ -108,6 +108,29 @@ const Openings: FC = () => {
   };
 
   useEffect(() => {
+    let urlParams = new URLSearchParams(searchParams);
+    console.log('searchParams Changed', urlParams);
+    let sort = urlParams.get('order');
+    console.log(sort);
+    if (sort) {
+      setQuerySort(sort);
+    }
+
+  }, [searchParams]);
+
+  useLayoutEffect(() => {
+    let urlParams = new URLSearchParams(searchParams);
+    console.log('searchParams first Loading', urlParams);
+    let sort = urlParams.get('order');
+    if (sort) {
+      setQuerySort(sort);
+    }
+    else {
+      setQuerySort('DESC');
+    }
+  }, []);
+
+  useEffect(() => {
     // data.length === 0 && dispatch(getAllJobs(query));
     // prevent request until set state
     if(query !== null && queryCount !== null) {
@@ -117,11 +140,15 @@ const Openings: FC = () => {
   }, [query]);
 
   useEffect(() => {
-    createQuery();
+    console.log('querySort changed', querySort);
+    if(querySort) {
+      createQuery();
+    }
   }, [queryStart,
-      queryLimit,
-      querySort,
-      querySearch]);
+    queryLimit,
+    querySort,
+    querySearch]);
+  /*
 
   useEffect(() => {
     setPage(Math.ceil(queryLimit / 6));
@@ -131,7 +158,7 @@ const Openings: FC = () => {
 
   useEffect(() => {
     console.log('URL: ', url);
-  }, [url])
+  }, [url])*/
 
   return ( 
     <Fragment>
@@ -144,12 +171,13 @@ const Openings: FC = () => {
           to="/openings/post-a-job"
           buttonText={t("hero.button", {ns: namespaces.pages.openings})}
         />
-        <CardList 
-          data={data} 
-          loading={loading} 
-          placeholderSearch='Search jobs' 
+        <CardList
+          data={data}
+          loading={loading}
+          placeholderSearch='Search jobs'
           onSearch={search}
           onFilter={handleFilter}
+          sort={querySort}
           onSort={handleSort} />
         <div className="load-more">
           {

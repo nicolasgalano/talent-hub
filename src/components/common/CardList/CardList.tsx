@@ -30,15 +30,18 @@ interface CardListProps {
   onSearch?: Function;
   onFilter?: Function;
   onSort?: Function;
+  sort?: string;
 }
 
-const CardList:FC<CardListProps> = ({data: cards, loading, placeholderSearch, onSearch, onFilter, onSort}) => {
+const CardList:FC<CardListProps> = ({data: cards, loading, placeholderSearch, onSearch, onFilter, onSort, sort}) => {
   const [openFilter, setOpenFilter] = useState(false);
   const modalRef = useRef<ModalHandle>(null);
   const {width: widthBrowser} = useWindowSize();
   const { t } = useTranslation(namespaces.common);
   const [activeFilters, setActiveFilters] = useState({});
   const [countFilters, setCountFilters] = useState(null);
+  const [sortDefault, setSortDefault] = useState('Latest');
+  const [showSortDropdown, setShowSortDropdown] = useState(false);
 
   const handleSearch = (param: string) => onSearch(param);
 
@@ -116,6 +119,15 @@ const CardList:FC<CardListProps> = ({data: cards, loading, placeholderSearch, on
     // onFilter(activeFilters);
   }, [activeFilters])
 
+  useEffect(() => {
+    if (sort) {
+      if (sort == 'ASC') {
+        setSortDefault('Oldest');
+      }
+      setShowSortDropdown(true);
+    }
+  }, [sort]);
+
   return(
     <Fragment>
       <div className="card-list">
@@ -144,10 +156,10 @@ const CardList:FC<CardListProps> = ({data: cards, loading, placeholderSearch, on
                   <img src={filterInactive} alt="btn filters inactive"/>
               }
             </Button>
-            <Dropdown
+            {showSortDropdown && <Dropdown
               options={Array('Latest', 'Oldest')}
-              optionDefault="Latest"
-              onChange={(sort) => onSort(sort)} />
+              optionDefault={sortDefault}
+              onChange={(sort) => onSort(sort)} /> }
           </div>
         </div>
         {/* box */}

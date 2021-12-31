@@ -15,14 +15,14 @@ const ScrollToTop:FC <ScrollToTopProps> = ({children}) => {
   const prevLocation = prevLocationRef.current;
   var scrollToTop = true;
 
-  console.log(prevLocation);
-  console.log(location);
+  // console.log(prevLocation);
+  // console.log(location);
   if (prevLocation) {
     if (prevLocation.pathname == '/openings' && location.pathname == '/openings') {
       scrollToTop = false;
     }
   }
-  console.log('scrollToTop', scrollToTop);
+  // console.log('scrollToTop', scrollToTop);
   useEffect(() => {
     if (scrollToTop) {
       window.scrollTo(0, 0);
