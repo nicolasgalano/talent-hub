@@ -76,7 +76,7 @@ const FeaturedCards: FC<FeaturedCardsProps> = ({title, action, to, data, classNa
                   company={job.company}
                   description={job.description}
                   date={job.date}
-                  location={job.location}
+                  profession={job.profession}
                   to={job.to}
                   key={`featured-card-${index}`} />
               ))  :

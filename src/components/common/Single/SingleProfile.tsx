@@ -61,7 +61,7 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
           </div>
       }
       {
-        data.workgin_shedule &&
+        data.workgin_shedule.length !== 0 &&
           <div>
             {/* Working schedule */}
             <Label type="review">{t("general.working-schedule")}</Label>
@@ -71,7 +71,7 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
           </div>
       }
       {
-        data.fields &&
+        data.fields.length !== 0 &&
           <div>
             {/* Field */}
             <Label type="review">Field</Label>
@@ -94,7 +94,7 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
         {
           data.image &&
             <div className="company-or-project desktop">
-              <img src={flordaniele} alt="logo" />
+              <img src={data.image} alt="logo" />
               <Typography variant="heading-xxs" element="h2">
                 {data.profession_job_name}
               </Typography>
@@ -114,22 +114,22 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
             data.portfolio &&
               <div>
                 <Label type="review">{t("general.online-portfolio")}</Label>
-                <Link to={data.portfolio} target="_blank" rel="noopener noreferrer">
+                <a href={data.portfolio} target="_blank" rel="noopener noreferrer">
                   <Typography variant="body-l" element="p">
                     {data.portfolio}
                   </Typography>
-                </Link>
+                </a>
               </div>
           }
           {
             data.linkedin &&
               <div>
                 <Label type="review">{t("general.linkedin")}</Label>
-                <Link to={data.linkedin} target="_blank" rel="noopener noreferrer">
+                <a href={data.linkedin} target="_blank" rel="noopener noreferrer">
                   <Typography variant="body-l" element="p">
                     {data.linkedin}
                   </Typography>
-                </Link>
+                </a>
               </div>
           }
           {
