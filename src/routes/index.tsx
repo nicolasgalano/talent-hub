@@ -89,6 +89,11 @@ const professionalsRoutes: RouteInterface = {
   exact: true,
   children: [
     {
+      path: '/professional/:slug',
+      name: 'Detail',
+      component: ProfessionalDetail
+    },
+    {
       path: '/professionals/create',
       name: 'Create a profile',
       component: ProfessionalCreate,

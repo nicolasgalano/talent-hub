@@ -4,7 +4,7 @@ import { Button } from 'decentraland-ui/dist/components/Button/Button';
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon/Icon'
 import { Link } from "react-router-dom";
 import "./Card.scss";
-import { location as locationIcon } from "../../../assets/icons";
+import moment from "moment";
 
 export interface CardProps {
   title: string;
@@ -12,11 +12,11 @@ export interface CardProps {
   company?: string;
   description: string;
   date?: string;
-  location?: string;
+  profession?: string;
   to?: string;
 }
  
-const Card: FC<CardProps> = ({img, title, company, description, date, location, to}) => {
+const Card: FC<CardProps> = ({img, title, company, description, date, profession, to}) => {
   return (
     <div className="card">
       <Link to={to}>
@@ -29,21 +29,17 @@ const Card: FC<CardProps> = ({img, title, company, description, date, location, 
           <div className="txt">
             <Typography element="h3" variant="body-xl" className="title">{title}</Typography>
             { company && <Typography element="h4" variant="body-m" className="subtitle">{company}</Typography> }
-            { location && <Typography element="h4" variant="body-m" className="subtitle">{location}</Typography> } 
+            { profession && <Typography element="h4" variant="body-m" className="subtitle">{profession}</Typography> } 
           </div>
         </div>
         <div className="body">
           <Typography element="p" variant="body-m" className="description">{description}</Typography>
         </div>
-        <div className={(date && location) ? 'footer jobs' : 'footer professionals'}>
+        <div className={(!profession) ? 'footer jobs' : 'footer professionals'}>
           {
-            (date && location) ?
+            (!profession ) ?
               <>
-                <Typography element="span" variant="body-s" className="date">{date}</Typography>
-                <Typography element="span" variant="body-s" className="location">
-                  <img src={locationIcon} alt="location icon" />
-                  <span>{location}</span>
-                </Typography>
+                <Typography element="span" variant="body-s" className="date">{ moment(date).fromNow()}</Typography>
               </>
               :
               <Button basic size="small">

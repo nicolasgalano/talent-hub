@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import apiClient from "../../services/apiCliente";
-import { formatProfessionals } from "../../services/formatData";
+import { formatProfessionals } from "../../utils/formatData";
 
 export const getAllProfessionals = createAsyncThunk(`/professionals/getAllProfessionals`, async (arg: string, thunkAPI) => {
   return await apiClient()

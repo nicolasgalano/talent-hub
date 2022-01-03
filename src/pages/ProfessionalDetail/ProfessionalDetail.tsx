@@ -1,49 +1,42 @@
-import React, { FC, Fragment, useRef } from 'react'
+import React, { FC, Fragment, useEffect, useRef, useState } from 'react'
+
+// hooks
+import { useHistory, useParams } from 'react-router';
+import useApi from '../../components/hooks/useApi';
+import { useTranslation } from 'react-i18next';
 
 // Files
-import detailData from '../../data/single.json';
 import '../../assets/scss/base/form.scss';
 import './ProfessionalDetail.scss';
 import { namespaces } from '../../i18n/i18n.constants';
-import { useTranslation } from 'react-i18next';
+import { formatProfessionalDetails } from '../../utils/formatData';
 
 // Semantic component
 import { Button } from 'semantic-ui-react';
 
 // Custom component
 import Detail from '../../components/common/Detail/Detail'
-import SingleProfile, { SingleProfileType } from '../../components/common/Single/SingleProfile';
+import SingleProfile from '../../components/common/Single/SingleProfile';
 import Modal, { ModalBody, ModalFooter, ModalHandle, ModalHeader } from '../../components/common/Modal/Modal';
 import TextField from '../../components/common/TextField/TextField';
-import { useHistory } from 'react-router';
+
 
 const ProfessionalDetail: FC = () => {
 
   const {t} = useTranslation();
   const history = useHistory();
 
-  // TODO: Only for testing porpuse
-  // we get the name of the URL to use in the title of About
-  let path: string | string[] = window.location.pathname;
-  path = path.split('/');
-  path = path[path.length - 1];
-  
-  let doc: SingleProfileType = null;
+  const { slug }: { slug: string } = useParams();
+  const [data, setData] = useState(null);
 
-  switch (path) {
-    case 'withphoto':
-      doc = detailData.candidate_with_photo
-      break;
-    case 'withoutphoto':
-      doc = detailData.candidate_without_photo
-      break;
-    case 'withgallery':
-      doc = detailData.candidate_with_gallery
-      break;
-    default:
-      doc = detailData.candidate_with_photo
-      break;
-  }
+  const {response, loading, error} = useApi({
+    url: `/professionals?Slug=${slug}`,
+    method: 'GET'
+  });
+
+  useEffect(() => {
+    response && setData(formatProfessionalDetails(response.data));
+  }, [response])
 
   const modalRef = useRef<ModalHandle>(null);
 
@@ -55,12 +48,16 @@ const ProfessionalDetail: FC = () => {
 
   return (
     <Fragment>
-      <Detail btnText="Contact" onClickAction={handleClick}>
-        <SingleProfile data={doc} />
-      </Detail>
+      { error && console.log(error)}
+      {
+        data !== null &&
+          <Detail btnText="Contact" onClickAction={handleClick}>
+            <SingleProfile data={data} />
+          </Detail>
+      }
       <Modal theme="light" ref={modalRef} className="modal-profile-details">
         <ModalHeader>
-          Contact Florencia Daniele
+          Contact { data !== null && data.company_project_candidate }
         </ModalHeader>
         <ModalBody>
           <div className="custom-form">
