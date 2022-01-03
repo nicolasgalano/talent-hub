@@ -2,7 +2,6 @@ import React, { FC, useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router';
 
 // Files
-import detailData from '../../data/single.json';
 import useApi from '../../components/hooks/useApi';
 
 // Custom component
@@ -20,14 +19,13 @@ const OpeningDetails: FC = () => {
     method: 'GET'
   });
 
-  // console.log('slug: ', slug);
-
   useEffect(() => {
     response && setData(formatOpeningDetails(response.data));
   }, [response])
 
   useEffect(() => {
-    console.log(data)
+    // TODO: only for testing porpouse
+    // console.log(data)
   }, [data])
 
 

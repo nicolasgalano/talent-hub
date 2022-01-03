@@ -1,5 +1,7 @@
+import { useTranslation } from "react-i18next";
 import { CardProps } from "../components/common/Card/Card";
 import { SingleOrganizationAndProjectType } from "../components/common/Single/SingleOrganizationAndProject";
+import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
 
 export const formatJobs = (res: any) => {
   let jobs: CardProps[] = [];
@@ -42,7 +44,10 @@ export const formatOpeningDetails = (res: any) => {
     benefits: doc.Benefits,
     experience: doc.Experience,
     start_date: doc.StartDate,
-    salary: `${doc.SalaryFrom}-${doc.SalaryTo}`,
+    salary_from: doc.SalaryFrom,
+    salary_to: doc.SalaryTo,
+    salary_currency: doc.Currency,
+    salary_type: doc.SalaryType,
     company_project_candidate: doc.Organization,
     image: doc.CompanyLogo ? 
             doc.CompanyLogo.formats ? 
@@ -50,7 +55,7 @@ export const formatOpeningDetails = (res: any) => {
               doc.CompanyLogo.url : 
             null,
     workgin_shedule: doc.WorkingSchedule,
-    type_of_contract: doc.TypeOfContract,
+    type_of_contract: capitalizeFirstLetter(doc.TypeOfContract.toLowerCase()),
     fields: doc.Fields
   };
   return formattedData;

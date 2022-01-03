@@ -11,7 +11,11 @@
     "start_date": "September 2021",
     "type_of_contract": "Permanent",
     "fields": [ "Design" ],
-    "salary": "$1500 - $2800 USD per month"
+    "salary": "$1500 - $2800 USD per month",
+    "salary_from": "1500",
+    "salary_to": "2800",
+    "salary_currency": "USD",
+    "salary_type": "MONTH"
   },
   "project": {
     "company_project_candidate": "Fintech App Design",

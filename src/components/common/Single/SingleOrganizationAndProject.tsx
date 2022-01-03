@@ -5,6 +5,7 @@ import './Single.scss';
 import { company } from '../../../assets/images';
 import { useTranslation } from 'react-i18next';
 import { namespaces } from '../../../i18n/i18n.constants';
+import moment from 'moment';
 
 // Custom component
 import Typography from '../Typography/Typography';
@@ -17,7 +18,10 @@ export type SingleOrganizationAndProjectType = {
   benefits: string;
   experience: string;
   start_date: string;
-  salary: string;
+  salary_from: string;
+  salary_to: string;
+  salary_currency: string;
+  salary_type: string;
   // Common
   company_project_candidate: string;
   image?: string;
@@ -38,6 +42,62 @@ const SingleOrganizationAndProject:FC <SingleOrganizationAndProjectProps> = ({da
   let path: string | string[] = window.location.pathname;
   path = path.split('/');
   path = path[path.length - 1];
+
+  const formatExperienceRequired = (years: number) => (
+    years + ' ' + t("general.year", { count: years })
+  )
+
+  const formatStartDate = (date: string) => (
+    moment(date, "YYYY-MM-DD").format('MMMM YYYY')
+  );
+
+  const formatSalary = (from: string, to: string, currency: string, type: string) => {
+    switch (type) {
+      case 'YEAR':
+        type = t("general.per-year");
+        break;
+      case 'MONTH':
+        type = t("general.per-month");
+        break;
+      case 'DAY':
+        type = t("general.per-day");
+        break;
+    }
+    return `$${from} - $${to} ${currency} ${type}`;
+  }
+
+  const formatContract = (str: string) => {
+    switch (str) {
+      case 'permanent':
+        str = t("general.permanent");
+        break;
+      case 'temporary':
+        str = t("general.temporary");
+        break;
+      case 'freelance':
+        str = t("general.freelance");
+        break;
+      case 'intership':
+        str = t("general.intership");
+        break;
+    }
+    return str;
+  }
+
+  const formatSchedule = (str: string) => {
+    switch (str) {
+      case 'FULL_TIME':
+        str = t("general.full-time");
+        break;
+      case 'PART_TIME':
+        str = t("general.part-time");
+        break;
+      case 'PER_HOUR':
+        str = t("general.per-hour");
+        break;
+    }
+    return str;
+  }
 
   return (
     <div className="single">
@@ -100,7 +160,8 @@ const SingleOrganizationAndProject:FC <SingleOrganizationAndProjectProps> = ({da
                 {/* Experience required */}
                 <Label type="review">{t("general.experience-required")}</Label>
                 <Typography variant="body-l" element="p">
-                  {data.experience}
+                  {/* {data.experience} */}
+                  {formatExperienceRequired(parseInt(data.experience))}
                 </Typography>
               </div>
             }
@@ -110,7 +171,7 @@ const SingleOrganizationAndProject:FC <SingleOrganizationAndProjectProps> = ({da
                   {/* Working schedule */}
                   <Label type="review">{t("general.working-schedule")}</Label>
                   <Typography variant="body-l" element="p">
-                    {data.workgin_shedule}
+                    { formatSchedule(data.workgin_shedule) }
                   </Typography>
                 </div>
             }
@@ -120,7 +181,8 @@ const SingleOrganizationAndProject:FC <SingleOrganizationAndProjectProps> = ({da
                   {/* Start date */}
                   <Label type="review">{t("general.start-date")}</Label>
                   <Typography variant="body-l" element="p">
-                    {data.start_date}
+                    {/* {data.start_date} */}
+                    { formatStartDate(data.start_date) }
                   </Typography>
                 </div>
             }
@@ -130,7 +192,7 @@ const SingleOrganizationAndProject:FC <SingleOrganizationAndProjectProps> = ({da
                   {/* Type of contract */}
                   <Label type="review">{t("general.type-of-contract")}</Label>
                   <Typography variant="body-l" element="p">
-                    {data.type_of_contract}
+                    { formatContract(data.type_of_contract) }
                   </Typography>
                 </div>
             }
@@ -150,12 +212,12 @@ const SingleOrganizationAndProject:FC <SingleOrganizationAndProjectProps> = ({da
                 </div>
             }
             {
-              data.salary &&
+              data.salary_from &&
                 <div>
                   {/* Salary */}
                   <Label type="review">{t("general.salary")}</Label>
                   <Typography variant="body-l" element="p">
-                    {data.salary}
+                    { formatSalary( data.salary_from, data.salary_to, data.salary_currency, data.salary_type ) }
                   </Typography>
                 </div>
             }
