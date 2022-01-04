@@ -31,9 +31,17 @@ interface CardListProps {
   onFilter?: Function;
   onSort?: Function;
   sort?: string;
+  defaultFiltersSelected?: {
+    field: string[],
+    schedule: string[],
+    contract: string[],
+  },
+  firstTimeLoading?: boolean;
+  searchValue?: string;
 }
 
-const CardList:FC<CardListProps> = ({data: cards, loading, placeholderSearch, onSearch, onFilter, onSort, sort}) => {
+const CardList:FC<CardListProps> = ({data: cards, loading, placeholderSearch, onSearch, onFilter,
+                                      defaultFiltersSelected, onSort, sort, firstTimeLoading, searchValue}) => {
   const [openFilter, setOpenFilter] = useState(false);
   const modalRef = useRef<ModalHandle>(null);
   const {width: widthBrowser} = useWindowSize();
@@ -75,15 +83,15 @@ const CardList:FC<CardListProps> = ({data: cards, loading, placeholderSearch, on
     <Fragment>
       <div>
         <Label type="filter">{ t("general.field") }</Label>
-        <FilterButtons options={filter.field} callback={(filters: Array<string>) => handleActiveFilters(filters, 'field')}/>
+        <FilterButtons defaultSelected={defaultFiltersSelected.field} options={filter.field} callback={(filters: Array<string>) => handleActiveFilters(filters, 'field')}/>
       </div>
       <div>
         <Label type="filter">{ t("general.type-of-contract") }</Label>
-        <FilterButtons options={filter.contract} callback={(filters: Array<string>) => handleActiveFilters(filters, 'contract')}/>
+        <FilterButtons defaultSelected={defaultFiltersSelected.contract} options={filter.contract} callback={(filters: Array<string>) => handleActiveFilters(filters, 'contract')}/>
       </div>
       <div>
         <Label type="filter">{ t("general.working-schedule") }</Label>
-        <FilterButtons options={filter.schedule} callback={(filters: Array<string>) => handleActiveFilters(filters, 'schedule')}/>
+        <FilterButtons defaultSelected={defaultFiltersSelected.schedule} options={filter.schedule} callback={(filters: Array<string>) => handleActiveFilters(filters, 'schedule')}/>
       </div>
       <div>
         <Label type="filter">{ t("general.experience") }</Label>
@@ -116,7 +124,9 @@ const CardList:FC<CardListProps> = ({data: cards, loading, placeholderSearch, on
   }, [widthBrowser])
 
   useEffect(() => {
-    // onFilter(activeFilters);
+    if(!firstTimeLoading) {
+      onFilter(activeFilters);
+    }
   }, [activeFilters])
 
   useEffect(() => {
@@ -136,8 +146,12 @@ const CardList:FC<CardListProps> = ({data: cards, loading, placeholderSearch, on
           <div className="title">
           <TextFilter
               placeholder={placeholderSearch}
-              value=""
-              onChange={(val) => handleSearch(val)} />
+              value={searchValue}
+              onChange={(val) => {
+                if(val != searchValue) {
+                  handleSearch(val);
+                }
+              }} />
           </div>
           <div className="actions">
             <Button basic className="btn-filters" onClick={() => handleOpenFilter()}>
@@ -164,7 +178,7 @@ const CardList:FC<CardListProps> = ({data: cards, loading, placeholderSearch, on
         </div>
         {/* box */}
         <div className={clsx('filter-box', { 'open': openFilter })}>
-          { renderFilters() }
+          { !firstTimeLoading && renderFilters() }
         </div>
         <div className="cards-container">
           {/* Show result */}
