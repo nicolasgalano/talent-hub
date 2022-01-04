@@ -99,3 +99,27 @@ const profilePicture = (img) => {
 const galleryPictures = (imgs) => {
   
 }
+
+export const generateURL = (url: string) => {
+
+  // add HTTPS and WWW
+  url = visibleURL(url);
+  url = 'https://www.' + url;
+
+  return url;
+}
+
+export const visibleURL = (url: string) => {
+
+  // remove
+  url = url.replace('http://', '');
+  url = url.replace('https://', '');
+  url = url.replace('www.', '');
+
+  if(url.slice(-1) === '/'){
+    // remove last slash if exist
+    url = url.slice(0, -1);
+  }
+
+  return url;
+}
