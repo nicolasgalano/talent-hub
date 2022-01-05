@@ -14,10 +14,11 @@ const axiosClient: AxiosInstance = axios.create({
 const useApi = (axiosParams: AxiosRequestConfig) => {
   const [response, setResponse] = useState<AxiosResponse>();
   const [error, setError] = useState<AxiosError>();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const fetchData = async (params: AxiosRequestConfig) => {
     try {
+      setLoading(true);
       const result = await axiosClient.request(params);
       setResponse(result);
     } catch( err ) {

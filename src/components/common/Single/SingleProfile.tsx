@@ -16,6 +16,7 @@ import Label from '../Label/Label';
 import Tag from '../Tag/Tag';
 import { Link } from 'react-router-dom';
 import { useWindowSize } from '../../hooks/useWindowsSize';
+import { generateURL, visibleURL } from '../../../utils/formatData';
 
 export type SingleProfileType = {
   introduction: string;
@@ -136,9 +137,9 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
             data.portfolio &&
               <div>
                 <Label type="review">{t("general.online-portfolio")}</Label>
-                <a href={data.portfolio} target="_blank" rel="noopener noreferrer">
+                <a href={generateURL(data.portfolio)} target="_blank" rel="noopener noreferrer">
                   <Typography variant="body-l" element="p">
-                    {data.portfolio}
+                    { visibleURL(data.portfolio)}
                   </Typography>
                 </a>
               </div>
@@ -147,9 +148,9 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
             data.linkedin &&
               <div>
                 <Label type="review">{t("general.linkedin")}</Label>
-                <a href={data.linkedin} target="_blank" rel="noopener noreferrer">
+                <a href={generateURL(data.linkedin)} target="_blank" rel="noopener noreferrer">
                   <Typography variant="body-l" element="p">
-                    {data.linkedin}
+                    {visibleURL(data.linkedin)}
                   </Typography>
                 </a>
               </div>
