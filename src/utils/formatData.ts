@@ -54,7 +54,8 @@ export const formatOpeningDetails = (res: any) => {
     image: profilePicture(doc.CompanyLogo),
     workgin_shedule: doc.WorkingSchedule,
     type_of_contract: doc.TypeOfContract,
-    fields: doc.Fields
+    fields: doc.Fields,
+    organizationProject: doc.OrganizationProject,
   };
   return formattedData;
 }
