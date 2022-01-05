@@ -7,7 +7,7 @@ import useApi from '../../components/hooks/useApi';
 // Custom component
 import Detail from '../../components/common/Detail/Detail'
 import SingleOrganizationAndProject, { SingleOrganizationAndProjectType } from '../../components/common/Single/SingleOrganizationAndProject';
-import { formatOpeningDetails } from '../../services/formatData';
+import { formatOpeningDetails } from '../../utils/formatData';
 
 const OpeningDetails: FC = () => {
   const history = useHistory();

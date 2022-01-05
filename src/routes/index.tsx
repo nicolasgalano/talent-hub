@@ -114,7 +114,13 @@ const professionalsRoutes: RouteInterface = {
       component: ProfessionalCreateSuccess,
     },
     {
-      path: '/professional/success',
+      path: '/professional/:slug',
+      name: 'Detail',
+      component: ProfessionalDetail,
+      exact: true,
+    },
+    {
+      path: '/professional/:slug/success',
       name: 'Success',
       component: ProfessionalContactSuccess,
     },

@@ -165,7 +165,7 @@ const CardList:FC<CardListProps> = ({data: cards, loading, placeholderSearch, on
                   company={doc.company}
                   description={doc.description}
                   date={doc.date}
-                  location={doc.location}
+                  profession={doc.profession}
                   to={doc.to}
                   key={`card-doc-${key}`}/>
               ))

@@ -95,6 +95,9 @@
     }
     &.professionals{
       justify-content: flex-end;
+      .button{
+        color: $color-grey-700 !important;
+      }
     }
   }
 }

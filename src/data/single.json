@@ -7,10 +7,37 @@
     "responsabilities": "Here goes a brief description of the responsabilities required for the role. It could talk about what’s expected in terms of professional experience or background too. It shouldn’t be very long, around 150 words max.",
     "benefits": "Healthcare, 3 weeks vacations, budget for courses, lunch ticket.",
     "experience": "4 - 8 years",
-    "workgin_shedule": "Full-Time",
+    "workgin_shedule": [
+      {
+          "id": 1,
+          "WorkingSchedule": "FULL_TIME"
+      },
+      {
+          "id": 2,
+          "WorkingSchedule": "PART_TIME"
+      }
+    ],
     "start_date": "September 2021",
-    "type_of_contract": "Permanent",
-    "fields": [ "Design" ],
+    "type_of_contract": [
+      {
+          "id": 1,
+          "TypeOfContract": "PERMANENT"
+      },
+      {
+          "id": 2,
+          "TypeOfContract": "TEMPORARY"
+      }
+    ],
+    "fields": [
+      {
+          "id": 1,
+          "Fields": "DESIGN"
+      },
+      {
+          "id": 2,
+          "Fields": "DEVELOPMENT"
+      }
+    ],
     "salary": "$1500 - $2800 USD per month",
     "salary_from": "1500",
     "salary_to": "2800",
@@ -24,10 +51,37 @@
     "responsabilities": "Here goes a brief description of the responsabilities required for the role. It could talk about what’s expected in terms of professional experience or background too. It shouldn’t be very long, around 150 words max.",
     "benefits": "Flexible working hours.",
     "experience": "1 - 3 years",
-    "workgin_shedule": "Per hour",
-    "start_date": "October 2021",
-    "type_of_contract": "Freelance",
-    "fields": [ "Design", "Development" ],
+    "workgin_shedule": [
+      {
+          "id": 1,
+          "WorkingSchedule": "FULL_TIME"
+      },
+      {
+          "id": 2,
+          "WorkingSchedule": "PART_TIME"
+      }
+    ],
+    "start_date": "September 2021",
+    "type_of_contract": [
+      {
+          "id": 1,
+          "TypeOfContract": "PERMANENT"
+      },
+      {
+          "id": 2,
+          "TypeOfContract": "TEMPORARY"
+      }
+    ],
+    "fields": [
+      {
+          "id": 1,
+          "Fields": "DESIGN"
+      },
+      {
+          "id": 2,
+          "Fields": "DEVELOPMENT"
+      }
+    ],
     "salary": "$50 - $100 USD per hour"
   },
   "candidate_with_photo": {
@@ -35,9 +89,36 @@
     "image": "URL",
     "introduction": "I’m a UX/UI Designer with a background in Digital Marketing. I work with Figma, Adobe XD, Miro, Optimal Workshop, Google Analytics and I also know the basics of HTML/CSS/SASS. I love designing and optimizing digital interfaces, especially the UX stages of wireframes and prototypes.",
     "profession_job_name": "UX/UI Designer",
-    "workgin_shedule": "Full-Time / Per hour",
-    "type_of_contract": "Permanent / Freelance",
-    "fields": [ "Design", "Marketing" ],
+    "workgin_shedule": [
+      {
+          "id": 1,
+          "WorkingSchedule": "FULL_TIME"
+      },
+      {
+          "id": 2,
+          "WorkingSchedule": "PART_TIME"
+      }
+    ],
+    "type_of_contract": [
+      {
+          "id": 1,
+          "TypeOfContract": "PERMANENT"
+      },
+      {
+          "id": 2,
+          "TypeOfContract": "TEMPORARY"
+      }
+    ],
+    "fields": [
+      {
+          "id": 1,
+          "Fields": "DESIGN"
+      },
+      {
+          "id": 2,
+          "Fields": "DEVELOPMENT"
+      }
+    ],
     "email": "flordaniele@gmail.com",
     "portfolio": "behance.net/flordaniele",
     "linkedin": "linkedin.com/flordaniele"
@@ -46,9 +127,36 @@
     "company_project_candidate": "Florencia Daniele",
     "introduction": "I’m a UX/UI Designer with a background in Digital Marketing. I work with Figma, Adobe XD, Miro, Optimal Workshop, Google Analytics and I also know the basics of HTML/CSS/SASS. I love designing and optimizing digital interfaces, especially the UX stages of wireframes and prototypes.",
     "profession_job_name": "UX/UI Designer",
-    "workgin_shedule": "Full-Time / Per hour",
-    "type_of_contract": "Permanent / Freelance",
-    "fields": [ "Design", "Marketing" ],
+    "workgin_shedule": [
+      {
+          "id": 1,
+          "WorkingSchedule": "FULL_TIME"
+      },
+      {
+          "id": 2,
+          "WorkingSchedule": "PART_TIME"
+      }
+    ],
+    "type_of_contract": [
+      {
+          "id": 1,
+          "TypeOfContract": "PERMANENT"
+      },
+      {
+          "id": 2,
+          "TypeOfContract": "TEMPORARY"
+      }
+    ],
+    "fields": [
+      {
+          "id": 1,
+          "Fields": "DESIGN"
+      },
+      {
+          "id": 2,
+          "Fields": "DEVELOPMENT"
+      }
+    ],
     "email": "flordaniele@gmail.com",
     "portfolio": "behance.net/flordaniele",
     "linkedin": "linkedin.com/flordaniele"
@@ -58,9 +166,36 @@
     "image": "URL",
     "introduction": "I’m a UX/UI Designer with a background in Digital Marketing. I work with Figma, Adobe XD, Miro, Optimal Workshop, Google Analytics and I also know the basics of HTML/CSS/SASS. I love designing and optimizing digital interfaces, especially the UX stages of wireframes and prototypes.",
     "profession_job_name": "UX/UI Designer",
-    "workgin_shedule": "Full-Time / Per hour",
-    "type_of_contract": "Permanent / Freelance",
-    "fields": [ "Design", "Marketing" ],
+    "workgin_shedule": [
+      {
+          "id": 1,
+          "WorkingSchedule": "FULL_TIME"
+      },
+      {
+          "id": 2,
+          "WorkingSchedule": "PART_TIME"
+      }
+    ],
+    "type_of_contract": [
+      {
+          "id": 1,
+          "TypeOfContract": "PERMANENT"
+      },
+      {
+          "id": 2,
+          "TypeOfContract": "TEMPORARY"
+      }
+    ],
+    "fields": [
+      {
+          "id": 1,
+          "Fields": "DESIGN"
+      },
+      {
+          "id": 2,
+          "Fields": "DEVELOPMENT"
+      }
+    ],
     "email": "flordaniele@gmail.com",
     "portfolio": "behance.net/flordaniele",
     "linkedin": "linkedin.com/flordaniele",

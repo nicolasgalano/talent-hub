@@ -8,6 +8,7 @@ import { namespaces } from '../../../i18n/i18n.constants';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import { formatContract, formatField, formatSchedule, getMultipleField } from '../../../utils/formatData';
 
 // Custom component
 import Typography from '../Typography/Typography';
@@ -15,6 +16,7 @@ import Label from '../Label/Label';
 import Tag from '../Tag/Tag';
 import { Link } from 'react-router-dom';
 import { useWindowSize } from '../../hooks/useWindowsSize';
+import { generateURL, visibleURL } from '../../../utils/formatData';
 
 export type SingleProfileType = {
   introduction: string;
@@ -26,9 +28,9 @@ export type SingleProfileType = {
   company_project_candidate: string;
   image?: string;
   profession_job_name: string;
-  workgin_shedule?: string;
-  type_of_contract?: string;
-  fields?: Array<string>;
+  workgin_shedule?: Array<any>;
+  type_of_contract?: Array<any>;
+  fields?: Array<any>;
 }
 
 interface SingleProfileProps {
@@ -39,6 +41,27 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
   const { t } = useTranslation(namespaces.common);
 
   const {width} = useWindowSize();
+
+  // Schedule
+  let schedule = getMultipleField(data.workgin_shedule);
+
+  if(schedule){
+    schedule = schedule.map((val) => formatSchedule(val, t));
+  }
+
+  // Contract
+  let contract = getMultipleField(data.type_of_contract);
+
+  if(contract){
+    contract = contract.map((val) => formatContract(val, t));
+  }
+
+  // Field
+  let fields = getMultipleField(data.fields);
+
+  if(fields){
+    fields = fields.map((val) => formatField(val, t));
+  }
 
   const settings = {
     slidesToShow: 1,
@@ -51,33 +74,33 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
   const renderMoreInfo = () => (
     <>
       {
-        data.type_of_contract &&
+        contract &&
           <div>
             {/* Type of contract */}
             <Label type="review">{t("general.type-of-contract")}</Label>
             <Typography variant="body-l" element="p">
-              {data.type_of_contract}
+              { contract.join(' / ') }
             </Typography>
           </div>
       }
       {
-        data.workgin_shedule &&
+        schedule &&
           <div>
             {/* Working schedule */}
             <Label type="review">{t("general.working-schedule")}</Label>
             <Typography variant="body-l" element="p">
-              {data.workgin_shedule}
+              { schedule.join(' / ') }
             </Typography>
           </div>
       }
       {
-        data.fields &&
+        fields &&
           <div>
             {/* Field */}
             <Label type="review">Field</Label>
             <div className="fields">
             {
-              data.fields.map((field) => (
+              fields.map((field) => (
                 <Tag>{field}</Tag>
               ))
             }
@@ -94,7 +117,7 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
         {
           data.image &&
             <div className="company-or-project desktop">
-              <img src={flordaniele} alt="logo" />
+              <img src={data.image} alt="logo" />
               <Typography variant="heading-xxs" element="h2">
                 {data.profession_job_name}
               </Typography>
@@ -114,22 +137,22 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
             data.portfolio &&
               <div>
                 <Label type="review">{t("general.online-portfolio")}</Label>
-                <Link to={data.portfolio} target="_blank" rel="noopener noreferrer">
+                <a href={generateURL(data.portfolio)} target="_blank" rel="noopener noreferrer">
                   <Typography variant="body-l" element="p">
-                    {data.portfolio}
+                    { visibleURL(data.portfolio)}
                   </Typography>
-                </Link>
+                </a>
               </div>
           }
           {
             data.linkedin &&
               <div>
                 <Label type="review">{t("general.linkedin")}</Label>
-                <Link to={data.linkedin} target="_blank" rel="noopener noreferrer">
+                <a href={generateURL(data.linkedin)} target="_blank" rel="noopener noreferrer">
                   <Typography variant="body-l" element="p">
-                    {data.linkedin}
+                    {visibleURL(data.linkedin)}
                   </Typography>
-                </Link>
+                </a>
               </div>
           }
           {
