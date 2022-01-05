@@ -1,6 +1,9 @@
+import moment from "moment";
+import { useTranslation } from "react-i18next";
 import { CardProps } from "../components/common/Card/Card";
 import { SingleOrganizationAndProjectType } from "../components/common/Single/SingleOrganizationAndProject";
 import { SingleProfileType } from "../components/common/Single/SingleProfile";
+import { namespaces } from "../i18n/i18n.constants";
 
 export const formatJobs = (res: any) => {
   let jobs: CardProps[] = [];
@@ -50,7 +53,7 @@ export const formatOpeningDetails = (res: any) => {
     company_project_candidate: doc.Organization,
     image: profilePicture(doc.CompanyLogo),
     workgin_shedule: doc.WorkingSchedule,
-    type_of_contract: capitalizeFirstLetter(doc.TypeOfContract),
+    type_of_contract: doc.TypeOfContract,
     fields: doc.Fields
   };
   return formattedData;
@@ -67,7 +70,7 @@ export const formatProfessionalDetails = (res: any) => {
     linkedin: doc.Linkedin,
     gallery: doc.Email,
     workgin_shedule: doc.WorkingSchedule,
-    type_of_contract: capitalizeFirstLetter(doc.TypeOfContract),
+    type_of_contract: doc.TypeOfContract,
     fields: doc.Fields,
     image: profilePicture(doc.ProfilePicture)
   };
@@ -122,4 +125,95 @@ export const visibleURL = (url: string) => {
   }
 
   return url;
+};
+
+export const formatExperienceRequired = (years: number, lang) => {
+  return years + ' ' + lang("general.year", { count: years })
+}
+  
+export const formatStartDate = (date: string) => (
+  moment(date, "YYYY-MM-DD").format('MMMM YYYY')
+);
+
+export const formatSalary = (from: string, to: string, currency: string, type: string, lang) => {
+  switch (type) {
+    case 'YEAR':
+      type = lang("general.per-year");
+      break;
+    case 'MONTH':
+      type = lang("general.per-month");
+      break;
+    case 'DAY':
+      type = lang("general.per-day");
+      break;
+  }
+  return `$${from} - $${to} ${currency} ${type}`;
+}
+
+export const formatContract = (str: string, lang) => {
+  switch (str) {
+    case 'PERMANENT':
+      str = lang("general.permanent");
+      break;
+    case 'TEMPORARY':
+      str = lang("general.temporary");
+      break;
+    case 'FREELANCE':
+      str = lang("general.freelance");
+      break;
+    case 'INTERSHIP':
+      str = lang("general.intership");
+      break;
+  }
+  return str;
+}
+
+export const formatSchedule = (str: string, lang) => {
+  switch (str) {
+    case 'FULL_TIME':
+      str = lang("general.full-time");
+      break;
+    case 'PART_TIME':
+      str = lang("general.part-time");
+      break;
+    case 'PER_HOUR':
+      str = lang("general.per-hour");
+      break;
+  }
+  return str;
+}
+
+export const formatField = (str: string, lang) => {
+  switch (str) {
+    case 'DESIGN':
+      str = lang("general.design");
+      break;
+    case 'DEVELOPMENT':
+      str = lang("general.development");
+      break;
+    case 'ENGINEERING':
+      str = lang("general.engineering");
+      break;
+    case 'MODELLING':
+      str = lang("general.modelling");
+      break;
+  }
+  return str;
+}
+
+export const getMultipleField = (list: Array<any>) => {
+
+  if(list.length === 0 || list === null) return;
+
+  let newList = [];
+
+  // Save value in a newList if it is not ID key
+  list.map((val) => {
+    Object.keys(val).map((key, index) => {
+      if( key !== 'id'){
+        newList.push(val[key]);
+      }
+    })
+  })
+  return newList;
 }
