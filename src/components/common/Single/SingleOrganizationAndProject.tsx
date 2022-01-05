@@ -23,6 +23,7 @@ export type SingleOrganizationAndProjectType = {
   salary_to: string;
   salary_currency: string;
   salary_type: string;
+  organizationProject?: string;
   // Common
   company_project_candidate: string;
   image?: string;
@@ -38,11 +39,6 @@ interface SingleOrganizationAndProjectProps {
 
 const SingleOrganizationAndProject:FC <SingleOrganizationAndProjectProps> = ({data}) => {
   const { t } = useTranslation(namespaces.common);
-  
-  // we get the name of the URL to use in the title of About
-  let path: string | string[] = window.location.pathname;
-  path = path.split('/');
-  path = path[path.length - 1];
 
   // Schedule
   let schedule = getMultipleField(data.workgin_shedule);
@@ -82,7 +78,7 @@ const SingleOrganizationAndProject:FC <SingleOrganizationAndProjectProps> = ({da
               <div className="about">
                 <Label type="review">
                   { 
-                    path === 'organization' ?
+                    data.organizationProject === 'organization' ?
                       t("general.about-the-organization") :
                       t("general.about-the-project")
                   }
