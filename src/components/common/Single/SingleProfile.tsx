@@ -17,6 +17,7 @@ import Tag from '../Tag/Tag';
 import { Link } from 'react-router-dom';
 import { useWindowSize } from '../../hooks/useWindowsSize';
 import { generateURL, visibleURL } from '../../../utils/formatData';
+import { count } from 'console';
 
 export type SingleProfileType = {
   introduction: string;
@@ -24,6 +25,7 @@ export type SingleProfileType = {
   portfolio: string;
   linkedin: string;
   gallery?: Array<string>;
+  experience?: number;
   // Common
   company_project_candidate: string;
   image?: string;
@@ -103,11 +105,21 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
             <Label type="review">Field</Label>
             <div className="fields">
             {
-              fields.map((field) => (
-                <Tag>{field}</Tag>
+              fields.map((field, key) => (
+                <Tag key={`tag-${key}`}>{field}</Tag>
               ))
             }
             </div>
+          </div>
+      }
+      {
+        data.experience &&
+          <div>
+            {/* Experience */}
+            <Label type="review">Experience</Label>
+            <Typography variant="body-l" element="p">
+              { data.experience + ' ' + t("general.year", {count: data.experience}) }
+            </Typography>
           </div>
       }
     </>

@@ -24,8 +24,7 @@ $animation-duration: 0.4s;
   &.active {
     .control {
       &::after {
-        border-bottom: 2px solid $color-grey-700;
-        transform: scaleX(150);
+        width: 100%;
       }
     }
     .label-component-form {
@@ -36,6 +35,14 @@ $animation-duration: 0.4s;
   &.filled {
     .label-component-form {
       @include label-active();
+    }
+  }
+  &.error {
+    .control {
+      &::after {
+        width: 100%;
+        border-bottom: 2px solid $color-primary;
+      }
     }
   }
   .label-component-form {
@@ -67,9 +74,8 @@ $animation-duration: 0.4s;
       margin: 0 auto;
       position: absolute;
       right: 0;
-      transform: scaleX(0);
       transition: all $animation-duration;
-      width: 1%;
+      width: 0%;
     }
   }
   .input,
@@ -86,5 +92,16 @@ $animation-duration: 0.4s;
     padding: 0 12px 8px 0;
     width: 100%;
     resize: none;
+  }
+  .message {
+    color: $color-primary;
+    font-family: $font-text;
+    font-size: 0.9375rem;
+    font-weight: 400;
+    line-height: 1.4285em;
+    margin-top: 8px;
+    @include media-breakpoint-down(md) {
+      font-size: 0.8125;
+    }
   }
 }

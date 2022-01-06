@@ -73,7 +73,8 @@ export const formatProfessionalDetails = (res: any) => {
     workgin_shedule: doc.WorkingSchedule,
     type_of_contract: doc.TypeOfContract,
     fields: doc.Fields,
-    image: profilePicture(doc.ProfilePicture)
+    image: profilePicture(doc.ProfilePicture),
+    experience: doc.Experience
   };
   return formattedData;
 }
@@ -105,10 +106,14 @@ export const galleryPictures = (imgs: Array<any>) => {
     return imgs.map((img) => {
       if(img.formats){
         // Get large size if exist
-        if(img.formats.large !== null){
+        if(img.formats.large !== undefined){
           return img.formats.large.url;
-        }else{
+        }else if(img.formats.medium !== undefined){
           return img.formats.medium.url;
+        }else if(img.formats.small !== undefined){
+          return img.formats.small.url;
+        }else if(img.formats.large !== undefined){
+          return img.formats.large.url;
         }
       }else{
         return img.url;
