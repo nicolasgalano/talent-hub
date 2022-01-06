@@ -8,7 +8,7 @@ import { namespaces } from '../../../i18n/i18n.constants';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import { formatContract, formatField, formatSchedule, getMultipleField } from '../../../utils/formatData';
+import { formatContract, formatField, formatSchedule, galleryPictures, getMultipleField } from '../../../utils/formatData';
 
 // Custom component
 import Typography from '../Typography/Typography';
@@ -62,6 +62,9 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
   if(fields){
     fields = fields.map((val) => formatField(val, t));
   }
+
+  // Best works
+  let gallery = galleryPictures(data.gallery);
 
   const settings = {
     slidesToShow: 1,
@@ -194,19 +197,18 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
             </>
         }
         {
-          data.gallery &&
+          gallery &&
             <Slider className="slide-gallery" {...settings}>
-              {/* TODO: Only for testing porpuse */}
-              <img src={gallery} alt="gallery-1" />
-              <img src={gallery} alt="gallery-2" />
-              <img src={gallery} alt="gallery-3" />
-              <img src={gallery} alt="gallery-4" />
-              <img src={gallery} alt="gallery-5" />
+              {
+                gallery.map((img, key) => (
+                  <img src={img} alt={`gallery-${key}`} key={`gallery-${key}`} />    
+                ))
+              }
             </Slider>
         }
         {/* Template Grid */}
         { 
-          (!data.gallery && width >= 1024 ) &&
+          (!gallery && width >= 1024 ) &&
             <div className="more-info">
               { renderMoreInfo() }
             </div>
