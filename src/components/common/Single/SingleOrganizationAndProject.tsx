@@ -11,6 +11,7 @@ import moment from 'moment';
 import Typography from '../Typography/Typography';
 import Label from '../Label/Label';
 import Tag from '../Tag/Tag';
+import { formatContract, formatExperienceRequired, formatField, formatSalary, formatSchedule, formatStartDate, getMultipleField } from '../../../utils/formatData';
 
 export type SingleOrganizationAndProjectType = {
   about?: string;
@@ -22,13 +23,14 @@ export type SingleOrganizationAndProjectType = {
   salary_to: string;
   salary_currency: string;
   salary_type: string;
+  organizationProject?: string;
   // Common
   company_project_candidate: string;
   image?: string;
   profession_job_name: string;
-  workgin_shedule: string;
-  type_of_contract: string;
-  fields: Array<string>;
+  workgin_shedule: Array<any>;
+  type_of_contract: Array<any>;
+  fields: Array<any>;
 }
 
 interface SingleOrganizationAndProjectProps {
@@ -38,66 +40,27 @@ interface SingleOrganizationAndProjectProps {
 const SingleOrganizationAndProject:FC <SingleOrganizationAndProjectProps> = ({data}) => {
   const { t } = useTranslation(namespaces.common);
 
-  // we get the name of the URL to use in the title of About
-  let path: string | string[] = window.location.pathname;
-  path = path.split('/');
-  path = path[path.length - 1];
+  // Schedule
+  let schedule = getMultipleField(data.workgin_shedule);
 
-  const formatExperienceRequired = (years: number) => (
-    years + ' ' + t("general.year", { count: years })
-  )
-
-  const formatStartDate = (date: string) => (
-    moment(date, "YYYY-MM-DD").format('MMMM YYYY')
-  );
-
-  const formatSalary = (from: string, to: string, currency: string, type: string) => {
-    switch (type) {
-      case 'YEAR':
-        type = t("general.per-year");
-        break;
-      case 'MONTH':
-        type = t("general.per-month");
-        break;
-      case 'DAY':
-        type = t("general.per-day");
-        break;
-    }
-    return `$${from} - $${to} ${currency} ${type}`;
+  if(schedule){
+    schedule = schedule.map((val) => formatSchedule(val, t));
   }
 
-  const formatContract = (str: string) => {
-    switch (str) {
-      case 'permanent':
-        str = t("general.permanent");
-        break;
-      case 'temporary':
-        str = t("general.temporary");
-        break;
-      case 'freelance':
-        str = t("general.freelance");
-        break;
-      case 'intership':
-        str = t("general.intership");
-        break;
-    }
-    return str;
+  // Contract
+  let contract = getMultipleField(data.type_of_contract);
+
+  if(contract){
+    contract = contract.map((val) => formatContract(val, t));
   }
 
-  const formatSchedule = (str: string) => {
-    switch (str) {
-      case 'FULL_TIME':
-        str = t("general.full-time");
-        break;
-      case 'PART_TIME':
-        str = t("general.part-time");
-        break;
-      case 'PER_HOUR':
-        str = t("general.per-hour");
-        break;
-    }
-    return str;
+  // Field
+  let fields = getMultipleField(data.fields);
+
+  if(fields){
+    fields = fields.map((val) => formatField(val, t));
   }
+
 
   return (
     <div className="single">
@@ -115,7 +78,7 @@ const SingleOrganizationAndProject:FC <SingleOrganizationAndProjectProps> = ({da
               <div className="about">
                 <Label type="review">
                   { 
-                    path === 'organization' ?
+                    data.organizationProject === 'organization' ?
                       t("general.about-the-organization") :
                       t("general.about-the-project")
                   }
@@ -161,17 +124,17 @@ const SingleOrganizationAndProject:FC <SingleOrganizationAndProjectProps> = ({da
                 <Label type="review">{t("general.experience-required")}</Label>
                 <Typography variant="body-l" element="p">
                   {/* {data.experience} */}
-                  {formatExperienceRequired(parseInt(data.experience))}
+                  {formatExperienceRequired(parseInt(data.experience), t)}
                 </Typography>
               </div>
             }
             {
-              data.workgin_shedule &&
+              schedule &&
                 <div>
                   {/* Working schedule */}
                   <Label type="review">{t("general.working-schedule")}</Label>
                   <Typography variant="body-l" element="p">
-                    { formatSchedule(data.workgin_shedule) }
+                    { schedule.join(' / ') }
                   </Typography>
                 </div>
             }
@@ -187,27 +150,26 @@ const SingleOrganizationAndProject:FC <SingleOrganizationAndProjectProps> = ({da
                 </div>
             }
             {
-              data.type_of_contract &&
+              contract &&
                 <div>
                   {/* Type of contract */}
                   <Label type="review">{t("general.type-of-contract")}</Label>
                   <Typography variant="body-l" element="p">
-                    { formatContract(data.type_of_contract) }
+                    { contract.join(' / ') }
                   </Typography>
                 </div>
             }
             {
-              data.fields &&
+              fields &&
                 <div>
                   {/* Field */}
                   <Label type="review">Field</Label>
                   <div className="fields">
-                    {/* TODO: Error on backend */}
-                  {/* {
-                    data.fields.map((field, key) => (
+                  {
+                    fields.map((field, key) => (
                       <Tag key={key}>{field}</Tag>
                     ))
-                  } */}
+                  }
                   </div>
                 </div>
             }
@@ -217,7 +179,7 @@ const SingleOrganizationAndProject:FC <SingleOrganizationAndProjectProps> = ({da
                   {/* Salary */}
                   <Label type="review">{t("general.salary")}</Label>
                   <Typography variant="body-l" element="p">
-                    { formatSalary( data.salary_from, data.salary_to, data.salary_currency, data.salary_type ) }
+                    { formatSalary( data.salary_from, data.salary_to, data.salary_currency, data.salary_type, t ) }
                   </Typography>
                 </div>
             }
