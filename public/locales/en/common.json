@@ -9,10 +9,14 @@
     "send":         "Send"
   },
   "tabs": {
-    "openings":       "Openings",
-    "professionals":  "Professionals",
-    "post-a-job":     "Post a job",
-    "create-profile": "Create profile"
+    "openings":         "Openings",
+    "professionals":    "Professionals",
+    "post-a-job":       "Post a job",
+    "create-profile":   "Create profile"
+  },
+  "forms": {
+    "required":         "is a required field",
+    "invalid-email":    "must be a valid email"
   },
   "general": {
     "filter_one":             "Filter",
@@ -46,8 +50,8 @@
     "per-day":                "Per day",
     "per-month":              "per month",
     "per-year":               "per year",
-    "year_one":            "year",
-    "year_other":            "years",
+    "year_one":               "year",
+    "year_other":             "years",
     "experience-required":    "Experience required",
     "salary":                 "Salary",
     "from":                   "From",
