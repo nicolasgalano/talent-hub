@@ -69,7 +69,7 @@ export const formatProfessionalDetails = (res: any) => {
     email: doc.Email,
     portfolio: doc.OnlinePortfolio,
     linkedin: doc.Linkedin,
-    gallery: doc.Email,
+    gallery: doc.BestWork,
     workgin_shedule: doc.WorkingSchedule,
     type_of_contract: doc.TypeOfContract,
     fields: doc.Fields,
@@ -100,8 +100,23 @@ const profilePicture = (img) => {
   }
 }
 
-const galleryPictures = (imgs) => {
-  
+export const galleryPictures = (imgs: Array<any>) => {
+  if(imgs.length !== 0 && imgs !== null){
+    return imgs.map((img) => {
+      if(img.formats){
+        // Get large size if exist
+        if(img.formats.large !== null){
+          return img.formats.large.url;
+        }else{
+          return img.formats.medium.url;
+        }
+      }else{
+        return img.url;
+      }
+    })
+  }else{
+    return null;
+  }
 }
 
 export const generateURL = (url: string) => {
