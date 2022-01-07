@@ -97,7 +97,7 @@ const OpeningCreate:FC = () =>{
         />
       <Formik 
         initialValues={initialValues}
-        // validationSchema={formSchema}
+        validationSchema={formSchema}
         onSubmit={(values, actions) => {
           console.log(JSON.stringify(values, null, 2));
           // prevent submit
