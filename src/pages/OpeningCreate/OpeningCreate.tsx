@@ -34,8 +34,8 @@ interface FormInterface {
   Benefits: string;
   Email: string;
   About: string;
-  From: number;
-  To: number;
+  From: string;
+  To: string;
   Currency: string;
   SalaryType: string;
   Month: string;
@@ -63,8 +63,8 @@ const OpeningCreate:FC = () =>{
     Benefits: '',
     Email: '',
     About: '',
-    From: null,
-    To: null,
+    From: '',
+    To: '',
     Currency: 'USD',
     SalaryType: 'Year',
     Month: 'September',
