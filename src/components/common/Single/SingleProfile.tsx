@@ -171,7 +171,7 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
               </div>
           }
           {
-            (data.gallery && width >= 1024) && renderMoreInfo()
+            (gallery && width >= 1024) && renderMoreInfo()
           }
           { 
             width < 1024  && renderMoreInfo()
