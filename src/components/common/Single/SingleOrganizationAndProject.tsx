@@ -5,7 +5,6 @@ import './Single.scss';
 import { company } from '../../../assets/images';
 import { useTranslation } from 'react-i18next';
 import { namespaces } from '../../../i18n/i18n.constants';
-import moment from 'moment';
 
 // Custom component
 import Typography from '../Typography/Typography';
@@ -17,7 +16,8 @@ export type SingleOrganizationAndProjectType = {
   about?: string;
   responsabilities: string;
   benefits: string;
-  experience: string;
+  experience_from: string;
+  experience_to: string;
   start_date: string;
   salary_from: string;
   salary_to: string;
@@ -67,7 +67,7 @@ const SingleOrganizationAndProject:FC <SingleOrganizationAndProjectProps> = ({da
       {/* Extract / Sidebar */}
       <div className="extract">
         <div className="company-or-project">
-          { data.image && <img src={company} alt="logo" /> }
+          { data.image ? <img src={data.image} alt="logo" /> : <img src={company} alt="logo" /> }
           <Typography variant="heading-xxs" element="h2">
             { data.company_project_candidate}
           </Typography>
@@ -78,7 +78,7 @@ const SingleOrganizationAndProject:FC <SingleOrganizationAndProjectProps> = ({da
               <div className="about">
                 <Label type="review">
                   { 
-                    data.organizationProject === 'organization' ?
+                    data.organizationProject === 'Organization' ?
                       t("general.about-the-organization") :
                       t("general.about-the-project")
                   }
@@ -118,13 +118,13 @@ const SingleOrganizationAndProject:FC <SingleOrganizationAndProjectProps> = ({da
         {/* Template Grid */}
           <div className="more-info">
             {
-              data.experience &&
+              data.experience_from &&
               <div>
                 {/* Experience required */}
                 <Label type="review">{t("general.experience-required")}</Label>
                 <Typography variant="body-l" element="p">
                   {/* {data.experience} */}
-                  {formatExperienceRequired(parseInt(data.experience), t)}
+                  {formatExperienceRequired(t, parseInt(data.experience_from), parseInt(data.experience_to))}
                 </Typography>
               </div>
             }

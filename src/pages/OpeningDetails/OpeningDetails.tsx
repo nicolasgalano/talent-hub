@@ -25,7 +25,7 @@ const OpeningDetails: FC = () => {
 
   useEffect(() => {
     // TODO: only for testing porpouse
-    // console.log(data)
+    console.log(data)
   }, [data])
 
 

@@ -44,7 +44,8 @@ export const formatOpeningDetails = (res: any) => {
     about: doc.About,
     responsabilities: doc.Responsibilities,
     benefits: doc.Benefits,
-    experience: doc.Experience,
+    experience_from: doc.ExperienceFrom,
+    experience_to: doc.ExperienceTo,
     start_date: doc.StartDate,
     salary_from: doc.SalaryFrom,
     salary_to: doc.SalaryTo,
@@ -148,8 +149,17 @@ export const visibleURL = (url: string) => {
   return url;
 };
 
-export const formatExperienceRequired = (years: number, lang) => {
-  return years + ' ' + lang("general.year", { count: years })
+export const formatExperienceRequired = (lang, from: number, to?: number) => {
+  let txt = '';
+  txt += from + ' ';
+  
+  if(to){
+    txt += '- ' + to + ' ';
+  }
+
+  txt += lang("general.year", { count: to ? to : from }); 
+  
+  return txt;
 }
   
 export const formatStartDate = (date: string) => (
