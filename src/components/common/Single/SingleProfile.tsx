@@ -8,7 +8,7 @@ import { namespaces } from '../../../i18n/i18n.constants';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import { formatContract, formatField, formatSchedule, getMultipleField } from '../../../utils/formatData';
+import { formatContract, formatField, formatSchedule, galleryPictures, getMultipleField } from '../../../utils/formatData';
 
 // Custom component
 import Typography from '../Typography/Typography';
@@ -17,6 +17,7 @@ import Tag from '../Tag/Tag';
 import { Link } from 'react-router-dom';
 import { useWindowSize } from '../../hooks/useWindowsSize';
 import { generateURL, visibleURL } from '../../../utils/formatData';
+import { count } from 'console';
 
 export type SingleProfileType = {
   introduction: string;
@@ -24,6 +25,7 @@ export type SingleProfileType = {
   portfolio: string;
   linkedin: string;
   gallery?: Array<string>;
+  experience?: number;
   // Common
   company_project_candidate: string;
   image?: string;
@@ -63,6 +65,9 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
     fields = fields.map((val) => formatField(val, t));
   }
 
+  // Best works
+  let gallery = galleryPictures(data.gallery);
+
   const settings = {
     slidesToShow: 1,
     infinite: true,
@@ -100,11 +105,21 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
             <Label type="review">Field</Label>
             <div className="fields">
             {
-              fields.map((field) => (
-                <Tag>{field}</Tag>
+              fields.map((field, key) => (
+                <Tag key={`tag-${key}`}>{field}</Tag>
               ))
             }
             </div>
+          </div>
+      }
+      {
+        data.experience &&
+          <div>
+            {/* Experience */}
+            <Label type="review">Experience</Label>
+            <Typography variant="body-l" element="p">
+              { data.experience + ' ' + t("general.year", {count: data.experience}) }
+            </Typography>
           </div>
       }
     </>
@@ -194,19 +209,18 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
             </>
         }
         {
-          data.gallery &&
+          gallery &&
             <Slider className="slide-gallery" {...settings}>
-              {/* TODO: Only for testing porpuse */}
-              <img src={gallery} alt="gallery-1" />
-              <img src={gallery} alt="gallery-2" />
-              <img src={gallery} alt="gallery-3" />
-              <img src={gallery} alt="gallery-4" />
-              <img src={gallery} alt="gallery-5" />
+              {
+                gallery.map((img, key) => (
+                  <img src={img} alt={`gallery-${key}`} key={`gallery-${key}`} />    
+                ))
+              }
             </Slider>
         }
         {/* Template Grid */}
         { 
-          (!data.gallery && width >= 1024 ) &&
+          (!gallery && width >= 1024 ) &&
             <div className="more-info">
               { renderMoreInfo() }
             </div>

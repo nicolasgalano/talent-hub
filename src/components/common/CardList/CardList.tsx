@@ -145,6 +145,7 @@ const CardList:FC<CardListProps> = ({data: cards, loading, placeholderSearch, on
               }
             </Button>
             <Dropdown
+              name="Order"
               options={Array('Latest', 'Oldest')}
               optionDefault="Latest"
               onChange={(sort) => onSort(sort)} />
