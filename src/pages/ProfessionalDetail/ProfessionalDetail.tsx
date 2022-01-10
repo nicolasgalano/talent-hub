@@ -100,7 +100,7 @@ const ProfessionalDetail: FC = () => {
       { error && console.log(error)}
       {
         data !== null &&
-          <Detail btnText="Contact" onClickAction={handleClick}>
+          <Detail urlParent='/professionals/' btnText="Contact" onClickAction={handleClick}>
             <SingleProfile data={data} />
           </Detail>
       }
