@@ -44,7 +44,8 @@ export const formatOpeningDetails = (res: any) => {
     about: doc.About,
     responsabilities: doc.Responsibilities,
     benefits: doc.Benefits,
-    experience: doc.Experience,
+    experience_from: doc.ExperienceFrom,
+    experience_to: doc.ExperienceTo,
     start_date: doc.StartDate,
     salary_from: doc.SalaryFrom,
     salary_to: doc.SalaryTo,
@@ -73,7 +74,8 @@ export const formatProfessionalDetails = (res: any) => {
     workgin_shedule: doc.WorkingSchedule,
     type_of_contract: doc.TypeOfContract,
     fields: doc.Fields,
-    image: profilePicture(doc.ProfilePicture)
+    image: profilePicture(doc.ProfilePicture),
+    experience: doc.Experience
   };
   return formattedData;
 }
@@ -105,10 +107,14 @@ export const galleryPictures = (imgs: Array<any>) => {
     return imgs.map((img) => {
       if(img.formats){
         // Get large size if exist
-        if(img.formats.large !== null){
+        if(img.formats.large !== undefined){
           return img.formats.large.url;
-        }else{
+        }else if(img.formats.medium !== undefined){
           return img.formats.medium.url;
+        }else if(img.formats.small !== undefined){
+          return img.formats.small.url;
+        }else if(img.formats.large !== undefined){
+          return img.formats.large.url;
         }
       }else{
         return img.url;
@@ -143,8 +149,17 @@ export const visibleURL = (url: string) => {
   return url;
 };
 
-export const formatExperienceRequired = (years: number, lang) => {
-  return years + ' ' + lang("general.year", { count: years })
+export const formatExperienceRequired = (lang, from: number, to?: number) => {
+  let txt = '';
+  txt += from + ' ';
+  
+  if(to){
+    txt += '- ' + to + ' ';
+  }
+
+  txt += lang("general.year", { count: to ? to : from }); 
+  
+  return txt;
 }
   
 export const formatStartDate = (date: string) => (

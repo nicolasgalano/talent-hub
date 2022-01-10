@@ -1,7 +1,8 @@
 import { FC, useRef, useState } from "react";
+import { useHistory } from "react-router";
 
 // UI Semantic
-import { Checkbox, Dropdown, Radio } from "semantic-ui-react";
+import { Checkbox,  Radio } from "semantic-ui-react";
 
 // UI Decentraland
 import { Button } from 'decentraland-ui/dist/components/Button/Button';
@@ -12,9 +13,10 @@ import { openings2 } from '../../assets/illustrations'
 import { useTranslation } from 'react-i18next';
 import { namespaces } from '../../i18n/i18n.constants';
 import dataModal from '../../data/single.json';
+import { Form, Formik } from "formik";
+import * as Yup from "yup";
 
 // UI Custom Component
-import TextField from "../../components/common/TextField/TextField";
 import Typography from "../../components/common/Typography/Typography";
 import Label from "../../components/common/Label/Label";
 import Range from "../../components/common/Range/Range";
@@ -22,7 +24,23 @@ import HeroPost from '../../components/common/HeroPost/HeroPost';
 import File from '../../components/common/File/File';
 import Modal, { ModalBody, ModalFooter, ModalHandle, ModalHeader } from "../../components/common/Modal/Modal";
 import SingleOrganizationAndProject from "../../components/common/Single/SingleOrganizationAndProject";
-import { useHistory } from "react-router";
+import TextFieldNew from "../../components/common/TextField/TextFieldNew";
+import Dropdown from "../../components/common/Dropdown/Dropdown";
+
+interface FormInterface {
+  PositionOffered: string;
+  Organization: string;
+  Responsibilities: string;
+  Benefits: string;
+  Email: string;
+  About: string;
+  From: string;
+  To: string;
+  Currency: string;
+  SalaryType: string;
+  Month: string;
+  Year: string;
+}
 
 const OpeningCreate:FC = () =>{
   const { t } = useTranslation([namespaces.pages.openingcreate, namespaces.common]);
@@ -38,6 +56,37 @@ const OpeningCreate:FC = () =>{
 
   const handleChangeOrganizationOrProject = (value) => setOrganizationOrProject(value);
 
+  const initialValues: FormInterface = {
+    PositionOffered: '',
+    Organization: '',
+    Responsibilities: '',
+    Benefits: '',
+    Email: '',
+    About: '',
+    From: '',
+    To: '',
+    Currency: 'USD',
+    SalaryType: 'Year',
+    Month: 'September',
+    Year: '2021',
+  }
+
+  const formSchema = Yup.object().shape({
+    PositionOffered: Yup.string()
+      .required(),
+    Organization: Yup.string()
+      .required(),
+    Responsibilities: Yup.string()
+      .required(),
+    Benefits: Yup.string()
+      .required(),
+    Email: Yup.string()
+      .email(t("general.email", {ns: namespaces.common}) + ' ' + t("forms.invalid-email", {ns: namespaces.common}))
+      .required(t("general.email", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
+    About: Yup.string()
+      .required(),
+  });
+
   return(
     <div className="custom-form" id="post-a-job">
       <HeroPost 
@@ -46,209 +95,234 @@ const OpeningCreate:FC = () =>{
         description={ t("hero.description") }
         buttonText={t("hero.button")}
         />
-      <div className="ui container">
-        {/* Title */}
-        <Typography element="p" variant="body-s" className="label-required">*{t("general.required-information", {ns: namespaces.common})}</Typography>
-        <div className="row">
-          {/* First Col */}
-          <div className="col">
-            {/* Input Possition */}
-            <div>
-              <TextField 
-                element="input"
-                type="text"
-                label={t("general.position-offered", {ns: namespaces.common})}
-                htmlFor="position-offered"
-                required />
-            </div>
-            {/* Textarea responsabilities */}
-            <div>
-              <TextField 
-                element="textarea"
-                label={t("general.responsabilities", {ns: namespaces.common})}
-                htmlFor="responsabilities"
-                required />
-            </div>
-            {/* Benefits */}
-            <div>
-              <TextField 
-                element="input"
-                type="text"
-                label={t("general.benefits", {ns: namespaces.common})}
-                htmlFor="benefits" />
-            </div>
-            {/* Checkbox's Types of contract */}
-            <div>
-              <Label type="form" required>{t("general.type-of-contract", {ns: namespaces.common})}</Label>
-              <div className="checkbox-container">
+      <Formik 
+        initialValues={initialValues}
+        validationSchema={formSchema}
+        onSubmit={(values, actions) => {
+          console.log(JSON.stringify(values, null, 2));
+          // prevent submit
+          actions.setSubmitting(false);
+        }}>
+        <Form>
+          <div className="ui container">
+            {/* Title */}
+            <Typography element="p" variant="body-s" className="label-required">*{t("general.required-information", {ns: namespaces.common})}</Typography>
+            <div className="row">
+              {/* First Col */}
+              <div className="col">
+                {/* Input Possition */}
                 <div>
-                  <Checkbox label={t("general.permanent", {ns: namespaces.common})} />
-                  <Checkbox label={t("general.temporary", {ns: namespaces.common})} />
+                  <TextFieldNew
+                    element="input"
+                    type="text"
+                    label={t("general.position-offered", {ns: namespaces.common})}
+                    id="PositionOffered"
+                    name="PositionOffered"
+                    required />
                 </div>
+                {/* Textarea responsabilities */}
                 <div>
-                  <Checkbox label={t("general.freelance", {ns: namespaces.common})} />
-                  <Checkbox label={t("general.intership", {ns: namespaces.common})} />
+                  <TextFieldNew
+                    element="textarea"
+                    label={t("general.responsabilities", {ns: namespaces.common})}
+                    name="Responsibilities"
+                    id="Responsibilities"
+                    required />
+                </div>
+                {/* Benefits */}
+                <div>
+                  <TextFieldNew
+                    element="input"
+                    type="text"
+                    label={t("general.benefits", {ns: namespaces.common})}
+                    name="Benefits"
+                    id="Benefits" />
+                </div>
+                {/* Checkbox's Types of contract */}
+                <div>
+                  <Label type="form" required>{t("general.type-of-contract", {ns: namespaces.common})}</Label>
+                  <div className="checkbox-container">
+                    <div>
+                      <Checkbox label={t("general.permanent", {ns: namespaces.common})} />
+                      <Checkbox label={t("general.temporary", {ns: namespaces.common})} />
+                    </div>
+                    <div>
+                      <Checkbox label={t("general.freelance", {ns: namespaces.common})} />
+                      <Checkbox label={t("general.intership", {ns: namespaces.common})} />
+                    </div>
+                  </div>
+                </div>
+                {/* Checkbox's Fields */}
+                <div>
+                  <Label type="form" required>{t("general.fields", {ns: namespaces.common})}</Label>
+                  <div className="checkbox-container">
+                    <div>
+                      <Checkbox label={t("general.design", {ns: namespaces.common})} />
+                      <Checkbox label={t("general.development", {ns: namespaces.common})} />
+                      <Checkbox label={t("general.engineering", {ns: namespaces.common})} />
+                      <Checkbox label={t("general.modelling", {ns: namespaces.common})} />
+                    </div>
+                    <div>
+                      <Checkbox label={t("general.project-management", {ns: namespaces.common})} />
+                      <Checkbox label={t("general.marketing", {ns: namespaces.common})} />
+                      <Checkbox label={t("general.art-direction", {ns: namespaces.common})} />
+                      <Checkbox label={t("general.data-analytics", {ns: namespaces.common})} />
+                    </div>
+                  </div>
+                </div>
+                {/* Input Experience */}
+                <div>
+                  <Label type="form" required>{t("general.experience-required", {ns: namespaces.common})}</Label>
+                  <Range />
+                </div>
+                {/* Checkbox's Working schedule */}
+                <div>
+                  <Label type="form" required>{t("general.working-schedule", {ns: namespaces.common})}</Label>
+                  <div className="checkbox-inline">
+                    <Checkbox label={t("general.full-time", {ns: namespaces.common})} />
+                    <Checkbox label={t("general.part-time", {ns: namespaces.common})} />
+                    <Checkbox label={t("general.per-hour", {ns: namespaces.common})} />
+                  </div>
+                </div>
+                {/* Input Salary */}
+                <div>
+                  <Label type="form">{t("general.salary", {ns: namespaces.common})}</Label>
+                  <div className="salary">
+                    <TextFieldNew
+                      element="input"
+                      type="number"
+                      label={t("general.from", {ns: namespaces.common})}
+                      name="From"
+                      id="From" />
+                    <TextFieldNew
+                      element="input"
+                      type="number"
+                      label={t("general.to", {ns: namespaces.common})}
+                      name="To"
+                      id="To" />
+
+                    <Dropdown
+                      name="Currency"
+                      options={Array('USD', 'EUR')}
+                      optionDefault="USD" 
+                      direction="left" />
+
+                    <Dropdown
+                      name="SalaryType"
+                      options={Array('Month', 'Year')}
+                      optionDefault="Month" 
+                      direction="left" />
+                  </div>
+                </div>
+                {/* Select Start date */}
+                <div>
+                  <Label type="form">{t("general.start-date", {ns: namespaces.common})}</Label>
+                  <div className="start-date">
+                    <Dropdown
+                      name="Month"
+                      options={Array(
+                        t("months.january", {ns: namespaces.common}),
+                        t("months.febrary", {ns: namespaces.common}),
+                        t("months.march", {ns: namespaces.common}),
+                        t("months.april", {ns: namespaces.common}),
+                        t("months.may", {ns: namespaces.common}),
+                        t("months.june", {ns: namespaces.common}),
+                        t("months.july", {ns: namespaces.common}),
+                        t("months.august", {ns: namespaces.common}),
+                        t("months.september", {ns: namespaces.common}),
+                        t("months.october", {ns: namespaces.common}),
+                        t("months.november", {ns: namespaces.common}),
+                        t("months.decenber", {ns: namespaces.common})
+                      )}
+                      optionDefault={t("months.september", {ns: namespaces.common})}
+                      direction="right" />
+
+                    <Dropdown
+                      name="Year"
+                      options={Array('2021', '2022')}
+                      optionDefault="2021" 
+                      direction="right" />
+
+                  </div>
                 </div>
               </div>
-            </div>
-            {/* Checkbox's Fields */}
-            <div>
-              <Label type="form" required>{t("general.fields", {ns: namespaces.common})}</Label>
-              <div className="checkbox-container">
+              {/* Second Col */}
+              <div className="col">
+                {/* Input Organization or project name */}
                 <div>
-                  <Checkbox label={t("general.design", {ns: namespaces.common})} />
-                  <Checkbox label={t("general.development", {ns: namespaces.common})} />
-                  <Checkbox label={t("general.engineering", {ns: namespaces.common})} />
-                  <Checkbox label={t("general.modelling", {ns: namespaces.common})} />
+                  <TextFieldNew
+                    element="input"
+                    type="text"
+                    label={t("general.organization", {ns: namespaces.common})}
+                    name="Organization"
+                    id="Organization"
+                    required />
+                </div>
+                {/* Radio button - Organization or project */}
+                <div className="checkbox-inline">
+                  <Radio
+                    label='Organization'
+                    name='radioGroup'
+                    value='organization'
+                    checked={organizationOrProject === 'organization'}
+                    onChange={(event, data) => handleChangeOrganizationOrProject(data.value)} />
+                  <Radio
+                    label='Project'
+                    name='radioGroup'
+                    value='project'
+                    checked={organizationOrProject === 'project'}
+                    onChange={(event, data) => handleChangeOrganizationOrProject(data.value)} />
                 </div>
                 <div>
-                  <Checkbox label={t("general.project-management", {ns: namespaces.common})} />
-                  <Checkbox label={t("general.marketing", {ns: namespaces.common})} />
-                  <Checkbox label={t("general.art-direction", {ns: namespaces.common})} />
-                  <Checkbox label={t("general.data-analytics", {ns: namespaces.common})} />
+                  {/* Input Email */}
+                  <TextFieldNew
+                    element="input"
+                    type="email"
+                    label={t("general.email", {ns: namespaces.common})}
+                    name="Email"
+                    id="Email"
+                    required />
                 </div>
-              </div>
-            </div>
-            {/* Input Experience */}
-            <div>
-              <Label type="form" required>{t("general.experience-required", {ns: namespaces.common})}</Label>
-              <Range />
-            </div>
-            {/* Checkbox's Working schedule */}
-            <div>
-              <Label type="form" required>{t("general.working-schedule", {ns: namespaces.common})}</Label>
-              <div className="checkbox-inline">
-                <Checkbox label={t("general.full-time", {ns: namespaces.common})} />
-                <Checkbox label={t("general.part-time", {ns: namespaces.common})} />
-                <Checkbox label={t("general.per-hour", {ns: namespaces.common})} />
-              </div>
-            </div>
-            {/* Input Salary */}
-            <div>
-              <Label type="form">{t("general.salary", {ns: namespaces.common})}</Label>
-              <div className="salary">
-                <TextField 
-                  element="input"
-                  type="text"
-                  label={t("general.from", {ns: namespaces.common})}
-                  htmlFor="from" />
-                <TextField 
-                  element="input"
-                  type="text"
-                  label={t("general.to", {ns: namespaces.common})}
-                  htmlFor="to" />
-                <Dropdown text="USD" direction="left">
-                  <Dropdown.Menu>
-                    <Dropdown.Item text="USD" />
-                    <Dropdown.Item text="EUR" />
-                  </Dropdown.Menu>
-                </Dropdown>
-                <Dropdown text="Month" direction="left">
-                  <Dropdown.Menu>
-                    <Dropdown.Item text="Month" />
-                    <Dropdown.Item text="Year" />
-                  </Dropdown.Menu>
-                </Dropdown>
-              </div>
-            </div>
-            {/* Select Start date */}
-            <div>
-              <Label type="form">{t("general.start-date", {ns: namespaces.common})}</Label>
-              <div className="start-date">
-                <Dropdown text="September" direction="right">
-                  <Dropdown.Menu>
-                    <Dropdown.Item text={t("months.january", {ns: namespaces.common})} />
-                    <Dropdown.Item text={t("months.febrary", {ns: namespaces.common})} />
-                    <Dropdown.Item text={t("months.march", {ns: namespaces.common})} />
-                    <Dropdown.Item text={t("months.april", {ns: namespaces.common})} />
-                    <Dropdown.Item text={t("months.may", {ns: namespaces.common})} />
-                    <Dropdown.Item text={t("months.june", {ns: namespaces.common})} />
-                    <Dropdown.Item text={t("months.july", {ns: namespaces.common})} />
-                    <Dropdown.Item text={t("months.august", {ns: namespaces.common})} />
-                    <Dropdown.Item text={t("months.september", {ns: namespaces.common})} />
-                    <Dropdown.Item text={t("months.october", {ns: namespaces.common})} />
-                    <Dropdown.Item text={t("months.november", {ns: namespaces.common})} />
-                    <Dropdown.Item text={t("months.decenber", {ns: namespaces.common})} />
-                  </Dropdown.Menu>
-                </Dropdown>
-                <Dropdown text="2021" direction="right">
-                  <Dropdown.Menu>
-                    <Dropdown.Item text="2021" />
-                    <Dropdown.Item text="2022" />
-                  </Dropdown.Menu>
-                </Dropdown>
+                {/* Textarea About */}
+                <div>
+                  <TextFieldNew
+                    element="textarea"
+                    label={t("general.about", {ns: namespaces.common})}
+                    name="About"
+                    id="About"
+                    required />
+                </div>
+                {/* Input logo */}
+                <div className="upload-box">
+                  <Label type="form">{t("general.company", {ns: namespaces.common})}</Label>
+                  <Typography variant="body-s" element="p" className="recomended">{t("general.recomended-size", {ns: namespaces.common})} 100 x 100px</Typography>
+                  { updateFile && <File title="CompanyLogo.png" className="file" /> }
+                  <Button secondary className="btn-upload" type="button" onClick={() => setUploadFile(!updateFile)}>{t("general.upload-logo", {ns: namespaces.common})}</Button>
+                </div>
               </div>
             </div>
           </div>
-          {/* Second Col */}
-          <div className="col">
-            {/* Input Organization or project name */}
-            <div>
-              <TextField 
-                element="input"
-                type="text"
-                label={t("general.organization", {ns: namespaces.common})}
-                htmlFor="project-name"
-                required />
-            </div>
-            {/* Radio button - Organization or project */}
-            <div className="checkbox-inline">
-              <Radio
-                label='Organization'
-                name='radioGroup'
-                value='organization'
-                checked={organizationOrProject === 'organization'}
-                onChange={(event, data) => handleChangeOrganizationOrProject(data.value)} />
-              <Radio
-                label='Project'
-                name='radioGroup'
-                value='project'
-                checked={organizationOrProject === 'project'}
-                onChange={(event, data) => handleChangeOrganizationOrProject(data.value)} />
-            </div>
-            <div>
-              {/* Input Email */}
-              <TextField 
-                element="input"
-                type="email"
-                label={t("general.email", {ns: namespaces.common})}
-                htmlFor="email"
-                required />
-            </div>
-            {/* Textarea About */}
-            <div>
-              <TextField 
-                element="textarea"
-                label={t("general.about", {ns: namespaces.common})}
-                htmlFor="about"
-                required />
-            </div>
-            {/* Input logo */}
-            <div className="upload-box">
-              <Label type="form">{t("general.company", {ns: namespaces.common})}</Label>
-              <Typography variant="body-s" element="p" className="recomended">{t("general.recomended-size", {ns: namespaces.common})} 100 x 100px</Typography>
-              { updateFile && <File title="CompanyLogo.png" className="file" /> }
-              <Button secondary className="btn-upload" onClick={() => setUploadFile(!updateFile)}>{t("general.upload-logo", {ns: namespaces.common})}</Button>
+          <div className="ui container">
+            <div className="actions">
+              <Button 
+                // disabled={!updateFile}
+                type="submit"
+                primary 
+                // onClick={() => handleSubmit()}
+                >
+                  {t("buttons.submit", {ns: namespaces.common})}
+              </Button>
+              <Button 
+                disabled={!updateFile}
+                type="button"
+                onClick={() => handleOpenModal() }
+                secondary >
+                  {t("buttons.preview", {ns: namespaces.common})}
+              </Button>
             </div>
           </div>
-        </div>
-      </div>
-      <div className="ui container">
-        <div className="actions">
-          <Button 
-            disabled={!updateFile}
-            primary 
-            onClick={() => handleSubmit()}>
-              {t("buttons.submit", {ns: namespaces.common})}
-          </Button>
-          <Button 
-            disabled={!updateFile}
-            onClick={() => handleOpenModal() }
-            secondary >
-              {t("buttons.preview", {ns: namespaces.common})}
-          </Button>
-        </div>
-      </div>
+        </Form>
+      </Formik>
       <Modal theme="light" ref={modalRef}>
         <ModalHeader>Review your job</ModalHeader>
         <ModalBody className="review-modal">

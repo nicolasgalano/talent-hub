@@ -10,8 +10,6 @@ import '../../assets/scss/base/form.scss';
 import './ProfessionalDetail.scss';
 import { namespaces } from '../../i18n/i18n.constants';
 import { formatProfessionalDetails, generateURL } from '../../utils/formatData';
-import { Form, Formik } from 'formik';
-import * as Yup from "yup";
 
 // Semantic component
 import { Button } from 'semantic-ui-react';
@@ -21,17 +19,10 @@ import Detail from '../../components/common/Detail/Detail'
 import SingleProfile from '../../components/common/Single/SingleProfile';
 import Modal, { ModalBody, ModalFooter, ModalHandle, ModalHeader } from '../../components/common/Modal/Modal';
 import TextField from '../../components/common/TextField/TextField';
-import TextFieldNew from '../../components/common/TextField/TextFieldNew';
 
-interface FormInterface {
-  Fullname: string;
-  Email: string;
-  Company: string;
-  Message: string;
-}
 
-const ProfessionalDetail: FC = () => {
-  const {t} = useTranslation(namespaces.common);
+const ProfessionalDetailOld: FC = () => {
+  const {t} = useTranslation();
   const history = useHistory();
 
   const { slug }: { slug: string } = useParams();
@@ -62,24 +53,38 @@ const ProfessionalDetail: FC = () => {
       data: JSON.stringify(formData),
   });
 
-  const formSchema = Yup.object().shape({
-    Fullname: Yup.string()
-      .required(t("general.name-and-surname") + ' ' + t("forms.required")),
-    Email: Yup.string()
-      .email(t("general.email") + ' ' + t("forms.invalid-email"))
-      .required(t("general.email") + ' ' + t("forms.required")),
-    Company: Yup.string()
-      .required(t("general.company-or-project-name") + ' ' + t("forms.required")),
-    Message: Yup.string()
-      .required(t("general.message") + ' ' + t("forms.required")),
-  
-  });
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  const initialValues: FormInterface = { 
-    Fullname: '',
-    Email: '',
-    Company: '',
-    Message: '',
+    // Get form data
+    const contactData = new FormData(e.target);
+    const inputs = Object.fromEntries(contactData.entries());
+
+    // Get values
+    let name = inputs.name_and_surname;
+    let email = inputs.email;
+    let company = inputs.company_or_project_name;
+    let message = inputs.message;
+    
+    // Validate if not empty
+    if(name === '') return;
+    if(email === '') return;
+    if(company === '') return;
+    if(message === '') return;
+
+    // contactData.append('Fullname', name);
+    // contactData.append('Email', email);
+    // contactData.append('Company', company);
+    // contactData.append('Message', message);
+
+    let contact = {
+      Fullname: name,
+      Email: email,
+      Company: company,
+      Message: message
+    }
+
+    setFormData(contact);
   };
 
   useEffect(() => {
@@ -108,77 +113,62 @@ const ProfessionalDetail: FC = () => {
         <ModalHeader>
           Contact { data !== null && data.company_project_candidate }
         </ModalHeader>
-
-        <Formik
-          initialValues={initialValues}
-          validationSchema={formSchema}
-          onSubmit={(values, actions) => {
-            setFormData(values);
-            // prevent submit
-            actions.setSubmitting(false);
-          }}
-        >
-          <Form>
-            <ModalBody>
+        <form onSubmit={handleSubmit}>
+          <ModalBody>
               <div className="custom-form">
                 <div className="row">
                   <div className="col">
                     {/* Input Name and surname */}
-                    <TextFieldNew
+                    <TextField
                       element="input"
                       type="text"
-                      label={t("general.name-and-surname")}
-                      id="Fullname"
-                      name="Fullname"
+                      label={t("general.name-and-surname", {ns: namespaces.common})}
+                      htmlFor="name_and_surname"
                       required />
                   </div>
                   <div className="col">
-                    {/* Input Email */}
-                    <TextFieldNew
+                  {/* Input Email */}
+                    <TextField 
                       element="input"
                       type="email"
-                      label={t("general.email")}
-                      id="Email"
-                      name="Email"
+                      label={t("general.email", {ns: namespaces.common})}
+                      htmlFor="email"
                       required />
                   </div>
                 </div>
                 <div className="row">
                   <div className="col">
                     {/* Input Company or project name */}
-                    <TextFieldNew 
+                    <TextField 
                       element="input"
                       type="text"
-                      label={t("general.company-or-project-name")}
-                      id="Company"
-                      name="Company"
+                      label={t("general.company-or-project-name", {ns: namespaces.common})}
+                      htmlFor="company_or_project_name"
                       required />
                   </div>
                 </div>
                 <div className="row">
                   <div className="col">
                     {/* Textarea message */}
-                    <TextFieldNew 
+                    <TextField 
                       element="textarea"
-                      label={t("general.message")}
-                      id="Message"
-                      name="Message"
+                      label={t("general.message", {ns: namespaces.common})}
+                      htmlFor="message"
                       required />
                   </div>
                 </div>
               </div>
-            </ModalBody>
-            <ModalFooter>
+          </ModalBody>
+          <ModalFooter>
             <Button 
               loading={loadingSubmit}
               primary >
-                {t("buttons.send")}
+                {t("buttons.send", {ns: namespaces.common})}
             </Button>
           </ModalFooter>
-          </Form>
-        </Formik>
+        </form>
       </Modal>
     </Fragment>
   )
 }
-export default ProfessionalDetail;
+export default ProfessionalDetailOld;
