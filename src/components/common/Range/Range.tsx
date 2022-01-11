@@ -11,9 +11,10 @@ import './Range.scss';
 interface RangeProps {
   callback?: Function;
   className?: string;
+  defaultValue?: number[];
 }
 
-const Range:FC<RangeProps> = ({className, callback}) => {
+const Range:FC<RangeProps> = ({className, callback, defaultValue = []}) => {
 
   const CustomRange = createSliderWithTooltip(Slider.Range); 
 
@@ -30,7 +31,7 @@ const Range:FC<RangeProps> = ({className, callback}) => {
       <CustomRange
         min={0} 
         max={20} 
-        defaultValue={[0, 10]}
+        defaultValue={defaultValue}
         tipFormatter={formatValue}
         tipProps={{
           placement: 'bottom',

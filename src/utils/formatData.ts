@@ -9,6 +9,7 @@ export const formatJobs = (res: any) => {
   let jobs: CardProps[] = [];
   res.map((job: any) => {
     const formattedData: CardProps = {
+      id: job.id,
       title: job.PositionOffered,
       img: profilePicture(job.CompanyLogo),
       company: job.Organization,
@@ -25,6 +26,7 @@ export const formatProfessionals = (res: any) => {
   let professionals: CardProps[] = [];
   res.map((professional: any) => {
     const formattedData: CardProps = {
+      id: professional.id,
       title: professional.Fullname,
       profession: professional.Profession,
       img: profilePicture(professional.ProfilePicture),
@@ -44,7 +46,8 @@ export const formatOpeningDetails = (res: any) => {
     about: doc.About,
     responsabilities: doc.Responsibilities,
     benefits: doc.Benefits,
-    experience: doc.Experience,
+    experience_from: doc.ExperienceFrom,
+    experience_to: doc.ExperienceTo,
     start_date: doc.StartDate,
     salary_from: doc.SalaryFrom,
     salary_to: doc.SalaryTo,
@@ -148,8 +151,17 @@ export const visibleURL = (url: string) => {
   return url;
 };
 
-export const formatExperienceRequired = (years: number, lang) => {
-  return years + ' ' + lang("general.year", { count: years })
+export const formatExperienceRequired = (lang, from: number, to?: number) => {
+  let txt = '';
+  txt += from + ' ';
+  
+  if(to){
+    txt += '- ' + to + ' ';
+  }
+
+  txt += lang("general.year", { count: to ? to : from }); 
+  
+  return txt;
 }
   
 export const formatStartDate = (date: string) => (

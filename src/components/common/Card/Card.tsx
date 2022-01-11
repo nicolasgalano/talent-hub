@@ -7,6 +7,7 @@ import "./Card.scss";
 import moment from "moment";
 
 export interface CardProps {
+  id: number;
   title: string;
   img?: string;
   company?: string;

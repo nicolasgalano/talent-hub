@@ -71,6 +71,7 @@ const FeaturedCards: FC<FeaturedCardsProps> = ({title, action, to, data, classNa
             (data.length !== 0) ?
               data.map((job, index) => (
                 <Card 
+                  id={job.id}
                   title={job.title}
                   img={job.img}
                   company={job.company}

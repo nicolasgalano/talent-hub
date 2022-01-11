@@ -25,7 +25,7 @@ const OpeningDetails: FC = () => {
 
   useEffect(() => {
     // TODO: only for testing porpouse
-    // console.log(data)
+    console.log(data)
   }, [data])
 
 
@@ -36,7 +36,7 @@ const OpeningDetails: FC = () => {
       { error && console.log(error)}
       {
         data !== null &&
-        <Detail btnText="Apply" onClickAction={handleApply} >
+        <Detail urlParent='/jobs/' btnText="Apply" onClickAction={handleApply} >
           <SingleOrganizationAndProject data={data} />
         </Detail>
       }
