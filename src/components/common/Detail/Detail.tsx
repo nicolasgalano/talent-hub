@@ -28,7 +28,7 @@ const Detail: FC <DetailProps> = ({children, urlParent, btnText, btnLink, onClic
       <div className="back">
         {
           // validate if exist url to go back
-          history.length > 1 ?
+          history.action !== 'POP' ?
           <Button basic onClick={() => history.goBack()}>
             <img src={arrowLeft} alt="icon arrow left" />
             Back
