@@ -56,7 +56,13 @@ const Professionals:FC = () => {
           />
         <CardList 
           data={data} 
-          loading={loading} 
+          loading={loading}
+          defaultFiltersSelected={{
+            field: [],
+            contract: [],
+            schedule: []
+          }}
+          onFilter={() => {}}
           placeholderSearch='Search professionals' />
       </div>
     </Fragment>
