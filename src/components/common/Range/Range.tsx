@@ -14,7 +14,7 @@ interface RangeProps {
   defaultValue?: number[];
 }
 
-const Range:FC<RangeProps> = ({className, callback, defaultValue}) => {
+const Range:FC<RangeProps> = ({className, callback, defaultValue = []}) => {
 
   const CustomRange = createSliderWithTooltip(Slider.Range); 
 
