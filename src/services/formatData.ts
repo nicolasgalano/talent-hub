@@ -4,6 +4,7 @@ export const formatJobs = (res: any) => {
   let resJobs: CardProps[] = [];
   res.map((job: any) => {
     const resJob: CardProps = {
+      id: job.id,
       title: job.PositionOffered,
       img: job.CompanyLogo && job.CompanyLogo.url,
       company: job.Organization,
@@ -20,6 +21,7 @@ export const formatProfessionals = (res: any) => {
   let resProfessionals: CardProps[] = [];
   res.map((job: any) => {
     const resJob: CardProps = {
+      id: job.id,
       title: job.Fullname,
       img: job.ProfilePicture && job.ProfilePicture.formats.thumbnail.url,
       description: job.Introduction,

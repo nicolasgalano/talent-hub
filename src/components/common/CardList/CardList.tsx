@@ -36,11 +36,13 @@ interface CardListProps {
     schedule: string[],
     contract: string[],
   },
+  onRangeChanged?: Function;
+  experienceRange?: number[];
   firstTimeLoading?: boolean;
   searchValue?: string;
 }
 
-const CardList:FC<CardListProps> = ({data: cards, loading, placeholderSearch, onSearch, onFilter,
+const CardList:FC<CardListProps> = ({data: cards, loading, placeholderSearch, onSearch, onFilter, onRangeChanged, experienceRange,
                                       defaultFiltersSelected, onSort, sort, firstTimeLoading, searchValue}) => {
   const [openFilter, setOpenFilter] = useState(false);
   const modalRef = useRef<ModalHandle>(null);
@@ -95,7 +97,7 @@ const CardList:FC<CardListProps> = ({data: cards, loading, placeholderSearch, on
       </div>
       <div>
         <Label type="filter">{ t("general.experience") }</Label>
-        <Range />
+        <Range callback={onRangeChanged} defaultValue={experienceRange} />
       </div>
     </Fragment>
   );
@@ -186,6 +188,7 @@ const CardList:FC<CardListProps> = ({data: cards, loading, placeholderSearch, on
             (cards !== null && cards.length !== 0) &&
               cards.map((doc: CardProps, key: number) => (
                 <Card
+                  id={doc.id}
                   title={doc.title}
                   img={doc.img}
                   company={doc.company}
@@ -193,7 +196,7 @@ const CardList:FC<CardListProps> = ({data: cards, loading, placeholderSearch, on
                   date={doc.date}
                   location={doc.location}
                   to={doc.to}
-                  key={`card-doc-${key}`}/>
+                  key={`card-doc-${doc.id}`}/>
               ))
           }
           {/* Show Skeleton while loading */}

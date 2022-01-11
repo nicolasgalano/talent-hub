@@ -7,6 +7,7 @@ import "./Card.scss";
 import { location as locationIcon } from "../../../assets/icons";
 
 export interface CardProps {
+  id: number;
   title: string;
   img?: string;
   company?: string;

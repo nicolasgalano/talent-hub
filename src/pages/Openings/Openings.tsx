@@ -1,7 +1,6 @@
 import React, { FC, Fragment, useCallback, useEffect, useState, useLayoutEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
-import queryString from 'query-string';
-
+import {queryParse, queryStringify} from '../../utils/queryString';
 // Files
 import './Openings.scss';
 import '../../assets/scss/utils/LoadMore.scss';
@@ -20,7 +19,7 @@ import Hero from '../../components/common/Hero/Hero';
 
 // redux
 import { useAppDispatch, useAppSelector } from '../../components/hooks/hooks';
-import { getAllJobs, getCountAllJobs } from '../../redux/slices/jobsSlices';
+import { getAllJobs, getCountAllJobs, setJobPage } from '../../redux/slices/jobsSlices';
 import { debounce } from '../../utils/debounce';
 
 
@@ -29,29 +28,27 @@ interface QueryInterface {
   WorkingSchedule: string;
   TypeOfContract: string;
   Fields: string;
+  ExperienceFrom_gte?: number;
+  ExperienceTo_lte?: number;
   _start: number;
   _limit: number;
   _sort: string;
 }
 
+const RESULTS_PER_PAGE = 6;
+const EXPERIENCE_FROM = 0;
+const EXPERIENCE_TO = 10;
+
 const Openings: FC = () => {
   const { t } = useTranslation([namespaces.common, namespaces.pages.openings]);
   const searchParams = useLocation().search;
-  // const order = new URLSearchParams(searchParams).get('order');
   const history = useHistory();
-
-  const url = useWindowLocation();
 
   const [query, setQuery] = useState(null);
   const [queryCount, setQueryCount] = useState(null);
-  const [page, setPage] = useState(1);
-  const [lastPage, setLastPage] = useState(null);
 
   // arg for query
-  const [queryStart, setQueryStart] = useState(0);
-  const [queryLimit, setQueryLimit] = useState(6);
   const [querySort, setQuerySort] = useState('');
-  const [querySearch, setQuerySearch] = useState('');
   const [firstTimeLoading, setFirstTimeLoading] = useState(true);
   const [filterObj, setFilterObj] = useState({
     field: [],
@@ -63,13 +60,15 @@ const Openings: FC = () => {
     WorkingSchedule: '',
     TypeOfContract: '',
     Fields: '',
+    // ExperienceFrom_gte: EXPERIENCE_FROM,
+    // ExperienceTo_lte: EXPERIENCE_TO,
     _start: 0,
-    _limit: 6,
-    _sort: 'id:ASC'
+    _limit: RESULTS_PER_PAGE,
+    _sort: 'id:DESC'
   });
 
   // redux
-  const {data, loading} = useAppSelector((state) => state.jobs.allJobs);
+  const {data, loading, page} = useAppSelector((state) => state.jobs.allJobs);
   const countJobs = useAppSelector((state) => state.jobs.allJobs.count);
   const dispatch = useAppDispatch();
 
@@ -81,7 +80,7 @@ const Openings: FC = () => {
     console.log('searchParams: ', searchParams);
 
     console.log('querySearch: ', queryObj.PositionOffered_contains);
-    let currentUrlParams = queryString.parse(searchParams);
+    let currentUrlParams = queryParse(searchParams);
     interface FilterObj {
       schedule: string[];
       field: string[];
@@ -128,34 +127,103 @@ const Openings: FC = () => {
       delete newQueryObj.TypeOfContract;
     }
 
-    let sort:string = (currentUrlParams.order)? currentUrlParams.order.toString() : 'ASC';
+    let sort:string = (currentUrlParams.order)? currentUrlParams.order.toString() : 'DESC';
     newQueryObj._sort= `id:${sort}`;
 
+    let queryWhere = {
+      _where: {},
+      _sort: newQueryObj._sort,
+      _start: newQueryObj._start,
+      _limit: newQueryObj._limit,
+    };
+    if (currentUrlParams.experienceFrom) {
+      newQueryObj.ExperienceFrom_gte = parseInt(currentUrlParams.experienceFrom.toString());
+      // experienceFirstSegment.push({ExperienceFrom_gte: parseInt(currentUrlParams.experienceFrom.toString())});
+    }
+    else {
+      newQueryObj.ExperienceFrom_gte = EXPERIENCE_FROM;
+    }
+    let experienceFrom = (currentUrlParams.experienceFrom)? parseInt(currentUrlParams.experienceFrom.toString()) : EXPERIENCE_FROM;
+
+    if (currentUrlParams.experienceTo) {
+      newQueryObj.ExperienceTo_lte = parseInt(currentUrlParams.experienceTo.toString());
+    }
+    else {
+      newQueryObj.ExperienceTo_lte = EXPERIENCE_TO;
+    }
+    let experienceTo = (currentUrlParams.experienceTo)? parseInt(currentUrlParams.experienceTo.toString()) : EXPERIENCE_TO;
+
+    let experienceFirstSegment = [
+      {
+        ExperienceFrom_gte: experienceFrom
+      },
+      {
+        ExperienceFrom_lte: experienceTo
+      }
+    ];
+
+    let experienceSecondSegment = [
+      {
+        ExperienceTo_lte: experienceTo
+      },
+      {
+        ExperienceTo_gte: experienceFrom
+      }
+    ];
+
     console.log(newQueryObj);
+    let {_sort, _start, _limit, ExperienceFrom_gte, ExperienceTo_lte, ...filterParmasOnly} = newQueryObj;
 
+    queryWhere._where = {
+      _or: [experienceFirstSegment, experienceSecondSegment],
+      ...filterParmasOnly
+    };
 
-    let queryObjStr = queryString.stringify(newQueryObj);
-    setQuery(`?${queryObjStr}`);
-    // setQuery(`?PositionOffered_contains=${querySearch}&_start=${queryStart}&_limit=${queryLimit}&_sort=id:${querySort}`);
-    setQueryCount(`/count?PositionOffered_contains=${querySearch}`);
+    let queryWhereStr = queryStringify(queryWhere);
+    console.log('queryWhere', queryWhereStr);
+
+    let {_where} = queryWhere;
+    console.log('where', _where);
+    let countQueryStr = queryStringify({_where: {..._where}});
+    console.log('countQueryStr: ', countQueryStr);
+
+    setQuery(`?${queryWhereStr}`);
+    setQueryCount(`/count?${countQueryStr}`);
   };
 
   const handleSearch = (param: string) => {
-    console.log('Search: ', param, queryObj.PositionOffered_contains);
     let newQueryObj = {...queryObj};
-    console.log('newQueryObj: ', newQueryObj);
     newQueryObj.PositionOffered_contains = param;
+
+    newQueryObj._start = 0;
+    newQueryObj._limit = RESULTS_PER_PAGE;
+
+    dispatch(setJobPage(1));
 
     setQueryObj({
       ...newQueryObj,
     });
   }
 
+  const handleRangeChanged = values => {
+    console.log('handleRangeChanged: ', values);
+    let currentUrlParams = queryParse(searchParams);
+
+    let updatedUrlParams = {
+      ...currentUrlParams,
+      experienceFrom: values[0],
+      experienceTo: values[1]
+    };
+
+    let updatedUrlString = queryStringify(updatedUrlParams);
+    history.push({search: updatedUrlString});
+  };
+
   const search = useCallback(debounce(handleSearch, 600), []);
 
   const handleFilter = (param) => {
-    console.log('Filter: ', param);
-    let currentUrlParams = queryString.parse(searchParams);
+    console.log('handleFilter: ', param);
+    let currentUrlParams = queryParse(searchParams);
     console.log('currentUrlParams: ', currentUrlParams);
     let filterObj = {
       schedule: [],
@@ -173,15 +241,16 @@ const Openings: FC = () => {
       ...currentUrlParams,
       ...filterObj
     }
+    console.log('updatedUrlParams', updatedUrlParams);
 
-    let updatedUrlString = queryString.stringify(updatedUrlParams);
+    let updatedUrlString = queryStringify(updatedUrlParams);
     console.log('new urlParams', updatedUrlString);
     history.push({search: updatedUrlString});
   };
 
   const handleSort = (sort: string) => {
 
-    const params = queryString.parse(searchParams);
+    const params = queryParse(searchParams);
     if(sort === 'Oldest') {
       params.order = 'ASC';
     }
@@ -189,7 +258,7 @@ const Openings: FC = () => {
       params.order = 'DESC';
     }
 
-    history.push({search: queryString.stringify(params)});
+    history.push({search: queryStringify(params)});
   }
 
   const dataTab = {
@@ -210,7 +279,7 @@ const Openings: FC = () => {
   };
 
   useEffect(() => {
-    let urlParams = queryString.parse(searchParams);
+    let urlParams = queryParse(searchParams);
     console.log('searchParams Changed', urlParams);
 
     let sort:string = (urlParams.order)? urlParams.order.toString() : '';
@@ -260,26 +329,31 @@ const Openings: FC = () => {
       newFilterObj.contract = [];
     }
 
+    if (urlParams.experienceFrom) {
+      newQueryObj.ExperienceFrom_gte = parseInt(urlParams.experienceFrom.toString());
+    }
+    else {
+      newQueryObj.ExperienceFrom_gte = EXPERIENCE_FROM;
+    }
+
+    if (urlParams.experienceTo) {
+      newQueryObj.ExperienceTo_lte = parseInt(urlParams.experienceTo.toString());
+    }
+    else {
+      newQueryObj.ExperienceTo_lte = EXPERIENCE_TO;
+    }
+
+    newQueryObj._start = 0;
+    newQueryObj._limit = RESULTS_PER_PAGE;
+
+    dispatch(setJobPage(1));
     setQueryObj(newQueryObj);
     setFilterObj(newFilterObj);
     setFirstTimeLoading(false);
   }, [searchParams]);
 
-  /*useLayoutEffect(() => {
-    let urlParams = new URLSearchParams(searchParams);
-    console.log('searchParams first Loading', urlParams);
-    let sort = urlParams.get('order');
-    if (sort) {
-      setQuerySort(sort);
-    }
-    else {
-      setQuerySort('DESC');
-    }
-  }, []);*/
 
   useEffect(() => {
-    // data.length === 0 && dispatch(getAllJobs(query));
-    // prevent request until set state
     if(query !== null && queryCount !== null && !firstTimeLoading) {
       dispatch(getAllJobs(query));
       dispatch(getCountAllJobs(queryCount));
@@ -290,29 +364,19 @@ const Openings: FC = () => {
     createQuery();
   }, [queryObj]);
 
-  /*useEffect(() => {
-    console.log('querySort changed', querySort);
-    if(querySort) {
-      createQuery();
-    }
-  }, [queryStart,
-    queryLimit,
-    querySort,
-    querySearch]);*/
-  /*
+  const loadMoreClicked = (ev) => {
+    ev.preventDefault();
+    let newQueryObj = {
+      ...queryObj,
+      _start: queryObj._start + RESULTS_PER_PAGE,
+      _limit: queryObj._limit + RESULTS_PER_PAGE,
+    };
 
-  useEffect(() => {
-    setPage(Math.ceil(queryLimit / 6));
-    // We calculate how many pages there are
-    setLastPage(Math.ceil(countJobs / 6));
-  }, [countJobs]);
+    dispatch(setJobPage(page + 1));
+    setQueryObj(newQueryObj);
+  };
 
-  useEffect(() => {
-    console.log('URL: ', url);
-  }, [url])*/
-
-  console.log('re-rendering');
-  return ( 
+  return (
     <Fragment>
       <Tabs dataTabs={dataTab} />
       <div className="ui container">
@@ -330,14 +394,19 @@ const Openings: FC = () => {
           onSearch={search}
           searchValue={queryObj.PositionOffered_contains}
           onFilter={handleFilter}
+          onRangeChanged={handleRangeChanged}
+          experienceRange={[queryObj.ExperienceFrom_gte, queryObj.ExperienceTo_lte]}
           defaultFiltersSelected={filterObj}
           firstTimeLoading={firstTimeLoading}
           sort={querySort}
           onSort={handleSort} />
         <div className="load-more">
           {
-            page < lastPage &&
-              <Button secondary >{ t("general.load-more") }</Button>
+            data && countJobs > data.length &&
+              <Button
+                secondary
+                onClick={loadMoreClicked}
+              >{ t("general.load-more") }</Button>
           }
         </div>
       </div>
