@@ -43,6 +43,7 @@ export const jobsSlices = createSlice({
       error: false,
       loading: true,
       count: 0,
+      page: 1,
     },
     featuredJobs: {
       data: [],
@@ -50,14 +51,25 @@ export const jobsSlices = createSlice({
       loading: true,
     },
   },
-  reducers: {},
+  reducers: {
+    setJobPage: (state, action) => {
+      console.log('setJobPage');
+      console.log(action);
+      state.allJobs.page = action.payload;
+    }
+  },
   extraReducers: {
     // All jobs
     [getAllJobs.pending.type]: (state, action) => {
       state.allJobs.loading = true;
     },
     [getAllJobs.fulfilled.type]: (state, action) => {
-      state.allJobs.data = action.payload;
+      console.log('getAllJob fulfilled page: ', state.allJobs.page);
+      if(state.allJobs.page == 1) {
+        state.allJobs.data = action.payload;
+      } else {
+        state.allJobs.data = state.allJobs.data.concat(action.payload);
+      }
       state.allJobs.loading = false;
     },
     [getAllJobs.rejected.type]: (state, action) => {
@@ -83,4 +95,7 @@ export const jobsSlices = createSlice({
   },
 });
 
+export const {
+  setJobPage
+} = jobsSlices.actions;
 export default jobsSlices.reducer;

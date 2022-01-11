@@ -1,18 +1,38 @@
 {
   "field": [
-    "Design",
-    "Development",
-    "Engineering"
+    {
+      "DESIGN": "Design"
+    },
+    {
+      "DEVELOPMENT": "Development"
+    },
+    {
+      "ENGINEERING": "Engineering"
+    }
   ],
   "contract": [
-    "Permanent",
-    "Freelance",
-    "Temporary",
-    "Internship"
+    {
+      "PERMANENT": "Permanent"
+    },
+    {
+      "FREELANCE": "Freelance"
+    },
+    {
+      "TEMPORARY": "Temporary"
+    },
+    {
+      "INTERNSHIP": "Internship"
+    }
   ],
   "schedule": [
-    "Full-Time",
-    "Part-Time",
-    "Per Hour"
+    {
+      "FULL_TIME": "Full-Time"
+    },
+    {
+      "PART_TIME": "Part-Time"
+    },
+    {
+      "PER_HOUR": "Per Hour"
+    }
   ]
 }

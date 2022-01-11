@@ -30,15 +30,28 @@ interface CardListProps {
   onSearch?: Function;
   onFilter?: Function;
   onSort?: Function;
+  sort?: string;
+  defaultFiltersSelected?: {
+    field: string[],
+    schedule: string[],
+    contract: string[],
+  },
+  onRangeChanged?: Function;
+  experienceRange?: number[];
+  firstTimeLoading?: boolean;
+  searchValue?: string;
 }
 
-const CardList:FC<CardListProps> = ({data: cards, loading, placeholderSearch, onSearch, onFilter, onSort}) => {
+const CardList:FC<CardListProps> = ({data: cards, loading, placeholderSearch, onSearch, onFilter, onRangeChanged, experienceRange,
+                                      defaultFiltersSelected, onSort, sort, firstTimeLoading, searchValue}) => {
   const [openFilter, setOpenFilter] = useState(false);
   const modalRef = useRef<ModalHandle>(null);
   const {width: widthBrowser} = useWindowSize();
   const { t } = useTranslation(namespaces.common);
   const [activeFilters, setActiveFilters] = useState({});
   const [countFilters, setCountFilters] = useState(null);
+  const [sortDefault, setSortDefault] = useState('Latest');
+  const [showSortDropdown, setShowSortDropdown] = useState(false);
 
   const handleSearch = (param: string) => onSearch(param);
 
@@ -72,19 +85,19 @@ const CardList:FC<CardListProps> = ({data: cards, loading, placeholderSearch, on
     <Fragment>
       <div>
         <Label type="filter">{ t("general.field") }</Label>
-        <FilterButtons options={filter.field} callback={(filters: Array<string>) => handleActiveFilters(filters, 'field')}/>
+        <FilterButtons defaultSelected={defaultFiltersSelected.field} options={filter.field} callback={(filters: Array<string>) => handleActiveFilters(filters, 'field')}/>
       </div>
       <div>
         <Label type="filter">{ t("general.type-of-contract") }</Label>
-        <FilterButtons options={filter.contract} callback={(filters: Array<string>) => handleActiveFilters(filters, 'contract')}/>
+        <FilterButtons defaultSelected={defaultFiltersSelected.contract} options={filter.contract} callback={(filters: Array<string>) => handleActiveFilters(filters, 'contract')}/>
       </div>
       <div>
         <Label type="filter">{ t("general.working-schedule") }</Label>
-        <FilterButtons options={filter.schedule} callback={(filters: Array<string>) => handleActiveFilters(filters, 'schedule')}/>
+        <FilterButtons defaultSelected={defaultFiltersSelected.schedule} options={filter.schedule} callback={(filters: Array<string>) => handleActiveFilters(filters, 'schedule')}/>
       </div>
       <div>
         <Label type="filter">{ t("general.experience") }</Label>
-        <Range />
+        <Range callback={onRangeChanged} defaultValue={experienceRange} />
       </div>
     </Fragment>
   );
@@ -113,8 +126,19 @@ const CardList:FC<CardListProps> = ({data: cards, loading, placeholderSearch, on
   }, [widthBrowser])
 
   useEffect(() => {
-    // onFilter(activeFilters);
+    if(!firstTimeLoading) {
+      onFilter(activeFilters);
+    }
   }, [activeFilters])
+
+  useEffect(() => {
+    if (sort) {
+      if (sort == 'ASC') {
+        setSortDefault('Oldest');
+      }
+      setShowSortDropdown(true);
+    }
+  }, [sort]);
 
   return(
     <Fragment>
@@ -124,8 +148,12 @@ const CardList:FC<CardListProps> = ({data: cards, loading, placeholderSearch, on
           <div className="title">
           <TextFilter
               placeholder={placeholderSearch}
-              value=""
-              onChange={(val) => handleSearch(val)} />
+              value={searchValue}
+              onChange={(val) => {
+                if(val != searchValue) {
+                  handleSearch(val);
+                }
+              }} />
           </div>
           <div className="actions">
             <Button basic className="btn-filters" onClick={() => handleOpenFilter()}>
@@ -144,15 +172,15 @@ const CardList:FC<CardListProps> = ({data: cards, loading, placeholderSearch, on
                   <img src={filterInactive} alt="btn filters inactive"/>
               }
             </Button>
-            <Dropdown
+            {showSortDropdown && <Dropdown
               options={Array('Latest', 'Oldest')}
-              optionDefault="Latest"
-              onChange={(sort) => onSort(sort)} />
+              optionDefault={sortDefault}
+              onChange={(sort) => onSort(sort)} /> }
           </div>
         </div>
         {/* box */}
         <div className={clsx('filter-box', { 'open': openFilter })}>
-          { renderFilters() }
+          { !firstTimeLoading && renderFilters() }
         </div>
         <div className="cards-container">
           {/* Show result */}
@@ -160,6 +188,7 @@ const CardList:FC<CardListProps> = ({data: cards, loading, placeholderSearch, on
             (cards !== null && cards.length !== 0) &&
               cards.map((doc: CardProps, key: number) => (
                 <Card
+                  id={doc.id}
                   title={doc.title}
                   img={doc.img}
                   company={doc.company}
@@ -167,7 +196,7 @@ const CardList:FC<CardListProps> = ({data: cards, loading, placeholderSearch, on
                   date={doc.date}
                   profession={doc.profession}
                   to={doc.to}
-                  key={`card-doc-${key}`}/>
+                  key={`card-doc-${doc.id}`}/>
               ))
           }
           {/* Show Skeleton while loading */}
