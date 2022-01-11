@@ -26,12 +26,15 @@ import Modal, { ModalBody, ModalFooter, ModalHandle, ModalHeader } from "../../c
 import SingleOrganizationAndProject from "../../components/common/Single/SingleOrganizationAndProject";
 import TextFieldNew from "../../components/common/TextField/TextFieldNew";
 import Dropdown from "../../components/common/Dropdown/Dropdown";
+import CustomCheckbox from "../../components/common/Checkbox/Checkbox";
+import CheckboxGroup from "../../components/common/CheckboxGroup/CheckboxGroup";
 
 interface FormInterface {
   PositionOffered: string;
   Organization: string;
   Responsibilities: string;
   Benefits: string;
+  TypesOfContract: string;
   Email: string;
   About: string;
   From: string;
@@ -61,6 +64,7 @@ const OpeningCreate:FC = () =>{
     Organization: '',
     Responsibilities: '',
     Benefits: '',
+    TypesOfContract: '',
     Email: '',
     About: '',
     From: '',
@@ -97,7 +101,7 @@ const OpeningCreate:FC = () =>{
         />
       <Formik 
         initialValues={initialValues}
-        validationSchema={formSchema}
+        // validationSchema={formSchema}
         onSubmit={(values, actions) => {
           console.log(JSON.stringify(values, null, 2));
           // prevent submit
@@ -143,7 +147,12 @@ const OpeningCreate:FC = () =>{
                   <Label type="form" required>{t("general.type-of-contract", {ns: namespaces.common})}</Label>
                   <div className="checkbox-container">
                     <div>
-                      <Checkbox label={t("general.permanent", {ns: namespaces.common})} />
+                      {/* <CustomCheckbox 
+                        label={t("general.permanent", {ns: namespaces.common})}
+                        name="TypesOfContract"
+                        valuee="PERMANENT"
+                        /> */}
+                      {/* <Checkbox label={t("general.permanent", {ns: namespaces.common})} /> */}
                       <Checkbox label={t("general.temporary", {ns: namespaces.common})} />
                     </div>
                     <div>
@@ -152,12 +161,39 @@ const OpeningCreate:FC = () =>{
                     </div>
                   </div>
                 </div>
+                {/* TODO: New Checkbox's Types of contract */}
+                <div>
+                  <Label type="form" required>{t("general.type-of-contract", {ns: namespaces.common})}</Label>
+                  <div className="checkbox-container">
+                    <CheckboxGroup
+                      name="TypesOfContract"
+                      options={[
+                        {
+                          label: t("general.permanent", {ns: namespaces.common}),
+                          value: "PERMANENT"
+                        },
+                        {
+                          label: t("general.temporary", {ns: namespaces.common}),
+                          value: "TEMPORARY"
+                        },
+                        {
+                          label: t("general.freelance", {ns: namespaces.common}),
+                          value: "FREELANCE"
+                        },
+                        {
+                          label: t("general.intership", {ns: namespaces.common}),
+                          value: "INTERSHIP"
+                        },
+                      ]}
+                     />
+                  </div>
+                </div>
                 {/* Checkbox's Fields */}
                 <div>
                   <Label type="form" required>{t("general.fields", {ns: namespaces.common})}</Label>
                   <div className="checkbox-container">
                     <div>
-                      <Checkbox label={t("general.design", {ns: namespaces.common})} />
+                      <Checkbox label={t("general.design", {ns: namespaces.common})} value="test" />
                       <Checkbox label={t("general.development", {ns: namespaces.common})} />
                       <Checkbox label={t("general.engineering", {ns: namespaces.common})} />
                       <Checkbox label={t("general.modelling", {ns: namespaces.common})} />
