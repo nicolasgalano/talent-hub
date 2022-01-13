@@ -26,12 +26,17 @@ import Modal, { ModalBody, ModalFooter, ModalHandle, ModalHeader } from "../../c
 import SingleOrganizationAndProject from "../../components/common/Single/SingleOrganizationAndProject";
 import TextFieldNew from "../../components/common/TextField/TextFieldNew";
 import Dropdown from "../../components/common/Dropdown/Dropdown";
+import CustomCheckbox from "../../components/common/Checkbox/Checkbox";
+import CheckboxGroup from "../../components/common/CheckboxGroup/CheckboxGroup";
 
 interface FormInterface {
   PositionOffered: string;
   Organization: string;
   Responsibilities: string;
   Benefits: string;
+  TypesOfContract: Array<string>;
+  Fields: Array<string>;
+  WorkingSchedule: Array<string>;
   Email: string;
   About: string;
   From: string;
@@ -40,6 +45,8 @@ interface FormInterface {
   SalaryType: string;
   Month: string;
   Year: string;
+  Name: string;
+  RadioName: string;
 }
 
 const OpeningCreate:FC = () =>{
@@ -61,6 +68,9 @@ const OpeningCreate:FC = () =>{
     Organization: '',
     Responsibilities: '',
     Benefits: '',
+    TypesOfContract: [],
+    Fields: [],
+    WorkingSchedule: [],
     Email: '',
     About: '',
     From: '',
@@ -69,6 +79,8 @@ const OpeningCreate:FC = () =>{
     SalaryType: 'Year',
     Month: 'September',
     Year: '2021',
+    Name: '',
+    RadioName: ''
   }
 
   const formSchema = Yup.object().shape({
@@ -78,12 +90,21 @@ const OpeningCreate:FC = () =>{
       .required(),
     Responsibilities: Yup.string()
       .required(),
-    Benefits: Yup.string()
+    TypesOfContract: Yup.array()
+    .min(1, t("general.type-of-contract", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common}))
+    .required(),
+    Fields: Yup.array()
+      .min(1, t("general.fields", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common}))
+      .required(),
+    WorkingSchedule: Yup.array()
+      .min(1, t("general.working-schedule", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common}))
       .required(),
     Email: Yup.string()
       .email(t("general.email", {ns: namespaces.common}) + ' ' + t("forms.invalid-email", {ns: namespaces.common}))
       .required(t("general.email", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
     About: Yup.string()
+      .required(t("general.about", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
+    RadioName: Yup.string()
       .required(),
   });
 
@@ -141,33 +162,71 @@ const OpeningCreate:FC = () =>{
                 {/* Checkbox's Types of contract */}
                 <div>
                   <Label type="form" required>{t("general.type-of-contract", {ns: namespaces.common})}</Label>
-                  <div className="checkbox-container">
-                    <div>
-                      <Checkbox label={t("general.permanent", {ns: namespaces.common})} />
-                      <Checkbox label={t("general.temporary", {ns: namespaces.common})} />
-                    </div>
-                    <div>
-                      <Checkbox label={t("general.freelance", {ns: namespaces.common})} />
-                      <Checkbox label={t("general.intership", {ns: namespaces.common})} />
-                    </div>
+                  <div className="checkbox-container two-column">
+                    <CheckboxGroup
+                      name="TypesOfContract"
+                      options={[
+                        {
+                          label: t("general.permanent", {ns: namespaces.common}),
+                          value: "PERMANENT"
+                        },
+                        {
+                          label: t("general.temporary", {ns: namespaces.common}),
+                          value: "TEMPORARY"
+                        },
+                        {
+                          label: t("general.freelance", {ns: namespaces.common}),
+                          value: "FREELANCE"
+                        },
+                        {
+                          label: t("general.intership", {ns: namespaces.common}),
+                          value: "INTERSHIP"
+                        },
+                      ]}
+                     />
                   </div>
                 </div>
                 {/* Checkbox's Fields */}
                 <div>
                   <Label type="form" required>{t("general.fields", {ns: namespaces.common})}</Label>
-                  <div className="checkbox-container">
-                    <div>
-                      <Checkbox label={t("general.design", {ns: namespaces.common})} />
-                      <Checkbox label={t("general.development", {ns: namespaces.common})} />
-                      <Checkbox label={t("general.engineering", {ns: namespaces.common})} />
-                      <Checkbox label={t("general.modelling", {ns: namespaces.common})} />
-                    </div>
-                    <div>
-                      <Checkbox label={t("general.project-management", {ns: namespaces.common})} />
-                      <Checkbox label={t("general.marketing", {ns: namespaces.common})} />
-                      <Checkbox label={t("general.art-direction", {ns: namespaces.common})} />
-                      <Checkbox label={t("general.data-analytics", {ns: namespaces.common})} />
-                    </div>
+                  <div className="checkbox-container two-column">
+                    <CheckboxGroup
+                      name="Fields"
+                      options={[
+                        {
+                          label: t("general.design", {ns: namespaces.common}),
+                          value: "DESIGN"
+                        },
+                        {
+                          label: t("general.project-management", {ns: namespaces.common}),
+                          value: "PROJECT_MANAGEMENT"
+                        },
+                        {
+                          label: t("general.development", {ns: namespaces.common}),
+                          value: "DEVELOPMENT"
+                        },
+                        {
+                          label: t("general.marketing", {ns: namespaces.common}),
+                          value: "MARKETING"
+                        },
+                        {
+                          label: t("general.engineering", {ns: namespaces.common}),
+                          value: "ENGINEERING"
+                        },
+                        {
+                          label: t("general.art-direction", {ns: namespaces.common}),
+                          value: "ART_DIRECTION"
+                        },
+                        {
+                          label: t("general.modelling", {ns: namespaces.common}),
+                          value: "MODELLING"
+                        },
+                        {
+                          label: t("general.data-analytics", {ns: namespaces.common}),
+                          value: "DATA_ANALYTICS"
+                        },
+                      ]}
+                     />
                   </div>
                 </div>
                 {/* Input Experience */}
@@ -179,9 +238,23 @@ const OpeningCreate:FC = () =>{
                 <div>
                   <Label type="form" required>{t("general.working-schedule", {ns: namespaces.common})}</Label>
                   <div className="checkbox-inline">
-                    <Checkbox label={t("general.full-time", {ns: namespaces.common})} />
-                    <Checkbox label={t("general.part-time", {ns: namespaces.common})} />
-                    <Checkbox label={t("general.per-hour", {ns: namespaces.common})} />
+                    <CheckboxGroup
+                      name="WorkingSchedule"
+                      options={[
+                        {
+                          label: t("general.full-time", {ns: namespaces.common}),
+                          value: "FULL-TIME"
+                        },
+                        {
+                          label: t("general.part-time", {ns: namespaces.common}),
+                          value: "PART-TIME"
+                        },
+                        {
+                          label: t("general.per-hour", {ns: namespaces.common}),
+                          value: "PER HOUR"
+                        },
+                      ]}
+                     />
                   </div>
                 </div>
                 {/* Input Salary */}
@@ -260,18 +333,20 @@ const OpeningCreate:FC = () =>{
                 </div>
                 {/* Radio button - Organization or project */}
                 <div className="checkbox-inline">
-                  <Radio
-                    label='Organization'
-                    name='radioGroup'
-                    value='organization'
-                    checked={organizationOrProject === 'organization'}
-                    onChange={(event, data) => handleChangeOrganizationOrProject(data.value)} />
-                  <Radio
-                    label='Project'
-                    name='radioGroup'
-                    value='project'
-                    checked={organizationOrProject === 'project'}
-                    onChange={(event, data) => handleChangeOrganizationOrProject(data.value)} />
+                  <CheckboxGroup
+                    name="RadioName"
+                    radio
+                    options={[
+                      {
+                        label: t("general.organization-1", {ns: namespaces.common}),
+                        value: "Organization"
+                      },
+                      {
+                        label: t("general.project", {ns: namespaces.common}),
+                        value: "Project"
+                      },
+                    ]}
+                    />
                 </div>
                 <div>
                   {/* Input Email */}
