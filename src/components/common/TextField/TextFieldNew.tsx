@@ -74,7 +74,7 @@ const TextFieldNew: FC<TextFieldProps & FieldHookConfig<string>> = ({label, elem
               />
         }
       </div>
-      <ErrorMessage name={props.name} className="message" component="div"/>
+      <ErrorMessage name={props.name} className="form-message error" component="div"/>
     </div>
   );
 }

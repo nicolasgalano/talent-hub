@@ -14,9 +14,10 @@ type option = {
 interface CheckboxGroupProps {
   name: string;
   options: Array<option>;
+  radio?: boolean;
 }
 
-const CheckboxGroup: FC<CheckboxGroupProps> = ({name, options}) => {
+const CheckboxGroup: FC<CheckboxGroupProps> = ({name, options, radio}) => {
   return (
     <Fragment>
       <Field name={name} id={name}>
@@ -28,13 +29,14 @@ const CheckboxGroup: FC<CheckboxGroupProps> = ({name, options}) => {
               value={option.value}
               id={option.value}
               key={option.value}
-              type='checkbox'
+              type={radio ? 'radio' : 'checkbox'}
               onChange={field.onChange}
+              radio={radio}
               />
           ))
         )}
       </Field>
-      <ErrorMessage name={name} className="message" component="div" />
+      <ErrorMessage name={name} className="form-message error" component="div" />
     </Fragment>
   )
 }
