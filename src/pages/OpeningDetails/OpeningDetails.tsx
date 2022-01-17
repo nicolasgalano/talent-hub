@@ -29,7 +29,7 @@ const OpeningDetails: FC = () => {
       {
         data !== null &&
         <Detail 
-          urlParent='/jobs/' 
+          urlParent='/openings/' 
           btnText="Apply" 
           onClickAction={() => history.push({
             pathname: `./${data.slug}/apply`,
