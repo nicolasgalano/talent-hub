@@ -115,27 +115,27 @@ const OpeningCreate:FC = () =>{
 
   const formSchema = Yup.object().shape({
     PositionOffered: Yup.string()
-      .required(),
+      .required(t("general.position-offered", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
     OrganizationName: Yup.string()
-      .required(),
+      .required(t("general.organization", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
     Responsibilities: Yup.string()
-      .required(),
+      .required(t("general.responsabilities", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
     TypesOfContract: Yup.array()
-    .min(1, t("general.type-of-contract", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common}))
-    .required(),
+      .min(1, t("general.type-of-contract", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common}))
+      .required(t("general.type-of-contract", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
     Fields: Yup.array()
       .min(1, t("general.fields", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common}))
-      .required(),
+      .required(t("general.fields", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
     WorkingSchedule: Yup.array()
       .min(1, t("general.working-schedule", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common}))
-      .required(),
+      .required(t("general.working-schedule", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
     Email: Yup.string()
       .email(t("general.email", {ns: namespaces.common}) + ' ' + t("forms.invalid-email", {ns: namespaces.common}))
       .required(t("general.email", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
     About: Yup.string()
       .required(t("general.about", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
     OrganizationProject: Yup.string()
-      .required(),
+      .required(t("general.organization-or-project", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
   });
 
   return(
@@ -287,15 +287,15 @@ const OpeningCreate:FC = () =>{
                         options={[
                           {
                             label: t("general.full-time", {ns: namespaces.common}),
-                            value: "FULL-TIME"
+                            value: "FULL_TIME"
                           },
                           {
                             label: t("general.part-time", {ns: namespaces.common}),
-                            value: "PART-TIME"
+                            value: "PART_TIME"
                           },
                           {
                             label: t("general.per-hour", {ns: namespaces.common}),
-                            value: "PER HOUR"
+                            value: "PER_HOUR"
                           },
                         ]}
                       />
@@ -376,21 +376,24 @@ const OpeningCreate:FC = () =>{
                       required />
                   </div>
                   {/* Radio button - Organization or project */}
-                  <div className="checkbox-inline">
-                    <CheckboxGroup
-                      name="OrganizationProject"
-                      radio
-                      options={[
-                        {
-                          label: t("general.organization-1", {ns: namespaces.common}),
-                          value: "Organization"
-                        },
-                        {
-                          label: t("general.project", {ns: namespaces.common}),
-                          value: "Project"
-                        },
-                      ]}
-                      />
+                  <div>
+                    <Label type="form" required>{t("general.organization-or-project", {ns: namespaces.common})}</Label>
+                    <div className="checkbox-inline">
+                      <CheckboxGroup
+                        name="OrganizationProject"
+                        radio
+                        options={[
+                          {
+                            label: t("general.organization-1", {ns: namespaces.common}),
+                            value: "Organization"
+                          },
+                          {
+                            label: t("general.project", {ns: namespaces.common}),
+                            value: "Project"
+                          },
+                        ]}
+                        />
+                      </div>
                   </div>
                   <div>
                     {/* Input Email */}
@@ -432,12 +435,10 @@ const OpeningCreate:FC = () =>{
                 </Button>
                 <Button 
                   disabled={!formik.isValid}
-                  type="submit"
+                  type="button"
                   onClick={() => {
-                    // if not set timeout, the validation is not working
-                    setTimeout(() => {
-                      formik.setFieldValue('Preview', true)
-                    }, 100); 
+                    formik.setFieldValue('Preview', true)
+                    formik.handleSubmit();
                   }}
                   secondary >
                     {t("buttons.preview", {ns: namespaces.common})}

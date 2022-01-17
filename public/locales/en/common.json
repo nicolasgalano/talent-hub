@@ -58,6 +58,7 @@
     "to":                     "To",
     "start-date":             "Start date",
     "organization":           "Organization or project name",
+    "organization-or-project":"Organization or project",
     "email":                  "Email",
     "about":                  "About",
     "about-the-organization": "About the organization",

@@ -113,7 +113,7 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
           </div>
       }
       {
-        data.experience &&
+        (data.experience !== null && data.experience !== undefined && data.experience !== 0) &&
           <div>
             {/* Experience */}
             <Label type="review">Experience</Label>
