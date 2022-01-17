@@ -250,3 +250,18 @@ export const getMultipleField = (list: Array<any>) => {
   })
   return newList;
 }
+
+// Array formatting, for Strapi compatibility
+export const setMultipleField = (list: Array<any>, key: string) => {
+  if(list.length === 0 || list === null) return;
+
+  let newList = [];
+  
+  list.map((val, k) => {
+    let obj = {};
+    obj[key] = val;
+    obj["id"] = k;
+    newList.push(obj);
+  })
+  return newList;
+}

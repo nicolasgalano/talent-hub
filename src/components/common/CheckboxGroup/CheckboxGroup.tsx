@@ -22,7 +22,7 @@ const CheckboxGroup: FC<CheckboxGroupProps> = ({name, options, radio}) => {
     <Fragment>
       <Field name={name} id={name}>
         {({ field }) => (
-          options.map(option => (
+          options.map((option, key) => (
             <Checkbox
               label={option.label}
               name={field.name}
