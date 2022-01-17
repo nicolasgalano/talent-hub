@@ -1,6 +1,7 @@
 import { useLocation, useHistory } from 'react-router-dom';
 
 export interface FetchQuery {
+  Fullname_contains?: string;
   WorkingSchedule: string;
   TypeOfContract: string;
   Fields: string;
@@ -12,7 +13,7 @@ export interface FetchQuery {
 }
 
 export interface ProfessionalsQuery {
-  Fullname: string;
+  Fullname_contains: string;
 }
 
 const handleSearch = () => {

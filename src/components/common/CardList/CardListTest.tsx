@@ -1,4 +1,4 @@
-import React, { FC, Fragment, useEffect, useRef, useState } from "react";
+import React, { FC, Fragment, useEffect, useRef, useState, useCallback } from "react";
 import clsx from 'clsx';
 import { useLocation, useHistory } from 'react-router-dom';
 import {queryParse, queryStringify} from '../../../utils/queryString';
@@ -25,6 +25,7 @@ import Label from "../Label/Label";
 import FilterButtons from "../FilterButtons/FilterButtons";
 import Skeleton from "../Skeleton/Skeleton";
 import {ProfessionalsQuery, FetchQuery} from './utils';
+import { debounce } from '../../../utils/debounce';
 
 
 interface CardListProps {
@@ -35,7 +36,6 @@ interface CardListProps {
   onSearch?: Function;
   onFilter?: Function;
   onSort?: Function;
-  sort?: string;
   defaultFiltersSelected?: {
     field: string[],
     schedule: string[],
@@ -44,16 +44,18 @@ interface CardListProps {
   onRangeChanged?: Function;
   experienceRange?: number[];
   firstTimeLoading?: boolean;
-  searchValue?: string;
   handleOnFetch?: Function;
+  resultsCount?: number;
+  resetPage?: Function;
+  loadMoreClicked?: Function;
 }
 
 const RESULTS_PER_PAGE = 6;
 const EXPERIENCE_FROM = 0;
 const EXPERIENCE_TO = 10;
 
-const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch, type, onSearch, onFilter, onRangeChanged, experienceRange,
-                                      defaultFiltersSelected, onSort, sort, firstTimeLoading, searchValue, handleOnFetch}) => {
+const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch, type, onSearch, onFilter, onRangeChanged,
+                                      defaultFiltersSelected, onSort, firstTimeLoading, handleOnFetch, resultsCount, resetPage, loadMoreClicked}) => {
   const [openFilter, setOpenFilter] = useState(false);
   const modalRef = useRef<ModalHandle>(null);
   const {width: widthBrowser} = useWindowSize();
@@ -61,30 +63,60 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
   const [activeFilters, setActiveFilters] = useState({});
   const [countFilters, setCountFilters] = useState(null);
   const [sortDefault, setSortDefault] = useState('Latest');
+  const [inputSearchValue, setInputSearchValue] = useState('');
+  const [experienceRange, setExperienceRange] = useState([EXPERIENCE_FROM, EXPERIENCE_TO]);
   const [showSortDropdown, setShowSortDropdown] = useState(false);
-  const [queryObj, setQueryObj] = useState<FetchQuery>({
+  const [fetchQueryObj, setFetchQueryObj] = useState<FetchQuery>({
     WorkingSchedule: '',
     TypeOfContract: '',
     Fields: '',
-    // ExperienceFrom_gte: EXPERIENCE_FROM,
-    // ExperienceTo_lte: EXPERIENCE_TO,
+    ExperienceFrom_gte: EXPERIENCE_FROM,
+    ExperienceTo_lte: EXPERIENCE_TO,
     _start: 0,
     _limit: RESULTS_PER_PAGE,
     _sort: 'id:DESC'
   });
   const [professionalsQuery, setProfessionalsQuery] = useState<ProfessionalsQuery>({
-    Fullname: ''
+    Fullname_contains: ''
   });
   const [mainQuery, setMainQuery] = useState<any>({});
   const [queryStr, setQueryStr] = useState(null);
+  const [queryCountStr, setQueryCountStr] = useState(null);
+  const history = useHistory();
   const searchParams = useLocation().search;
 
   useEffect(() => {
     let urlParams = queryParse(searchParams);
     console.log('on URL params changed', urlParams);
+
+    let sort:string = (urlParams.order)? urlParams.order.toString() : '';
+
     let newQueryObj = {
-      ...queryObj
+      ...fetchQueryObj
     };
+    let sortLabel = 'Latest';
+    if (sort) {
+      newQueryObj._sort = `id:${sort}`;
+      sortLabel = (sort == 'ASC')? 'Oldest' : sortLabel;
+    }
+    else {
+      newQueryObj._sort = `id:DESC`;
+    }
+
+    if (urlParams.experienceFrom) {
+      newQueryObj.ExperienceFrom_gte = parseInt(urlParams.experienceFrom.toString());
+    }
+    else {
+      newQueryObj.ExperienceFrom_gte = EXPERIENCE_FROM;
+    }
+
+    if (urlParams.experienceTo) {
+      newQueryObj.ExperienceTo_lte = parseInt(urlParams.experienceTo.toString());
+    }
+    else {
+      newQueryObj.ExperienceTo_lte = EXPERIENCE_TO;
+    }
+
     if (type == 'professionals') {
       newQueryObj = {
         ...newQueryObj,
@@ -92,33 +124,201 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
       }
     }
 
-
-    setMainQuery(newQueryObj)
+    setSortDefault(sortLabel);
+    setShowSortDropdown(true);
+    setMainQuery(newQueryObj);
+    setExperienceRange([newQueryObj.ExperienceFrom_gte, newQueryObj.ExperienceTo_lte]);
   }, [searchParams]);
 
   useEffect(() => {
+    if (!Object.keys(mainQuery).length) {
+      return;
+    }
     console.log('Create query', mainQuery);
 
     let newQueryObj = {...mainQuery};
 
+    let currentUrlParams = queryParse(searchParams);
+    interface FilterObj {
+      schedule: string[];
+      field: string[];
+      contract: string[];
+    }
+    let filterObj:FilterObj = {
+      schedule: [],
+      field: [],
+      contract: [],
+    };
+    Object.keys(filterObj).forEach(filterName => {
+      if(currentUrlParams[filterName] && currentUrlParams[filterName].length) {
+        filterObj[filterName] = currentUrlParams[filterName];
+      }
+    });
+
+    if (filterObj.schedule.length) {
+
+    }
+    else {
+      delete newQueryObj.WorkingSchedule;
+    }
+
+    if (filterObj.field.length) {
+
+    }
+    else {
+      delete newQueryObj.Fields;
+    }
+
+    if (filterObj.contract.length) {
+
+    }
+    else {
+      delete newQueryObj.TypeOfContract;
+    }
+
+
     let queryWhere = {
-      _where: {},
+      _where: {
+        _or: [],
+        Experience_gte: 0,
+        Experience_lte: 0,
+      },
       _sort: newQueryObj._sort,
       _start: newQueryObj._start,
       _limit: newQueryObj._limit,
     };
+
+    if (type == 'professionals') {
+      newQueryObj = {
+        ...newQueryObj,
+        ...professionalsQuery,
+      }
+
+    }
+
+    let experienceFrom = (currentUrlParams.experienceFrom)? parseInt(currentUrlParams.experienceFrom.toString()) : EXPERIENCE_FROM;
+    let experienceTo = (currentUrlParams.experienceTo)? parseInt(currentUrlParams.experienceTo.toString()) : EXPERIENCE_TO;
+
+    let experienceFirstSegment = [
+      {
+        ExperienceFrom_gte: experienceFrom
+      },
+      {
+        ExperienceFrom_lte: experienceTo
+      }
+    ];
+
+    let experienceSecondSegment = [
+      {
+        ExperienceTo_lte: experienceTo
+      },
+      {
+        ExperienceTo_gte: experienceFrom
+      }
+    ];
+
+    let {_sort, _start, _limit, ExperienceFrom_gte, ExperienceTo_lte,
+      ...filterParamsOnly} = newQueryObj;
+
+    queryWhere._where = {
+      ...filterParamsOnly
+    };
+
+    console.log(queryWhere._where._or);
+
+    if (type == 'professionals') {
+      // queryWhere._where._or = [{Experience_gte: experienceFrom}, {Experience_lte: experienceTo}]
+      delete queryWhere._where._or;
+      queryWhere._where = {
+        ...queryWhere._where,
+        Experience_gte: experienceFrom,
+        Experience_lte: experienceTo
+      }
+    }
+    else if (type == 'jobs') {
+      queryWhere._where._or = [experienceFirstSegment, experienceSecondSegment];
+    }
+
     let queryWhereStr = queryStringify(queryWhere);
+    let countQueryStr = queryStringify({_where: {...queryWhere._where}});
 
     setQueryStr(queryWhereStr);
+    setQueryCountStr(countQueryStr);
   }, [mainQuery]);
 
   useEffect(() => {
     if(queryStr) {
-      handleOnFetch(`?${queryStr}`);
+      handleOnFetch(`?${queryStr}`, `/count?${queryCountStr}`);
     }
   }, [queryStr]);
 
-  const handleSearch = (param: string) => onSearch(param);
+  const handleSearch = (param: string) => {
+    if (param == inputSearchValue) {
+      return;
+    }
+    console.log('handleSearch param: ', param);
+
+    let newQueryObj = {...mainQuery};
+    if(type == 'professionals') {
+      let newProfessionalQuery = {...professionalsQuery};
+      newProfessionalQuery.Fullname_contains = param;
+      setProfessionalsQuery(newProfessionalQuery);
+    }
+    else if (type == 'openings') {
+      newQueryObj.PositionOffered_contains = param;
+    }
+
+    newQueryObj._start = 0;
+    newQueryObj._limit = RESULTS_PER_PAGE;
+
+    setInputSearchValue(param);
+    resetPage();
+    setMainQuery(newQueryObj);
+  };
+
+  const searchDebounce = useCallback(debounce(handleSearch, 400), [inputSearchValue]);
+
+  const handleLoadMoreClick = (ev) => {
+    ev.preventDefault();
+    console.log('handleLoadMoreClick');
+
+    let newQueryObj = {
+      ...mainQuery,
+      _start: mainQuery._start + RESULTS_PER_PAGE,
+      _limit: mainQuery._limit + RESULTS_PER_PAGE,
+    };
+
+    loadMoreClicked();
+    setMainQuery(newQueryObj);
+  };
+
+  const handleSortOnChange = (sort: string) => {
+    console.log('handleSortOnChange', sort);
+    const params = queryParse(searchParams);
+    if(sort === 'Oldest') {
+      params.order = 'ASC';
+    }
+    else if(sort === 'Latest') {
+      params.order = 'DESC';
+    }
+    resetPage();
+    history.push({search: queryStringify(params)});
+  };
+
+  const handleRangeChanged = values => {
+    console.log('handleRangeChanged: ', values);
+    let currentUrlParams = queryParse(searchParams);
+
+    let updatedUrlParams = {
+      ...currentUrlParams,
+      experienceFrom: values[0],
+      experienceTo: values[1]
+    };
+
+    resetPage();
+    let updatedUrlString = queryStringify(updatedUrlParams);
+    history.push({search: updatedUrlString});
+  };
 
   const handleActiveFilters = (filter: Array<string>, key: string) => {
     let actFilter: object = {...activeFilters};
@@ -162,7 +362,7 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
       </div>
       <div>
         <Label type="filter">{ t("general.experience") }</Label>
-        <Range callback={onRangeChanged} defaultValue={experienceRange} />
+        <Range callback={handleRangeChanged} defaultValue={experienceRange} />
       </div>
     </Fragment>
   );
@@ -196,15 +396,6 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
     }
   }, [activeFilters])
 
-  useEffect(() => {
-    if (sort) {
-      if (sort == 'ASC') {
-        setSortDefault('Oldest');
-      }
-      setShowSortDropdown(true);
-    }
-  }, [sort]);
-
   return(
     <Fragment>
       <div className="card-list">
@@ -213,12 +404,8 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
           <div className="title">
           <TextFilter
               placeholder={placeholderSearch}
-              value={searchValue}
-              onChange={(val) => {
-                if(val != searchValue) {
-                  handleSearch(val);
-                }
-              }} />
+              value={inputSearchValue}
+              onChange={searchDebounce} />
           </div>
           <div className="actions">
             <Button basic className="btn-filters" onClick={() => handleOpenFilter()}>
@@ -240,7 +427,7 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
             {showSortDropdown && <Dropdown
               options={Array('Latest', 'Oldest')}
               optionDefault={sortDefault}
-              onChange={(sort) => onSort(sort)} /> }
+              onChange={handleSortOnChange} /> }
           </div>
         </div>
         {/* box */}
@@ -277,6 +464,15 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
               'No data to show'
           }
         </div>
+      </div>
+      <div className="load-more">
+        {
+          cards && resultsCount > cards.length &&
+          <Button
+            secondary
+            onClick={handleLoadMoreClick}
+          >{ t("general.load-more") }</Button>
+        }
       </div>
       <Modal ref={modalRef} theme="grey" >
         <ModalBody>
