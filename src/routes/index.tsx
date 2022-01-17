@@ -2,8 +2,8 @@ import Home from "../pages/Home/Home";
 // Openings
 import Openings from "../pages/Openings/Openings";
 import OpeningDetails from "../pages/OpeningDetails/OpeningDetails";
-import OpeningContact from "../pages/OpeningContact/OpeningContact";
-import OpeningContactSuccess from "../pages/OpeningContactSuccess/OpeningContactSuccess";
+import OpeningApply from "../pages/OpeningApply/OpeningApply";
+import OpeningApplySuccess from "../pages/OpeningApplySuccess/OpeningApplySuccess";
 import OpeningCreate from "../pages/OpeningCreate/OpeningCreate";
 import OpeningCreateSuccess from "../pages/OpeningCreateSuccess/OpeningCreateSuccess";
 // Professionals
@@ -54,11 +54,6 @@ const jobsRoutes: RouteInterface = {
   exact: true,
   children: [
     {
-      path: '/job/:slug',
-      name: 'Detail',
-      component: OpeningDetails
-    },
-    {
       path: '/job/organization',
       name: 'Organization',
       component: OpeningDetails
@@ -69,15 +64,20 @@ const jobsRoutes: RouteInterface = {
       component: OpeningDetails,
     },
     {
-      path: '/job/contact',
-      name: 'Contact',
-      component: OpeningContact,
+      path: '/job/:slug',
+      name: 'Detail',
+      component: OpeningDetails,
       exact: true,
     },
     {
-      path: '/job/contact/success',
+      path: '/job/:slug/apply',
+      name: 'Apply',
+      component: OpeningApply,
+    },
+    {
+      path: '/job/:slug/apply/success',
       name: 'Success',
-      component: OpeningContactSuccess,
+      component: OpeningApplySuccess,
     },
   ]
 }
