@@ -145,6 +145,7 @@ const OpeningCreate:FC = () =>{
         title={ t("hero.title") }
         description={ t("hero.description") }
         buttonText={t("hero.button")}
+        buttonLink="/openings"
         />
       <Formik 
         initialValues={initialValues}

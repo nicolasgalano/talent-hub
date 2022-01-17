@@ -12,7 +12,7 @@ import { formatOpeningDetails } from '../../utils/formatData';
 const OpeningDetails: FC = () => {
   const history = useHistory();
   const { slug }: { slug: string } = useParams();
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<SingleOrganizationAndProjectType>(null);
 
   const {response, loading, error} = useApi({
     url: `/jobs?Slug=${slug}`,
@@ -23,20 +23,21 @@ const OpeningDetails: FC = () => {
     response && setData(formatOpeningDetails(response.data));
   }, [response])
 
-  useEffect(() => {
-    // TODO: only for testing porpouse
-    console.log(data)
-  }, [data])
-
-
-  const handleApply = () => history.push('./contact');
-
   return (
     <>
       { error && console.log(error)}
       {
         data !== null &&
-        <Detail urlParent='/jobs/' btnText="Apply" onClickAction={handleApply} >
+        <Detail 
+          urlParent='/jobs/' 
+          btnText="Apply" 
+          onClickAction={() => history.push({
+            pathname: `./${data.slug}/apply`,
+            state: {
+              positionOffered: data.profession_job_name
+            }
+          })}
+          >
           <SingleOrganizationAndProject data={data} />
         </Detail>
       }
