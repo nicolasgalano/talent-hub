@@ -435,13 +435,10 @@ const OpeningCreate:FC = () =>{
                 </Button>
                 <Button 
                   disabled={!formik.isValid}
-                  type="submit"
+                  type="button"
                   onClick={() => {
                     formik.setFieldValue('Preview', true)
-                    // TODO: sometime if not set timeout, the validation is not working
-                    // setTimeout(() => {
-                    //   formik.setFieldValue('Preview', true)
-                    // }, 100); 
+                    formik.handleSubmit();
                   }}
                   secondary >
                     {t("buttons.preview", {ns: namespaces.common})}
