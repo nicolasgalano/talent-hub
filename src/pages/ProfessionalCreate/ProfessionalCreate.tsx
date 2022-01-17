@@ -136,7 +136,7 @@ const ProfessionalCreate:FC = () =>{
         />
       <Formik 
         initialValues={initialValues}
-        // validationSchema={formSchema}
+        validationSchema={formSchema}
         onSubmit={(values, actions) => {
           if(values.Preview){
             handlePreview(values);
@@ -352,12 +352,10 @@ const ProfessionalCreate:FC = () =>{
                 </Button>
                 <Button 
                   disabled={!formik.isValid}
-                  type="submit"
+                  type="button"
                   onClick={() => {
-                    // if not set timeout, the validation is not working
-                    setTimeout(() => {
-                      formik.setFieldValue('Preview', true)
-                    }, 10); 
+                    formik.setFieldValue('Preview', true)
+                    formik.handleSubmit();
                   }}
                   secondary >
                     {t("buttons.preview", {ns: namespaces.common})}
