@@ -50,14 +50,17 @@
     "per-day":                "Per day",
     "per-month":              "per month",
     "per-year":               "per year",
+    "years":                  "Years",
     "year_one":               "year",
     "year_other":             "years",
     "experience-required":    "Experience required",
+    "years-of-experience":    "Years of experience",
     "salary":                 "Salary",
     "from":                   "From",
     "to":                     "To",
     "start-date":             "Start date",
     "organization":           "Organization or project name",
+    "organization-or-project":"Organization or project",
     "email":                  "Email",
     "about":                  "About",
     "about-the-organization": "About the organization",
@@ -80,7 +83,9 @@
     "file-types-accepted":    "File types accepted:",
     "upload-showcase":        "Upload up to 6 images to showcase your best work",
     "company-or-project-name":"Company or project name",
-    "message":                "Message"
+    "message":                "Message",
+    "project":                "Project",
+    "organization-1":         "Organization"
   },
   "months": {
     "january":    "January",

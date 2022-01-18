@@ -8,12 +8,13 @@ import './FilterButtons.scss';
 import clsx from 'clsx';
 
 interface FiltersProps {
-  options: Array<string>;
+  options: Array<object>;
   callback?: Function;
   className?: string;
+  defaultSelected?: string[];
 }
 
-const FilterButtons: FC<FiltersProps> = ({ options, callback, className}) => {
+const FilterButtons: FC<FiltersProps> = ({ options, callback, className, defaultSelected}) => {
   const [selected, setSelected] = useState([]);
 
   const handleSelect = (value: string) => {
@@ -58,22 +59,42 @@ const FilterButtons: FC<FiltersProps> = ({ options, callback, className}) => {
 
   const launchCallback = () => callback(selected);
 
+  const addMultipleSelection = (options: string[]) => {
+    let selection: Array<string> = selected.slice();
+    selection = selection.concat(options);
+    setSelected(selection);
+  };
+
   useEffect(() => {
     callback && launchCallback();
   }, [selected]);
 
+  useEffect(() => {
+    if(defaultSelected && defaultSelected.length) {
+      addMultipleSelection(defaultSelected);
+      /*defaultSelected.forEach(filterName => {
+        addSelection(filterName);
+      });*/
+      // addSelection(defaultSelected[1]);
+    }
+  }, []);
+
   return (
     <div className={clsx('filter-buttons', className)}>
       { 
-        options.map((option, key) => (
-          <Button
-            primary={isSelected(option)}
-            secondary={!isSelected(option)}
-            key={`btn-option-${option}-${key}`}
-            onClick={() => handleSelect(option)}>
-              {option}
-          </Button>
-        ))
+        options.map((option, key) => {
+          let optionKey = Object.keys(option)[0];
+
+          return (
+            <Button
+              primary={isSelected(optionKey)}
+              secondary={!isSelected(optionKey)}
+              key={`btn-option-${optionKey}-${key}`}
+              onClick={() => handleSelect(optionKey)}>
+              {option[optionKey]}
+            </Button>
+          )
+        })
       }
     </div>
   );

@@ -9,6 +9,7 @@ export const formatJobs = (res: any) => {
   let jobs: CardProps[] = [];
   res.map((job: any) => {
     const formattedData: CardProps = {
+      id: job.id,
       title: job.PositionOffered,
       img: profilePicture(job.CompanyLogo),
       company: job.Organization,
@@ -25,6 +26,7 @@ export const formatProfessionals = (res: any) => {
   let professionals: CardProps[] = [];
   res.map((professional: any) => {
     const formattedData: CardProps = {
+      id: professional.id,
       title: professional.Fullname,
       profession: professional.Profession,
       img: profilePicture(professional.ProfilePicture),
@@ -57,6 +59,7 @@ export const formatOpeningDetails = (res: any) => {
     type_of_contract: doc.TypeOfContract,
     fields: doc.Fields,
     organizationProject: doc.OrganizationProject,
+    slug: doc.Slug
   };
   return formattedData;
 }
@@ -228,6 +231,18 @@ export const formatField = (str: string, lang) => {
     case 'MODELLING':
       str = lang("general.modelling");
       break;
+    case 'PROJECT_MANAGEMENT':
+      str = lang("general.project-management");
+      break;
+    case 'DATA_ANALYTICS':
+      str = lang("general.data-analytics");
+      break;
+    case 'ART_DIRECTION':
+      str = lang("general.art-direction");
+      break;
+    case 'MARKETING':
+      str = lang("general.marketing");
+      break;
   }
   return str;
 }
@@ -245,6 +260,21 @@ export const getMultipleField = (list: Array<any>) => {
         newList.push(val[key]);
       }
     })
+  })
+  return newList;
+}
+
+// Array formatting, for Strapi compatibility
+export const setMultipleField = (list: Array<any>, key: string) => {
+  if(list.length === 0 || list === null) return;
+
+  let newList = [];
+  
+  list.map((val, k) => {
+    let obj = {};
+    obj[key] = val;
+    obj["id"] = k;
+    newList.push(obj);
   })
   return newList;
 }

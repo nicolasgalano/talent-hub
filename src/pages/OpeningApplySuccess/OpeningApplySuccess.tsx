@@ -7,7 +7,7 @@ import { namespaces } from '../../i18n/i18n.constants';
 // Custom component
 import Success from '../../components/common/Success/Success';
 
-const OpeningContactSuccess: FC = () => {
+const OpeningApplySuccess: FC = () => {
   const {t} = useTranslation(namespaces.pages.success);
   
   return (
@@ -19,4 +19,4 @@ const OpeningContactSuccess: FC = () => {
       />
   )
 }
-export default OpeningContactSuccess;
+export default OpeningApplySuccess;

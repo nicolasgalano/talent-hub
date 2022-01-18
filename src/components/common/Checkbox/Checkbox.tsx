@@ -1,16 +1,33 @@
-import React from 'react'
+import { Field } from 'formik';
+import React, { FC } from 'react'
 
-import './Checkbox.scss';
+// UI Semantic
+import { Checkbox as CheckboxSemantic } from "semantic-ui-react";
 
-const Checkbox = () => {
+interface CheckboxProps {
+  name: string;
+  label: string;
+  valuee: string;
+}
+
+const Checkbox: FC<CheckboxProps> = ({name, label, valuee}) => {
+
+  // console.log(value)
+
   return (
-    <div className="box-checkbox">
-      <input type="checkbox" id="test" />
-      <label htmlFor="test" className="checkbox-btn">
-        <span className="icon"></span>
-      </label>
-    </div>
+    <Field name={name} id={name}>
+      {({ field: {value}, form: {setFieldValue} }) => (
+        <CheckboxSemantic
+          label={label}
+          value={value}
+          onClick={() => {
+            console.log(value)
+            setFieldValue(name, valuee)
+          }}
+          />
+      )}
+    </Field>
   )
 }
 
-export default Checkbox
+export default Checkbox;

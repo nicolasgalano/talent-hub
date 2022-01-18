@@ -6,7 +6,7 @@ import { Dropdown as DropdownDecentraland } from 'decentraland-ui/dist/component
 import { ErrorMessage, Field } from "formik";
 
 interface DropDownProps {
-  name: string;
+  name?: string;
   options: Array<string>;
   optionDefault: string;
   className?: string;
@@ -25,29 +25,52 @@ const Dropdown: FC<DropDownProps> = ({name, options, optionDefault, className, o
 
   return (
     <Fragment>
-      <Field name={name} id={name}>
-        {({ field: {value}, form: {setFieldValue} }) => (
+      {
+        name && 
+          <Fragment>
+            <Field name={name} id={name}>
+              {({ field: {value}, form: {setFieldValue} }) => (
+                <DropdownDecentraland
+                  text={selected}
+                  direction={direction}
+                  className={clsx("btn-dropdown", className)}>
+                  <DropdownDecentraland.Menu>
+                    {
+                      options.map((option) => (
+                        <DropdownDecentraland.Item 
+                          onClick={() =>  {
+                            handleClick(option);
+                            setFieldValue(name, option);
+                          }}
+                          text={option}
+                          key={`dropdown-option-${option}`} />
+                      ))
+                    }
+                  </DropdownDecentraland.Menu>
+                </DropdownDecentraland>
+              )}
+            </Field>
+            <ErrorMessage name={name} className="message" component="div"/>
+          </Fragment>
+      }
+      {
+        !name &&
           <DropdownDecentraland
             text={selected}
-            direction={direction}
+            direction="left" 
             className={clsx("btn-dropdown", className)}>
             <DropdownDecentraland.Menu>
               {
                 options.map((option) => (
                   <DropdownDecentraland.Item 
-                    onClick={() =>  {
-                      handleClick(option);
-                      setFieldValue(name, option);
-                    }}
+                    onClick={() => handleClick(option)}
                     text={option}
                     key={`dropdown-option-${option}`} />
                 ))
               }
             </DropdownDecentraland.Menu>
           </DropdownDecentraland>
-        )}
-      </Field>
-      <ErrorMessage name={name} className="message" component="div"/>
+      }
     </Fragment>
   );
 }
