@@ -1,33 +1,31 @@
-import { FC, useRef, useState } from "react";
+import React, { FC, useRef, useState } from 'react'
 
-// UI Semantic
-import { Checkbox } from "semantic-ui-react";
+// Files & Libraries
+import { useHistory, useLocation, useParams } from 'react-router';
+import { useTranslation } from 'react-i18next';
+import { namespaces } from '../../i18n/i18n.constants';
+import '../../assets/scss/base/form.scss';
+import './OpeningApply.scss';
+import { Form, Formik } from 'formik';
+import * as Yup from "yup";
+import { ErrorFocus } from '../../utils/ErrorFocus';
 
 // UI Decentraland
 import { Button } from 'decentraland-ui/dist/components/Button/Button';
 
-// Files & Library
-import '../../assets/scss/base/form.scss';
-import { createAProfile } from '../../assets/illustrations'
-import { useTranslation } from 'react-i18next';
-import { namespaces } from '../../i18n/i18n.constants';
-import dataModal from '../../data/single.json';
-import { useHistory } from "react-router";
-import { Form, Formik } from "formik";
-import * as Yup from "yup";
-import { ErrorFocus } from "../../utils/ErrorFocus";
-
-// UI Custom Component
-import TextField from "../../components/common/TextField/TextField";
-import Typography from "../../components/common/Typography/Typography";
+// Custom component
+import HeroPost from '../../components/common/HeroPost/HeroPost'
+import Typography from '../../components/common/Typography/Typography';
+import TextField from '../../components/common/TextField/TextField';
 import Label from "../../components/common/Label/Label";
-import HeroPost from '../../components/common/HeroPost/HeroPost';
 import File from '../../components/common/File/File';
-import Modal, { ModalBody, ModalFooter, ModalHandle, ModalHeader } from "../../components/common/Modal/Modal";
-import SingleProfile, { SingleProfileType } from "../../components/common/Single/SingleProfile";
-import TextFieldNew from "../../components/common/TextField/TextFieldNew";
-import CheckboxGroup from "../../components/common/CheckboxGroup/CheckboxGroup";
-import { setMultipleField } from "../../utils/formatData";
+import Modal, { ModalBody, ModalFooter, ModalHandle, ModalHeader } from '../../components/common/Modal/Modal';
+import SingleProfile, { SingleProfileType } from '../../components/common/Single/SingleProfile';
+import TextFieldNew from '../../components/common/TextField/TextFieldNew';
+
+interface LocationProps {
+  positionOffered: string;
+}
 
 interface FormInterface {
   Fullname: string;
@@ -39,27 +37,25 @@ interface FormInterface {
   CV: string;
   Portfolio: string;
   ProfilePicture: string;
-  IsFeatured: boolean;
-  Slug: string;
-  TypesOfContract: Array<string>;
-  Fields: Array<string>;
-  WorkingSchedule: Array<string>;
-  Experience: number;
   BestWork: Array<string>;
   Preview: boolean;
 }
 
-const ProfessionalCreate:FC = () =>{
-  const { t } = useTranslation([namespaces.pages.professionalcreate, namespaces.common]);
+const OpeningApply:FC = () => {
+  const { t } = useTranslation([namespaces.pages.openingcontact, namespaces.common]);
   const [updateFile, setUploadFile] = useState(false);
-  const [newProfile, setNewProfile] = useState<SingleProfileType>(null)
+  const [applicants, setApplicants] = useState<SingleProfileType>(null)
   const modalRef = useRef<ModalHandle>(null);
   const history = useHistory();
+  // Get data that was send on params
+  const { state } : { state: LocationProps } = useLocation();
+  // Get slug profile
+  const { slug }: { slug: string } = useParams();
 
   const handleOpenModal = () => modalRef.current.openModal();
   const handleCloseModal = () => modalRef.current.closeModal();
 
-  const handleSubmit = () => history.push('/professional/create/success');
+  const handleSubmit = () => history.push('/job/contact/success');
 
   const handlePreview = (doc: FormInterface) => {
     const dataFormated: SingleProfileType = {
@@ -70,16 +66,12 @@ const ProfessionalCreate:FC = () =>{
       portfolio: doc.Portfolio,
       linkedin: doc.Linkedin,
       gallery: doc.BestWork,
-      experience: doc.Experience,
       image: doc.ProfilePicture,
-      workgin_shedule: setMultipleField(doc.WorkingSchedule, 'WorkingSchedule'),
-      type_of_contract: setMultipleField(doc.TypesOfContract, 'TypesOfContract'),
-      fields: setMultipleField(doc.Fields, 'Fields'),
     }
 
     console.log('handlePreview:', dataFormated);
 
-    setNewProfile(dataFormated);
+    setApplicants(dataFormated);
     handleOpenModal();
   };
 
@@ -93,12 +85,6 @@ const ProfessionalCreate:FC = () =>{
     CV: '',
     Portfolio: '',
     ProfilePicture: '',
-    IsFeatured: false,
-    Slug: '',
-    TypesOfContract: [],
-    Fields: [],
-    WorkingSchedule: [],
-    Experience: 0,
     BestWork: [],
     Preview: false,
   }
@@ -115,27 +101,17 @@ const ProfessionalCreate:FC = () =>{
       .required(t("general.email", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
     Linkedin: Yup.string(),
     OnlinePortfolio: Yup.string(),
-    TypesOfContract: Yup.array()
-      .min(1, t("general.type-of-contract", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common}))
-      .required(),
-    Fields: Yup.array()
-      .min(1, t("general.fields", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common}))
-      .required(),
-    WorkingSchedule: Yup.array()
-      .min(1, t("general.working-schedule", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common}))
-      .required(),
   });
 
-  return(
-    <div className="custom-form" id="create-a-profile">
-      <HeroPost 
-        imgSrc={createAProfile}
-        title={ t("hero.title") }
+  return (
+    <div className="custom-form" id="job-details-contact">
+      <HeroPost
+        title={ t("hero.title") + ' ' + state.positionOffered }
         description={ t("hero.description") }
         buttonText={t("hero.button")}
-        buttonLink="/professionals"
+        buttonLink={`/job/${slug}`}
         />
-      <Formik 
+      <Formik
         initialValues={initialValues}
         validationSchema={formSchema}
         onSubmit={(values, actions) => {
@@ -149,7 +125,7 @@ const ProfessionalCreate:FC = () =>{
           // prevent submit
           actions.setSubmitting(false);
         }}>
-        {(formik) =>
+        {(formik) => 
           <Form>
             <div className="ui container">
               {/* Title */}
@@ -161,6 +137,7 @@ const ProfessionalCreate:FC = () =>{
                   <div>
                     <TextFieldNew
                       element="input"
+                      type="text"
                       label={t("general.name-and-surname", {ns: namespaces.common})}
                       name="Fullname"
                       id="Fullname"
@@ -211,6 +188,8 @@ const ProfessionalCreate:FC = () =>{
                       name="OnlinePortfolio"
                       id="OnlinePortfolio" />
                   </div>
+                </div>
+                <div className="col uploads">
                   {/* Input cv */}
                   <div className="upload-box">
                     <Label type="form">{t("general.cv", {ns: namespaces.common})}</Label>
@@ -225,6 +204,13 @@ const ProfessionalCreate:FC = () =>{
                     { updateFile && <File title="Portfolio_Daniele.pdf" className="file" /> }
                     { !updateFile && <Button secondary className="btn-upload" onClick={() => setUploadFile(!updateFile)}>{t("general.upload-portfolio", {ns: namespaces.common})}</Button>}
                   </div>
+                  {/* Input picture */}
+                  <div className="upload-box">
+                    <Label type="form">{t("general.picture", {ns: namespaces.common})}</Label>
+                    { !updateFile && <Typography variant="body-s" element="p" className="recomended">{t("general.recomended-size", {ns: namespaces.common})} 100 x 100px</Typography>}
+                    { updateFile && <File title="ProfilePicture.png" className="file" /> }
+                    { !updateFile && <Button secondary className="btn-upload" onClick={() => setUploadFile(!updateFile)}>{t("general.upload-picture", {ns: namespaces.common})}</Button>}
+                  </div>
                   {/* Input showcase */}
                   <div className="upload-box">
                     <Label type="form">{t("general.upload-showcase", {ns: namespaces.common})}</Label>
@@ -236,108 +222,6 @@ const ProfessionalCreate:FC = () =>{
                     { updateFile && <File title="Picture5.jpg" className="file" /> }
                     { updateFile && <File title="Picture6.jpg" className="file" /> }
                     { !updateFile && <Button secondary className="btn-upload" onClick={() => setUploadFile(!updateFile)}>{t("general.upload-pictures", {ns: namespaces.common})}</Button>}
-                  </div>
-                </div>
-                <div className="col uploads">
-                  {/* Input picture */}
-                  <div className="upload-box">
-                    <Label type="form">{t("general.picture", {ns: namespaces.common})}</Label>
-                    { !updateFile && <Typography variant="body-s" element="p" className="recomended">{t("general.recomended-size", {ns: namespaces.common})} 100 x 100px</Typography>}
-                    { updateFile && <File title="ProfilePicture.png" className="file" /> }
-                    { !updateFile && <Button secondary className="btn-upload" onClick={() => setUploadFile(!updateFile)}>{t("general.upload-picture", {ns: namespaces.common})}</Button>}
-                  </div>
-                  {/* Checkbox's Working schedule */}
-                  <div>
-                    <Label type="form" required>{t("general.working-schedule", {ns: namespaces.common})}</Label>
-                    <div className="checkbox-inline">
-                      <CheckboxGroup
-                        name="WorkingSchedule"
-                        options={[
-                          {
-                            label: t("general.full-time", {ns: namespaces.common}),
-                            value: "FULL_TIME"
-                          },
-                          {
-                            label: t("general.part-time", {ns: namespaces.common}),
-                            value: "PART_TIME"
-                          },
-                          {
-                            label: t("general.per-hour", {ns: namespaces.common}),
-                            value: "PER_HOUR"
-                          },
-                        ]}
-                      />
-                    </div>
-                  </div>
-                  {/* Checkbox's Types of contract */}
-                  <div>
-                    <Label type="form" required>{t("general.type-of-contract", {ns: namespaces.common})}</Label>
-                    <div className="checkbox-container two-column">
-                      <CheckboxGroup
-                        name="TypesOfContract"
-                        options={[
-                          {
-                            label: t("general.permanent", {ns: namespaces.common}),
-                            value: "PERMANENT"
-                          },
-                          {
-                            label: t("general.temporary", {ns: namespaces.common}),
-                            value: "TEMPORARY"
-                          },
-                          {
-                            label: t("general.freelance", {ns: namespaces.common}),
-                            value: "FREELANCE"
-                          },
-                          {
-                            label: t("general.intership", {ns: namespaces.common}),
-                            value: "INTERSHIP"
-                          },
-                        ]}
-                      />
-                    </div>
-                  </div>
-                  {/* Checkbox's Fields */}
-                  <div>
-                    <Label type="form" required>{t("general.fields", {ns: namespaces.common})}</Label>
-                    <div className="checkbox-container two-column">
-                      <CheckboxGroup
-                        name="Fields"
-                        options={[
-                          {
-                            label: t("general.design", {ns: namespaces.common}),
-                            value: "DESIGN"
-                          },
-                          {
-                            label: t("general.project-management", {ns: namespaces.common}),
-                            value: "PROJECT_MANAGEMENT"
-                          },
-                          {
-                            label: t("general.development", {ns: namespaces.common}),
-                            value: "DEVELOPMENT"
-                          },
-                          {
-                            label: t("general.marketing", {ns: namespaces.common}),
-                            value: "MARKETING"
-                          },
-                          {
-                            label: t("general.engineering", {ns: namespaces.common}),
-                            value: "ENGINEERING"
-                          },
-                          {
-                            label: t("general.art-direction", {ns: namespaces.common}),
-                            value: "ART_DIRECTION"
-                          },
-                          {
-                            label: t("general.modelling", {ns: namespaces.common}),
-                            value: "MODELLING"
-                          },
-                          {
-                            label: t("general.data-analytics", {ns: namespaces.common}),
-                            value: "DATA_ANALYTICS"
-                          },
-                        ]}
-                      />
-                    </div>
                   </div>
                 </div>
               </div>
@@ -368,9 +252,9 @@ const ProfessionalCreate:FC = () =>{
         }
       </Formik>
       <Modal theme="light" ref={modalRef}>
-        <ModalHeader>Apply to Sr. UI Designer</ModalHeader>
+        <ModalHeader>{ t("hero.title") + ' ' + state.positionOffered }</ModalHeader>
         <ModalBody className="review-modal">
-          <SingleProfile data={newProfile} />
+          <SingleProfile data={applicants} />
         </ModalBody>
         <ModalFooter>
           <Button secondary onClick={() => handleCloseModal()}>{t("buttons.edit", {ns: namespaces.common})}</Button>
@@ -378,6 +262,7 @@ const ProfessionalCreate:FC = () =>{
         </ModalFooter>
       </Modal>
     </div>
-  );
+  )
 }
-export default ProfessionalCreate;
+
+export default OpeningApply;

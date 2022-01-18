@@ -45,28 +45,28 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
   const {width} = useWindowSize();
 
   // Schedule
-  let schedule = getMultipleField(data.workgin_shedule);
+  let schedule = data.workgin_shedule ? getMultipleField(data.workgin_shedule) : null;
 
   if(schedule){
     schedule = schedule.map((val) => formatSchedule(val, t));
   }
 
   // Contract
-  let contract = getMultipleField(data.type_of_contract);
+  let contract = data.type_of_contract ? getMultipleField(data.type_of_contract) : null;
 
   if(contract){
     contract = contract.map((val) => formatContract(val, t));
   }
 
   // Field
-  let fields = getMultipleField(data.fields);
+  let fields = data.fields ? getMultipleField(data.fields) : null;
 
   if(fields){
     fields = fields.map((val) => formatField(val, t));
   }
 
   // Best works
-  let gallery = galleryPictures(data.gallery);
+  let gallery = data.gallery ? galleryPictures(data.gallery) : null;
 
   const settings = {
     slidesToShow: 1,

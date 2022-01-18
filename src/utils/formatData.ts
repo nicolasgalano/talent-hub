@@ -59,6 +59,7 @@ export const formatOpeningDetails = (res: any) => {
     type_of_contract: doc.TypeOfContract,
     fields: doc.Fields,
     organizationProject: doc.OrganizationProject,
+    slug: doc.Slug
   };
   return formattedData;
 }
