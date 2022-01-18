@@ -33,6 +33,7 @@ interface FormInterface {
   Fullname: string;
   Profession: string;
   Introduction: string;
+  Experience: number;
   Email: string;
   Linkedin: string;
   OnlinePortfolio: string;
@@ -44,7 +45,6 @@ interface FormInterface {
   TypesOfContract: Array<string>;
   Fields: Array<string>;
   WorkingSchedule: Array<string>;
-  Experience: number;
   BestWork: Array<string>;
   Preview: boolean;
 }
@@ -67,7 +67,7 @@ const ProfessionalCreate:FC = () =>{
       profession_job_name: doc.Profession,
       introduction: doc.Introduction,
       email: doc.Email,
-      portfolio: doc.Portfolio,
+      portfolio: doc.OnlinePortfolio,
       linkedin: doc.Linkedin,
       gallery: doc.BestWork,
       experience: doc.Experience,
@@ -98,7 +98,7 @@ const ProfessionalCreate:FC = () =>{
     TypesOfContract: [],
     Fields: [],
     WorkingSchedule: [],
-    Experience: 0,
+    Experience: null,
     BestWork: [],
     Preview: false,
   }
@@ -184,6 +184,17 @@ const ProfessionalCreate:FC = () =>{
                       name="Introduction"
                       id="Introduction"
                       required />
+                  </div>
+                  {/* Input experience */}
+                  <div>
+                    <TextFieldNew
+                      element="input"
+                      type="number"
+                      label={t("general.years-of-experience", {ns: namespaces.common})}
+                      name="Experience"
+                      id="Experience"
+                      required
+                       />
                   </div>
                   <div>
                     {/* Input Email */}
@@ -368,7 +379,7 @@ const ProfessionalCreate:FC = () =>{
         }
       </Formik>
       <Modal theme="light" ref={modalRef}>
-        <ModalHeader>Apply to Sr. UI Designer</ModalHeader>
+        <ModalHeader>{t("modal.title", { ns: namespaces.pages.professionalcreate})}</ModalHeader>
         <ModalBody className="review-modal">
           <SingleProfile data={newProfile} />
         </ModalBody>
