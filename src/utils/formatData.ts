@@ -268,9 +268,10 @@ export const getMultipleField = (list: Array<any>) => {
 export const setMultipleField = (list: Array<any>, key: string) => {
   if(list.length === 0 || list === null) return;
 
+  const copyList = list;
   let newList = [];
   
-  list.map((val, k) => {
+  copyList.map((val, k) => {
     let obj = {};
     obj[key] = val;
     obj["id"] = k;
