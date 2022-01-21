@@ -120,6 +120,8 @@ const ProfessionalCreate:FC = () =>{
     Introduction: Yup.string()
       .required(t("general.introduction", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
     Experience: Yup.number()
+      .positive()
+      .min(0, t("general.experience-required", { ns: namespaces.common }) + ' ' + t("general.positive-number", { ns: namespaces.common }) )
       .required(t("general.experience-required", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
     Email: Yup.string()
       .email(t("general.email", {ns: namespaces.common}) + ' ' + t("forms.invalid-email", {ns: namespaces.common}))
@@ -235,6 +237,7 @@ const ProfessionalCreate:FC = () =>{
                       label={t("general.years-of-experience", {ns: namespaces.common})}
                       name="Experience"
                       id="Experience"
+                      min={0}
                       required
                        />
                   </div>
