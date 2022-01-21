@@ -522,7 +522,10 @@ const OpeningCreate:FC = () =>{
                 <Button 
                   primary
                   loading={loadingSubmit}
-                  type="submit">
+                  type="button"
+                  onClick={() => {
+                    formik.handleSubmit();
+                  }}>
                     {t("buttons.submit", {ns: namespaces.common})}
                   </Button>
               </ModalFooter>
