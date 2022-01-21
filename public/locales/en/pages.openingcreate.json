@@ -3,5 +3,8 @@
     "title": "Post positions for modellers, developers, designers and more",
     "description": "Build a team from scratch or find the missing talent to power your project.",
     "button": "Back to openings"
+  },
+  "modal": {
+    "title": "Review your job"
   }
 }

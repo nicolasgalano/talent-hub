@@ -3,10 +3,10 @@ import React, { FC } from 'react'
 // UI Decentraland
 import { Button } from 'decentraland-ui/dist/components/Button/Button'
 
-// Files
+// Files & Libraries
 import './Detail.scss';
 import { arrowLeft } from '../../../assets/icons';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
 interface DetailProps {
   children: React.ReactNode;
@@ -16,11 +16,26 @@ interface DetailProps {
   onClickAction?: Function;
 }
 
+interface LocationProps {
+  canGoBack: boolean;
+}
+
 const Detail: FC <DetailProps> = ({children, urlParent, btnText, btnLink, onClickAction}) => {
 
-  const handleClickAction = () => onClickAction();
-
   const history = useHistory();
+  // Get data that was send on params
+  const { state } : { state: LocationProps } = useLocation();
+  let canGoBack = false;
+
+  if(state){
+    if(state.canGoBack !== undefined){
+      canGoBack = true;
+    }else{
+      canGoBack = false;
+    }
+  }
+  
+  const handleClickAction = () => onClickAction && onClickAction();
 
   return (
     <div className="ui container" id="detail">
@@ -28,7 +43,7 @@ const Detail: FC <DetailProps> = ({children, urlParent, btnText, btnLink, onClic
       <div className="back">
         {
           // validate if exist url to go back
-          history.action !== 'POP' ?
+          canGoBack ?
           <Button basic onClick={() => history.goBack()}>
             <img src={arrowLeft} alt="icon arrow left" />
             Back

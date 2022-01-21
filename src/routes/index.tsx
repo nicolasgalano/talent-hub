@@ -89,11 +89,6 @@ const professionalsRoutes: RouteInterface = {
   exact: true,
   children: [
     {
-      path: '/professionals/create',
-      name: 'Create a profile',
-      component: ProfessionalCreate,
-    },
-    {
       path: '/professional/withphoto',
       name: 'Profile details with pic ',
       component: ProfessionalDetail,
@@ -109,9 +104,16 @@ const professionalsRoutes: RouteInterface = {
       component: ProfessionalDetail,
     },
     {
+      path: '/professionals/create',
+      name: 'Create a profile',
+      component: ProfessionalCreate,
+      exact: true,
+    },
+    {
       path: '/professional/create/success',
       name: 'Success',
       component: ProfessionalCreateSuccess,
+      exact: true,
     },
     {
       path: '/professional/:slug',
@@ -121,7 +123,7 @@ const professionalsRoutes: RouteInterface = {
     },
     {
       path: '/professional/:slug/success',
-      name: 'Success',
+      name: 'Contact success',
       component: ProfessionalContactSuccess,
     },
   ]

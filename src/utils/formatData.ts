@@ -231,6 +231,18 @@ export const formatField = (str: string, lang) => {
     case 'MODELLING':
       str = lang("general.modelling");
       break;
+    case 'PROJECT_MANAGEMENT':
+      str = lang("general.project-management");
+      break;
+    case 'DATA_ANALYTICS':
+      str = lang("general.data-analytics");
+      break;
+    case 'ART_DIRECTION':
+      str = lang("general.art-direction");
+      break;
+    case 'MARKETING':
+      str = lang("general.marketing");
+      break;
   }
   return str;
 }
@@ -256,9 +268,10 @@ export const getMultipleField = (list: Array<any>) => {
 export const setMultipleField = (list: Array<any>, key: string) => {
   if(list.length === 0 || list === null) return;
 
+  const copyList = list;
   let newList = [];
   
-  list.map((val, k) => {
+  copyList.map((val, k) => {
     let obj = {};
     obj[key] = val;
     obj["id"] = k;

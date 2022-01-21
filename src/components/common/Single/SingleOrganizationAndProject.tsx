@@ -124,7 +124,6 @@ const SingleOrganizationAndProject:FC <SingleOrganizationAndProjectProps> = ({da
                 {/* Experience required */}
                 <Label type="review">{t("general.experience-required")}</Label>
                 <Typography variant="body-l" element="p">
-                  {/* {data.experience} */}
                   {formatExperienceRequired(t, parseInt(data.experience_from), parseInt(data.experience_to))}
                 </Typography>
               </div>
@@ -145,7 +144,6 @@ const SingleOrganizationAndProject:FC <SingleOrganizationAndProjectProps> = ({da
                   {/* Start date */}
                   <Label type="review">{t("general.start-date")}</Label>
                   <Typography variant="body-l" element="p">
-                    {/* {data.start_date} */}
                     { formatStartDate(data.start_date) }
                   </Typography>
                 </div>
