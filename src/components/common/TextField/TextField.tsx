@@ -9,11 +9,13 @@ import clsx from "clsx";
 import Label from '../Label/Label';
 
 interface TextFieldProps {
-  label?:     string;
-  element:    'input' | 'textarea';
+  label?:               string;
+  element:              'input' | 'textarea';
+  disableErrorMessage?: boolean;
+  min?:                 number;
 }
 
-const TextField: FC<TextFieldProps & FieldHookConfig<string>> = ({label, element, ...props}) => {
+const TextField: FC<TextFieldProps & FieldHookConfig<string>> = ({label, element, disableErrorMessage, min, ...props}) => {
 
   const [classListContainer, setClassListContainer] = useState('');
   const [field, meta] = useField(props);
@@ -60,6 +62,7 @@ const TextField: FC<TextFieldProps & FieldHookConfig<string>> = ({label, element
               name={props.name}
               id={props.id}
               type={props.type}
+              min={min}
               className='input' 
               /> :
             <textarea
@@ -74,7 +77,7 @@ const TextField: FC<TextFieldProps & FieldHookConfig<string>> = ({label, element
               />
         }
       </div>
-      <ErrorMessage name={props.name} className="form-message error" component="div"/>
+      { !disableErrorMessage && <ErrorMessage name={props.name} className="form-message error" component="div"/>}
     </div>
   );
 }

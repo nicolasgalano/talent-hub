@@ -85,7 +85,9 @@
     "company-or-project-name":"Company or project name",
     "message":                "Message",
     "project":                "Project",
-    "organization-1":         "Organization"
+    "organization-1":         "Organization",
+    "salary-lower":           "Salary To must be equal to or greater than Salary From",
+    "positive-number":        "must be a positive number"
   },
   "months": {
     "january":    "January",
