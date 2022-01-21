@@ -24,6 +24,7 @@ import File from '../../components/common/File/File';
 import Modal, { ModalBody, ModalFooter, ModalHandle, ModalHeader } from '../../components/common/Modal/Modal';
 import SingleProfile, { SingleProfileType } from '../../components/common/Single/SingleProfile';
 import TextField from '../../components/common/TextField/TextField';
+import { formatOpeningDetails } from '../../utils/formatData';
 
 interface LocationProps {
   positionOffered: string;
@@ -50,12 +51,18 @@ const OpeningApply:FC = () => {
   const [applicants, setApplicants] = useState<SingleProfileType>(null)
   const modalRef = useRef<ModalHandle>(null);
   const [formData, setFormData] = useState<FormInterface>(null);
+  const [title, setTitle] = useState<string>('');
   const reRef = useRef<ReCAPTCHA>();
   const history = useHistory();
   // Get data that was send on params
   const { state } : { state: LocationProps } = useLocation();
   // Get slug profile
   const { slug }: { slug: string } = useParams();
+
+  const {response, loading, error} = useApi({
+    url: `/jobs?Slug=${slug}`,
+    method: 'GET'
+  });
 
   const { 
     response: responseSubmit, 
@@ -117,6 +124,15 @@ const OpeningApply:FC = () => {
   });
 
   useEffect(() => {
+    if(state){ 
+      setTitle(state.positionOffered);
+    }else{
+      (response && !state) && 
+        setTitle(formatOpeningDetails(response.data).profession_job_name);
+    }
+  }, [response])
+
+  useEffect(() => {
     // launch when setState is ready when handleSubmit was executed
     formData !== null && sendData();
   }, [formData])
@@ -132,7 +148,7 @@ const OpeningApply:FC = () => {
   return (
     <div className="custom-form" id="job-details-contact">
       <HeroPost
-        title={ t("hero.title") + ' ' + state && state.positionOffered }
+        title={ t("hero.title") + ' ' + title }
         description={ t("hero.description") }
         buttonText={t("hero.button")}
         buttonLink={`/job/${slug}`}
@@ -293,7 +309,7 @@ const OpeningApply:FC = () => {
               ref={reRef}
               />
             <Modal theme="light" ref={modalRef}>
-              <ModalHeader>{ t("hero.title") + ' ' + state && state.positionOffered }</ModalHeader>
+              <ModalHeader>{ t("hero.title") + ' ' + title }</ModalHeader>
               <ModalBody className="review-modal">
                 <SingleProfile data={applicants} />
               </ModalBody>
