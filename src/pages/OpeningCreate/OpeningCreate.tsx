@@ -6,7 +6,7 @@ import '../../assets/scss/base/form.scss';
 import { openings2 } from '../../assets/illustrations'
 import { useTranslation } from 'react-i18next';
 import { namespaces } from '../../i18n/i18n.constants';
-import { Form, Formik } from "formik";
+import { ErrorMessage, Form, Formik } from "formik";
 import * as Yup from "yup";
 import moment from "moment";
 import { setMultipleField } from "../../utils/formatData";
@@ -120,8 +120,8 @@ const OpeningCreate:FC = () =>{
     WorkingSchedule: [],
     Email: '',
     About: '',
-    SalaryFrom: null,
-    SalaryTo: null,
+    SalaryFrom: undefined,
+    SalaryTo: undefined,
     Currency: 'USD',
     SalaryType: 'YEAR',
     Month: 'September',
@@ -155,6 +155,18 @@ const OpeningCreate:FC = () =>{
       .required(t("general.about", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
     OrganizationProject: Yup.string()
       .required(t("general.organization-or-project", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
+    SalaryFrom: Yup.number()
+      .min(0, t("general.from", { ns: namespaces.common }) + ' ' + t("general.positive-number", { ns: namespaces.common }) )
+      .positive(),
+    SalaryTo: Yup.number()
+      .min(0, t("general.to", { ns: namespaces.common }) + ' ' + t("general.positive-number", { ns: namespaces.common }) )
+      .positive()
+      .when('SalaryFrom', (SalaryFrom: number) => {
+        if(SalaryFrom){
+          return Yup.number()
+              .min(SalaryFrom, t("general.salary-lower", {ns: namespaces.common}) )
+        }
+      })
   });
 
   useEffect(() => {
@@ -366,13 +378,17 @@ const OpeningCreate:FC = () =>{
                         type="number"
                         label={t("general.from", {ns: namespaces.common})}
                         name="SalaryFrom"
-                        id="SalaryFrom" />
+                        id="SalaryFrom" 
+                        min={0}
+                        disableErrorMessage/>
                       <TextField
                         element="input"
                         type="number"
                         label={t("general.to", {ns: namespaces.common})}
                         name="SalaryTo"
-                        id="SalaryTo" />
+                        id="SalaryTo" 
+                        min={0}
+                        disableErrorMessage/>
 
                       <Dropdown
                         name="Currency"
@@ -385,7 +401,11 @@ const OpeningCreate:FC = () =>{
                         options={Array('MONTH', 'YEAR')}
                         optionDefault="Month" 
                         direction="left" />
+                      
                     </div>
+                    {/* Show pretty error  */}
+                    { formik.errors.SalaryFrom  && <ErrorMessage name="SalaryFrom" className="form-message error" component="div"/> }
+                    { formik.errors.SalaryTo  && <ErrorMessage name="SalaryTo" className="form-message error" component="div"/> }
                   </div>
                   {/* Select Start date */}
                   <div>
