@@ -1,8 +1,5 @@
 import { FC, useEffect, useRef, useState } from "react";
 
-// UI Semantic
-import { Checkbox } from "semantic-ui-react";
-
 // UI Decentraland
 import { Button } from 'decentraland-ui/dist/components/Button/Button';
 
@@ -11,7 +8,6 @@ import '../../assets/scss/base/form.scss';
 import { createAProfile } from '../../assets/illustrations'
 import { useTranslation } from 'react-i18next';
 import { namespaces } from '../../i18n/i18n.constants';
-import dataModal from '../../data/single.json';
 import { useHistory } from "react-router";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -19,7 +15,6 @@ import { ErrorFocus } from "../../utils/ErrorFocus";
 import ReCAPTCHA from "react-google-recaptcha";
 
 // UI Custom Component
-import TextField from "../../components/common/TextField/TextField";
 import Typography from "../../components/common/Typography/Typography";
 import Label from "../../components/common/Label/Label";
 import HeroPost from '../../components/common/HeroPost/HeroPost';
@@ -65,7 +60,6 @@ const ProfessionalCreate:FC = () =>{
   const { 
     response: responseSubmit, 
     loading: loadingSubmit, 
-    error: errorSubmit,
     sendData } = useApi({
       url: '/professionals',
       method: 'POST',
@@ -74,8 +68,6 @@ const ProfessionalCreate:FC = () =>{
 
   const handleOpenModal = () => modalRef.current.openModal();
   const handleCloseModal = () => modalRef.current.closeModal();
-
-  const handleSubmit = () => history.push('/professional/create/success');
 
   const handlePreview = (doc: FormInterface) => {
     const dataFormated: SingleProfileType = {
@@ -93,7 +85,7 @@ const ProfessionalCreate:FC = () =>{
       fields: setMultipleField(doc.Fields, 'Fields'),
     }
 
-    console.log('handlePreview:', dataFormated);
+    // console.log('handlePreview:', dataFormated);
 
     setNewProfile(dataFormated);
     handleOpenModal();
@@ -192,7 +184,7 @@ const ProfessionalCreate:FC = () =>{
 
             setFormData(data);
             // handle submit on useEffect FormData
-            console.log(JSON.stringify(data, null, 2));
+            // console.log(JSON.stringify(data, null, 2));
           }
           // prevent submit
           actions.setSubmitting(false);

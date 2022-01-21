@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState } from 'react'
+import React, { FC, useEffect, useRef, useState } from 'react'
 
 // Files & Libraries
 import { useHistory, useLocation, useParams } from 'react-router';
@@ -9,6 +9,9 @@ import './OpeningApply.scss';
 import { Form, Formik } from 'formik';
 import * as Yup from "yup";
 import { ErrorFocus } from '../../utils/ErrorFocus';
+import ReCAPTCHA from "react-google-recaptcha";
+import useApi from '../../components/hooks/useApi';
+import validateReCaptcha from '../../utils/validateReCaptcha';
 
 // UI Decentraland
 import { Button } from 'decentraland-ui/dist/components/Button/Button';
@@ -16,7 +19,6 @@ import { Button } from 'decentraland-ui/dist/components/Button/Button';
 // Custom component
 import HeroPost from '../../components/common/HeroPost/HeroPost'
 import Typography from '../../components/common/Typography/Typography';
-import TextField from '../../components/common/TextField/TextField';
 import Label from "../../components/common/Label/Label";
 import File from '../../components/common/File/File';
 import Modal, { ModalBody, ModalFooter, ModalHandle, ModalHeader } from '../../components/common/Modal/Modal';
@@ -39,6 +41,7 @@ interface FormInterface {
   ProfilePicture: string;
   BestWork: Array<string>;
   Preview: boolean;
+  published_at: boolean;
 }
 
 const OpeningApply:FC = () => {
@@ -46,16 +49,25 @@ const OpeningApply:FC = () => {
   const [updateFile, setUploadFile] = useState(false);
   const [applicants, setApplicants] = useState<SingleProfileType>(null)
   const modalRef = useRef<ModalHandle>(null);
+  const [formData, setFormData] = useState<FormInterface>(null);
+  const reRef = useRef<ReCAPTCHA>();
   const history = useHistory();
   // Get data that was send on params
   const { state } : { state: LocationProps } = useLocation();
   // Get slug profile
   const { slug }: { slug: string } = useParams();
 
+  const { 
+    response: responseSubmit, 
+    loading: loadingSubmit, 
+    sendData } = useApi({
+      url: '/applicants',
+      method: 'POST',
+      data: JSON.stringify(formData),
+  });
+
   const handleOpenModal = () => modalRef.current.openModal();
   const handleCloseModal = () => modalRef.current.closeModal();
-
-  const handleSubmit = () => history.push('/job/contact/success');
 
   const handlePreview = (doc: FormInterface) => {
     const dataFormated: SingleProfileType = {
@@ -63,13 +75,13 @@ const OpeningApply:FC = () => {
       profession_job_name: doc.Profession,
       introduction: doc.Introduction,
       email: doc.Email,
-      portfolio: doc.Portfolio,
+      portfolio: doc.OnlinePortfolio,
       linkedin: doc.Linkedin,
       gallery: doc.BestWork,
       image: doc.ProfilePicture,
     }
 
-    console.log('handlePreview:', dataFormated);
+    // console.log('handlePreview:', dataFormated);
 
     setApplicants(dataFormated);
     handleOpenModal();
@@ -82,11 +94,12 @@ const OpeningApply:FC = () => {
     Email: '',
     Linkedin: '',
     OnlinePortfolio: '',
-    CV: '',
-    Portfolio: '',
-    ProfilePicture: '',
+    CV: null,
+    Portfolio: null,
+    ProfilePicture: null,
     BestWork: [],
     Preview: false,
+    published_at: null
   }
 
   const formSchema = Yup.object().shape({
@@ -103,10 +116,23 @@ const OpeningApply:FC = () => {
     OnlinePortfolio: Yup.string(),
   });
 
+  useEffect(() => {
+    // launch when setState is ready when handleSubmit was executed
+    formData !== null && sendData();
+  }, [formData])
+
+  useEffect(() => {
+    if(responseSubmit){
+      if(responseSubmit.status === 200){
+        history.push(`/job/${slug}/apply/success`);
+      }
+    }
+  }, [responseSubmit]);
+
   return (
     <div className="custom-form" id="job-details-contact">
       <HeroPost
-        title={ t("hero.title") + ' ' + state.positionOffered }
+        title={ t("hero.title") + ' ' + state && state.positionOffered }
         description={ t("hero.description") }
         buttonText={t("hero.button")}
         buttonLink={`/job/${slug}`}
@@ -114,13 +140,26 @@ const OpeningApply:FC = () => {
       <Formik
         initialValues={initialValues}
         validationSchema={formSchema}
-        onSubmit={(values, actions) => {
+        onSubmit={async (values, actions) => {
+          // GET token ReCaptcha
+          const token = await reRef.current.executeAsync();
+          reRef.current.reset();
+          // Validate captcha
+          const isValidCaptcha = await validateReCaptcha(token);
+          if(!isValidCaptcha){
+            return alert('invalid captcha');
+          }
+
           if(values.Preview){
             handlePreview(values);
-            console.log('onSubmit:', values);
+            // Reset variable
+            actions.setFieldValue('Preview', false);
           }else{
-            // TODO: handle submit
-            console.log(JSON.stringify(values, null, 2));
+            let data: FormInterface = Object.assign({}, values);
+
+            setFormData(data);
+            // handle submit on useEffect FormData
+            // console.log(JSON.stringify(data, null, 2));
           }
           // prevent submit
           actions.setSubmitting(false);
@@ -230,9 +269,9 @@ const OpeningApply:FC = () => {
               <div className="actions">
                 <Button 
                   disabled={!formik.isValid}
+                  loading={loadingSubmit}
                   type="submit"
-                  primary 
-                  onClick={() => handleSubmit()}>
+                  primary >
                     {t("buttons.submit", {ns: namespaces.common})}
                 </Button>
                 <Button 
@@ -248,19 +287,36 @@ const OpeningApply:FC = () => {
               </div>
             </div>
             <ErrorFocus />
+            <ReCAPTCHA
+              sitekey="6LfszyMeAAAAALJi3GgI_heeMTWzPLW5HrK5_ebF"
+              size="invisible"
+              ref={reRef}
+              />
+            <Modal theme="light" ref={modalRef}>
+              <ModalHeader>{ t("hero.title") + ' ' + state && state.positionOffered }</ModalHeader>
+              <ModalBody className="review-modal">
+                <SingleProfile data={applicants} />
+              </ModalBody>
+              <ModalFooter>
+                <Button 
+                  secondary 
+                  onClick={() => handleCloseModal()}>
+                    {t("buttons.edit", {ns: namespaces.common})}
+                </Button>
+                <Button 
+                  primary
+                  loading={loadingSubmit}
+                  type="button"
+                  onClick={() => {
+                    formik.handleSubmit();
+                  }}>
+                    {t("buttons.submit", {ns: namespaces.common})}
+                </Button>
+              </ModalFooter>
+            </Modal>
           </Form>
         }
       </Formik>
-      <Modal theme="light" ref={modalRef}>
-        <ModalHeader>{ t("hero.title") + ' ' + state.positionOffered }</ModalHeader>
-        <ModalBody className="review-modal">
-          <SingleProfile data={applicants} />
-        </ModalBody>
-        <ModalFooter>
-          <Button secondary onClick={() => handleCloseModal()}>{t("buttons.edit", {ns: namespaces.common})}</Button>
-          <Button primary onClick={() => handleSubmit()}>{t("buttons.submit", {ns: namespaces.common})}</Button>
-        </ModalFooter>
-      </Modal>
     </div>
   )
 }
