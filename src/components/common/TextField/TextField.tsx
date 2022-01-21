@@ -1,31 +1,34 @@
-import clsx from "clsx";
 import { FC, useRef, useState } from "react";
 
 // Files
 import './TextField.scss';
+import { ErrorMessage, FieldHookConfig, useField } from "formik";
+import clsx from "clsx";
+
+// Components
 import Label from '../Label/Label';
 
 interface TextFieldProps {
   label?:     string;
   element:    'input' | 'textarea';
-  type?:      'text' | 'number' | 'password' | 'email';
-  required?:  boolean;
-  htmlFor:    string;
 }
 
-const TextField: FC<TextFieldProps> = ({label, element, type, required, htmlFor}) => {
+const TextField: FC<TextFieldProps & FieldHookConfig<string>> = ({label, element, ...props}) => {
 
-  const fieldRef = useRef(null);
   const [classListContainer, setClassListContainer] = useState('');
+  const [field, meta] = useField(props);
+  const fieldRef = useRef(null);
 
   const onFocus = () => {
     if (!fieldRef.current) return;
+    console.log('onFocus');
 
     fieldRef.current.focus();
     setClassListContainer('active');
   }
 
   const onBlur = () => {
+    console.log('onBlur');
     if (!fieldRef.current) return;
 
     fieldRef.current.blur();
@@ -35,33 +38,43 @@ const TextField: FC<TextFieldProps> = ({label, element, type, required, htmlFor}
   }
 
   return (
-    <div className={clsx('form-field', classListContainer)}>
+    <div className={clsx(
+      'form-field', 
+      classListContainer,
+      {
+        'error': meta.touched && meta.error
+      }
+      )}>
       <div className="control">
         {
           label &&
-            <Label type="form" htmlFor={htmlFor} required={required}>{ label }</Label>
+            <Label type="form" htmlFor={props.id} required={props.required}>{ label }</Label>
         }
-        {
+        { 
           element === 'input' ?
             <input 
+              {...field}
               ref={fieldRef} 
               onFocus={onFocus}
               onBlur={onBlur}
-              name={htmlFor}
-              id={htmlFor} 
-              type={type}
-              className='input' /> :
+              name={props.name}
+              id={props.id}
+              type={props.type}
+              className='input' 
+              /> :
             <textarea
+              {...field}
               ref={fieldRef} 
               onFocus={onFocus}
               onBlur={onBlur}
-              name={htmlFor}
-              id={htmlFor} 
+              name={props.name}
+              id={props.id}
               className='textarea'
               rows={3}
               />
         }
       </div>
+      <ErrorMessage name={props.name} className="form-message error" component="div"/>
     </div>
   );
 }

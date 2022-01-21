@@ -23,7 +23,7 @@ import Label from "../../components/common/Label/Label";
 import File from '../../components/common/File/File';
 import Modal, { ModalBody, ModalFooter, ModalHandle, ModalHeader } from '../../components/common/Modal/Modal';
 import SingleProfile, { SingleProfileType } from '../../components/common/Single/SingleProfile';
-import TextFieldNew from '../../components/common/TextField/TextFieldNew';
+import TextField from '../../components/common/TextField/TextField';
 
 interface LocationProps {
   positionOffered: string;
@@ -174,7 +174,7 @@ const OpeningApply:FC = () => {
                 <div className="col">
                   {/* Input Name and surname */}
                   <div>
-                    <TextFieldNew
+                    <TextField
                       element="input"
                       type="text"
                       label={t("general.name-and-surname", {ns: namespaces.common})}
@@ -184,7 +184,7 @@ const OpeningApply:FC = () => {
                   </div>
                   {/* Input profession */}
                   <div>
-                    <TextFieldNew
+                    <TextField
                       element="input"
                       type="text"
                       label={t("general.profession", {ns: namespaces.common})}
@@ -194,7 +194,7 @@ const OpeningApply:FC = () => {
                   </div>
                   {/* Textarea introduction */}
                   <div>
-                    <TextFieldNew 
+                    <TextField 
                       element="textarea"
                       label={t("general.introduction", {ns: namespaces.common})}
                       name="Introduction"
@@ -203,7 +203,7 @@ const OpeningApply:FC = () => {
                   </div>
                   <div>
                     {/* Input Email */}
-                    <TextFieldNew 
+                    <TextField 
                       element="input"
                       type="email"
                       label={t("general.email", {ns: namespaces.common})}
@@ -213,7 +213,7 @@ const OpeningApply:FC = () => {
                   </div>
                   <div>
                     {/* Input linkedin */}
-                    <TextFieldNew 
+                    <TextField 
                       element="input"
                       label={t("general.linkedin", {ns: namespaces.common})}
                       name="Linkedin"
@@ -221,7 +221,7 @@ const OpeningApply:FC = () => {
                   </div>
                   <div>
                     {/* Input Online portfolio */}
-                    <TextFieldNew 
+                    <TextField 
                       element="input"
                       label={t("general.online-portfolio", {ns: namespaces.common})}
                       name="OnlinePortfolio"

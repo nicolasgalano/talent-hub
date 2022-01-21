@@ -21,7 +21,7 @@ import HeroPost from '../../components/common/HeroPost/HeroPost';
 import File from '../../components/common/File/File';
 import Modal, { ModalBody, ModalFooter, ModalHandle, ModalHeader } from "../../components/common/Modal/Modal";
 import SingleProfile, { SingleProfileType } from "../../components/common/Single/SingleProfile";
-import TextFieldNew from "../../components/common/TextField/TextFieldNew";
+import TextField from "../../components/common/TextField/TextField";
 import CheckboxGroup from "../../components/common/CheckboxGroup/CheckboxGroup";
 import { setMultipleField } from "../../utils/formatData";
 import useApi from "../../components/hooks/useApi";
@@ -106,7 +106,7 @@ const ProfessionalCreate:FC = () =>{
     TypeOfContract: [],
     Fields: [],
     WorkingSchedule: [],
-    Experience: null,
+    Experience: undefined,
     BestWork: [],
     Preview: false,
     published_at: null
@@ -119,6 +119,8 @@ const ProfessionalCreate:FC = () =>{
       .required(t("general.profession", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
     Introduction: Yup.string()
       .required(t("general.introduction", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
+    Experience: Yup.number()
+      .required(t("general.experience-required", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
     Email: Yup.string()
       .email(t("general.email", {ns: namespaces.common}) + ' ' + t("forms.invalid-email", {ns: namespaces.common}))
       .required(t("general.email", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
@@ -199,7 +201,7 @@ const ProfessionalCreate:FC = () =>{
                 <div className="col">
                   {/* Input Name and surname */}
                   <div>
-                    <TextFieldNew
+                    <TextField
                       element="input"
                       label={t("general.name-and-surname", {ns: namespaces.common})}
                       name="Fullname"
@@ -208,7 +210,7 @@ const ProfessionalCreate:FC = () =>{
                   </div>
                   {/* Input profession */}
                   <div>
-                    <TextFieldNew
+                    <TextField
                       element="input"
                       type="text"
                       label={t("general.profession", {ns: namespaces.common})}
@@ -218,7 +220,7 @@ const ProfessionalCreate:FC = () =>{
                   </div>
                   {/* Textarea introduction */}
                   <div>
-                    <TextFieldNew 
+                    <TextField 
                       element="textarea"
                       label={t("general.introduction", {ns: namespaces.common})}
                       name="Introduction"
@@ -227,7 +229,7 @@ const ProfessionalCreate:FC = () =>{
                   </div>
                   {/* Input experience */}
                   <div>
-                    <TextFieldNew
+                    <TextField
                       element="input"
                       type="number"
                       label={t("general.years-of-experience", {ns: namespaces.common})}
@@ -238,7 +240,7 @@ const ProfessionalCreate:FC = () =>{
                   </div>
                   <div>
                     {/* Input Email */}
-                    <TextFieldNew 
+                    <TextField 
                       element="input"
                       type="email"
                       label={t("general.email", {ns: namespaces.common})}
@@ -248,7 +250,7 @@ const ProfessionalCreate:FC = () =>{
                   </div>
                   <div>
                     {/* Input linkedin */}
-                    <TextFieldNew 
+                    <TextField 
                       element="input"
                       label={t("general.linkedin", {ns: namespaces.common})}
                       name="Linkedin"
@@ -256,7 +258,7 @@ const ProfessionalCreate:FC = () =>{
                   </div>
                   <div>
                     {/* Input Online portfolio */}
-                    <TextFieldNew 
+                    <TextField 
                       element="input"
                       label={t("general.online-portfolio", {ns: namespaces.common})}
                       name="OnlinePortfolio"
