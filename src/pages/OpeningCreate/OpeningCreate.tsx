@@ -1,9 +1,6 @@
 import { FC, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router";
 
-// UI Decentraland
-import { Button } from 'decentraland-ui/dist/components/Button/Button';
-
 // Files & Library
 import '../../assets/scss/base/form.scss';
 import { openings2 } from '../../assets/illustrations'
@@ -14,6 +11,12 @@ import * as Yup from "yup";
 import moment from "moment";
 import { setMultipleField } from "../../utils/formatData";
 import { ErrorFocus } from "../../utils/ErrorFocus";
+import ReCAPTCHA from "react-google-recaptcha";
+import validateReCaptcha from "../../utils/validateReCaptcha";
+import useApi from "../../components/hooks/useApi";
+
+// UI Decentraland
+import { Button } from 'decentraland-ui/dist/components/Button/Button';
 
 // UI Custom Component
 import Typography from "../../components/common/Typography/Typography";
@@ -35,34 +38,47 @@ interface FormInterface {
   Organization: string;
   Responsibilities: string;
   Benefits: string;
-  TypesOfContract: Array<string>;
+  TypeOfContract: Array<string>;
   Fields: Array<string>;
+  ExperienceFrom: number;
+  ExperienceTo?: number;
   WorkingSchedule: Array<string>;
   Email: string;
   About: string;
-  From: string;
-  To: string;
+  SalaryFrom: number;
+  SalaryTo: number;
   Currency: string;
   SalaryType: string;
   Month: string;
   Year: string;
-  Name: string;
+  StartDate: string;
   OrganizationProject: string;
   Image?: string;
   Preview: boolean;
+  published_at: boolean;
 }
 
 const OpeningCreate:FC = () =>{
   const { t } = useTranslation([namespaces.pages.openingcreate, namespaces.common]);
   const [updateFile, setUploadFile] = useState(false);
-  const [newJob, setNewJob] = useState<SingleOrganizationAndProjectType>(null);
-  const modalRef = useRef<ModalHandle>(null);
+  const [modalData, setModalData] = useState<SingleOrganizationAndProjectType>(null);
+  const [formData, setFormData] = useState<FormInterface>(null);
   const history = useHistory();
+  const modalRef = useRef<ModalHandle>(null);
+  const reRef = useRef<ReCAPTCHA>();
+
+  const { 
+    response: responseSubmit, 
+    loading: loadingSubmit, 
+    error: errorSubmit,
+    sendData } = useApi({
+      url: '/jobs',
+      method: 'POST',
+      data: JSON.stringify(formData),
+  });
 
   const handleOpenModal = () => modalRef.current.openModal();
   const handleCloseModal = () => modalRef.current.closeModal();
-
-  const handleSubmit = () => history.push('/openings/post-a-job/success');
 
   const handlePreview = (doc: FormInterface) => {
     const dataFormated: SingleOrganizationAndProjectType = {
@@ -73,21 +89,21 @@ const OpeningCreate:FC = () =>{
       benefits: doc.Benefits,
       experience_from: '1', //TODO: Only for testing
       experience_to: '3', //TODO: Only for testing
-      start_date: moment((doc.Month + ' ' + doc.Year), "MMMM YYYY").format('MMMM YYYY'),
-      salary_from: doc.From,
-      salary_to: doc.To,
+      start_date: moment((doc.Month + ' ' + doc.Year), "MMMM YYYY").format('YYYY-MM-DD'),
+      salary_from: doc.SalaryFrom && doc.SalaryFrom.toString(),
+      salary_to: doc.SalaryTo && doc.SalaryTo.toString(),
       salary_currency: doc.Currency,
       salary_type: doc.SalaryType,
       organizationProject: doc.OrganizationProject,
       image: 'https://talent-hub-website-53698d6.s3.amazonaws.com/logo_indicius_a73c00b319.jpg',
       workgin_shedule: setMultipleField(doc.WorkingSchedule, 'WorkingSchedule'),
-      type_of_contract: setMultipleField(doc.TypesOfContract, 'TypesOfContract'),
+      type_of_contract: setMultipleField(doc.TypeOfContract, 'TypeOfContract'),
       fields: setMultipleField(doc.Fields, 'Fields'),
     }
 
-    console.log('handlePreview:', dataFormated);
+    // console.log('handlePreview:', dataFormated);
 
-    setNewJob(dataFormated);
+    setModalData(dataFormated);
     handleOpenModal();
   }
 
@@ -97,20 +113,23 @@ const OpeningCreate:FC = () =>{
     Organization: '',
     Responsibilities: '',
     Benefits: '',
-    TypesOfContract: [],
+    TypeOfContract: [],
     Fields: [],
+    ExperienceFrom: 1,
+    ExperienceTo: null,
     WorkingSchedule: [],
     Email: '',
     About: '',
-    From: '',
-    To: '',
+    SalaryFrom: null,
+    SalaryTo: null,
     Currency: 'USD',
     SalaryType: 'YEAR',
     Month: 'September',
     Year: '2021',
-    Name: '',
+    StartDate: '',
     OrganizationProject: '',
-    Preview: false
+    Preview: false,
+    published_at: null
   }
 
   const formSchema = Yup.object().shape({
@@ -120,7 +139,7 @@ const OpeningCreate:FC = () =>{
       .required(t("general.organization", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
     Responsibilities: Yup.string()
       .required(t("general.responsabilities", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
-    TypesOfContract: Yup.array()
+    TypeOfContract: Yup.array()
       .min(1, t("general.type-of-contract", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common}))
       .required(t("general.type-of-contract", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
     Fields: Yup.array()
@@ -138,6 +157,20 @@ const OpeningCreate:FC = () =>{
       .required(t("general.organization-or-project", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
   });
 
+  useEffect(() => {
+    // launch when setState is ready when handleSubmit was executed
+    formData !== null && sendData();
+  }, [formData])
+
+  useEffect(() => {
+    if(responseSubmit){
+      if(responseSubmit.status === 200){
+        history.push('/openings/post-a-job/success');
+      }
+    }
+  }, [responseSubmit]);
+  
+
   return(
     <div className="custom-form" id="post-a-job">
       <HeroPost 
@@ -145,30 +178,53 @@ const OpeningCreate:FC = () =>{
         title={ t("hero.title") }
         description={ t("hero.description") }
         buttonText={t("hero.button")}
+        buttonLink="/openings"
         />
       <Formik 
         initialValues={initialValues}
         validationSchema={formSchema}
-        onSubmit={(values, actions) => {
+        onSubmit={async (values, actions) => {
+          // GET token ReCaptcha
+          const token = await reRef.current.executeAsync();
+          reRef.current.reset();
+          // Validate captcha
+          const isValidCaptcha = await validateReCaptcha(token);
+          if(!isValidCaptcha){
+            return alert('invalid captcha');
+          }
+
           if(values.Preview){
             handlePreview(values);
-            console.log('onSubmit:', values);
+            // Reset variable
+            actions.setFieldValue('Preview', false);
           }else{
+            let data: FormInterface = Object.assign({}, values);
+
+
             // handle Organization Field. That's because there is a conflict with the name
-            values.Organization = values.OrganizationName;
-            delete values.OrganizationName;
-            // TODO: handle submit
-            console.log(JSON.stringify(values, null, 2));
+            data.Organization = data.OrganizationName;
+            delete data.OrganizationName;
+
+            // Format fields that would be an array
+            data.TypeOfContract = setMultipleField(data.TypeOfContract, 'TypeOfContract');
+            data.Fields = setMultipleField(data.Fields, 'Fields');
+            data.WorkingSchedule = setMultipleField(data.WorkingSchedule, 'WorkingSchedule');
+
+            // Format fields for Strapi
+            data.StartDate = moment((data.Month + ' ' + data.Year), "MMMM YYYY").format();
+            delete data.Month;
+            delete data.Year;
+
+            setFormData(data);
+
+            // handle submit on useEffect FormData
+            console.log(JSON.stringify(data, null, 2));
           }
           // prevent submit
           actions.setSubmitting(false);
         }}>
         {(formik) => (
           <Form>
-            {() =>
-              !formik.isValid && alert('error')
-              
-            }
             <div className="ui container">
               {/* Title */}
               <Typography element="p" variant="body-s" className="label-required">*{t("general.required-information", {ns: namespaces.common})}</Typography>
@@ -208,7 +264,7 @@ const OpeningCreate:FC = () =>{
                     <Label type="form" required>{t("general.type-of-contract", {ns: namespaces.common})}</Label>
                     <div className="checkbox-container two-column">
                       <CheckboxGroup
-                        name="TypesOfContract"
+                        name="TypeOfContract"
                         options={[
                           {
                             label: t("general.permanent", {ns: namespaces.common}),
@@ -309,14 +365,14 @@ const OpeningCreate:FC = () =>{
                         element="input"
                         type="number"
                         label={t("general.from", {ns: namespaces.common})}
-                        name="From"
-                        id="From" />
+                        name="SalaryFrom"
+                        id="SalaryFrom" />
                       <TextFieldNew
                         element="input"
                         type="number"
                         label={t("general.to", {ns: namespaces.common})}
-                        name="To"
-                        id="To" />
+                        name="SalaryTo"
+                        id="SalaryTo" />
 
                       <Dropdown
                         name="Currency"
@@ -428,6 +484,7 @@ const OpeningCreate:FC = () =>{
               <div className="actions">
                 <Button 
                   disabled={!formik.isValid}
+                  loading={loadingSubmit}
                   type="submit"
                   primary 
                   >
@@ -446,19 +503,33 @@ const OpeningCreate:FC = () =>{
               </div>
             </div>
             <ErrorFocus />
+            <ReCAPTCHA
+              sitekey="6LfszyMeAAAAALJi3GgI_heeMTWzPLW5HrK5_ebF"
+              size="invisible"
+              ref={reRef}
+              />
+            <Modal theme="light" ref={modalRef}>
+              <ModalHeader>{t("modal.title", { ns: namespaces.pages.openingcreate})}</ModalHeader>
+              <ModalBody className="review-modal">
+                <SingleOrganizationAndProject data={modalData} />
+              </ModalBody>
+              <ModalFooter>
+                <Button 
+                  secondary 
+                  onClick={() => handleCloseModal()}>
+                    {t("buttons.edit", {ns: namespaces.common})}
+                </Button>
+                <Button 
+                  primary
+                  loading={loadingSubmit}
+                  type="submit">
+                    {t("buttons.submit", {ns: namespaces.common})}
+                  </Button>
+              </ModalFooter>
+            </Modal>
           </Form>
         )}
       </Formik>
-      <Modal theme="light" ref={modalRef}>
-        <ModalHeader>Review your job</ModalHeader>
-        <ModalBody className="review-modal">
-          <SingleOrganizationAndProject data={newJob} />
-        </ModalBody>
-        <ModalFooter>
-          <Button secondary onClick={() => handleCloseModal()}>{t("buttons.edit", {ns: namespaces.common})}</Button>
-          <Button primary onClick={() => handleSubmit()}>{t("buttons.submit", {ns: namespaces.common})}</Button>
-        </ModalFooter>
-      </Modal>
     </div>
   );
 }

@@ -31,6 +31,7 @@ export type SingleOrganizationAndProjectType = {
   workgin_shedule: Array<any>;
   type_of_contract: Array<any>;
   fields: Array<any>;
+  slug?: string;
 }
 
 interface SingleOrganizationAndProjectProps {
@@ -41,21 +42,21 @@ const SingleOrganizationAndProject:FC <SingleOrganizationAndProjectProps> = ({da
   const { t } = useTranslation(namespaces.common);
 
   // Schedule
-  let schedule = getMultipleField(data.workgin_shedule);
+  let schedule = data.workgin_shedule ? getMultipleField(data.workgin_shedule) : null;
 
   if(schedule){
     schedule = schedule.map((val) => formatSchedule(val, t));
   }
 
   // Contract
-  let contract = getMultipleField(data.type_of_contract);
+  let contract = data.type_of_contract ? getMultipleField(data.type_of_contract) : null;
 
   if(contract){
     contract = contract.map((val) => formatContract(val, t));
   }
 
   // Field
-  let fields = getMultipleField(data.fields);
+  let fields = data.fields ? getMultipleField(data.fields) : null;
 
   if(fields){
     fields = fields.map((val) => formatField(val, t));
@@ -123,7 +124,6 @@ const SingleOrganizationAndProject:FC <SingleOrganizationAndProjectProps> = ({da
                 {/* Experience required */}
                 <Label type="review">{t("general.experience-required")}</Label>
                 <Typography variant="body-l" element="p">
-                  {/* {data.experience} */}
                   {formatExperienceRequired(t, parseInt(data.experience_from), parseInt(data.experience_to))}
                 </Typography>
               </div>
@@ -144,7 +144,6 @@ const SingleOrganizationAndProject:FC <SingleOrganizationAndProjectProps> = ({da
                   {/* Start date */}
                   <Label type="review">{t("general.start-date")}</Label>
                   <Typography variant="body-l" element="p">
-                    {/* {data.start_date} */}
                     { formatStartDate(data.start_date) }
                   </Typography>
                 </div>

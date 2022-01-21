@@ -20,7 +20,7 @@ export interface CardProps {
 const Card: FC<CardProps> = ({img, title, company, description, date, profession, to}) => {
   return (
     <div className="card">
-      <Link to={to}>
+      <Link to={{pathname: to, state: { canGoBack: true }}}>
         <div className="header">
           { img && 
             <div className="image">
