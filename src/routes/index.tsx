@@ -73,6 +73,7 @@ const jobsRoutes: RouteInterface = {
       path: '/job/:slug/apply',
       name: 'Apply',
       component: OpeningApply,
+      exact: true,
     },
     {
       path: '/job/:slug/apply/success',

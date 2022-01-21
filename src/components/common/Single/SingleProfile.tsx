@@ -14,10 +14,8 @@ import { formatContract, formatField, formatSchedule, galleryPictures, getMultip
 import Typography from '../Typography/Typography';
 import Label from '../Label/Label';
 import Tag from '../Tag/Tag';
-import { Link } from 'react-router-dom';
 import { useWindowSize } from '../../hooks/useWindowsSize';
 import { generateURL, visibleURL } from '../../../utils/formatData';
-import { count } from 'console';
 
 export type SingleProfileType = {
   introduction: string;

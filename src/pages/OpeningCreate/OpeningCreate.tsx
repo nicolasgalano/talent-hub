@@ -25,7 +25,7 @@ import Range from "../../components/common/Range/Range";
 import HeroPost from '../../components/common/HeroPost/HeroPost';
 import File from '../../components/common/File/File';
 import Modal, { ModalBody, ModalFooter, ModalHandle, ModalHeader } from "../../components/common/Modal/Modal";
-import TextFieldNew from "../../components/common/TextField/TextFieldNew";
+import TextField from "../../components/common/TextField/TextField";
 import Dropdown from "../../components/common/Dropdown/Dropdown";
 import CheckboxGroup from "../../components/common/CheckboxGroup/CheckboxGroup";
 
@@ -233,7 +233,7 @@ const OpeningCreate:FC = () =>{
                 <div className="col">
                   {/* Input Possition */}
                   <div>
-                    <TextFieldNew
+                    <TextField
                       element="input"
                       type="text"
                       label={t("general.position-offered", {ns: namespaces.common})}
@@ -243,7 +243,7 @@ const OpeningCreate:FC = () =>{
                   </div>
                   {/* Textarea responsabilities */}
                   <div>
-                    <TextFieldNew
+                    <TextField
                       element="textarea"
                       label={t("general.responsabilities", {ns: namespaces.common})}
                       name="Responsibilities"
@@ -252,7 +252,7 @@ const OpeningCreate:FC = () =>{
                   </div>
                   {/* Benefits */}
                   <div>
-                    <TextFieldNew
+                    <TextField
                       element="input"
                       type="text"
                       label={t("general.benefits", {ns: namespaces.common})}
@@ -361,13 +361,13 @@ const OpeningCreate:FC = () =>{
                   <div>
                     <Label type="form">{t("general.salary", {ns: namespaces.common})}</Label>
                     <div className="salary">
-                      <TextFieldNew
+                      <TextField
                         element="input"
                         type="number"
                         label={t("general.from", {ns: namespaces.common})}
                         name="SalaryFrom"
                         id="SalaryFrom" />
-                      <TextFieldNew
+                      <TextField
                         element="input"
                         type="number"
                         label={t("general.to", {ns: namespaces.common})}
@@ -423,7 +423,7 @@ const OpeningCreate:FC = () =>{
                 <div className="col">
                   {/* Input Organization or project name */}
                   <div>
-                    <TextFieldNew
+                    <TextField
                       element="input"
                       type="text"
                       label={t("general.organization", {ns: namespaces.common})}
@@ -453,7 +453,7 @@ const OpeningCreate:FC = () =>{
                   </div>
                   <div>
                     {/* Input Email */}
-                    <TextFieldNew
+                    <TextField
                       element="input"
                       type="email"
                       label={t("general.email", {ns: namespaces.common})}
@@ -463,7 +463,7 @@ const OpeningCreate:FC = () =>{
                   </div>
                   {/* Textarea About */}
                   <div>
-                    <TextFieldNew
+                    <TextField
                       element="textarea"
                       label={t("general.about", {ns: namespaces.common})}
                       name="About"
