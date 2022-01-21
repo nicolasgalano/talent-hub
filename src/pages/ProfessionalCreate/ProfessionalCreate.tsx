@@ -1,7 +1,4 @@
-import { FC, useRef, useState } from "react";
-
-// UI Semantic
-import { Checkbox } from "semantic-ui-react";
+import { FC, useEffect, useRef, useState } from "react";
 
 // UI Decentraland
 import { Button } from 'decentraland-ui/dist/components/Button/Button';
@@ -11,23 +8,24 @@ import '../../assets/scss/base/form.scss';
 import { createAProfile } from '../../assets/illustrations'
 import { useTranslation } from 'react-i18next';
 import { namespaces } from '../../i18n/i18n.constants';
-import dataModal from '../../data/single.json';
 import { useHistory } from "react-router";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { ErrorFocus } from "../../utils/ErrorFocus";
+import ReCAPTCHA from "react-google-recaptcha";
 
 // UI Custom Component
-import TextField from "../../components/common/TextField/TextField";
 import Typography from "../../components/common/Typography/Typography";
 import Label from "../../components/common/Label/Label";
 import HeroPost from '../../components/common/HeroPost/HeroPost';
 import File from '../../components/common/File/File';
 import Modal, { ModalBody, ModalFooter, ModalHandle, ModalHeader } from "../../components/common/Modal/Modal";
 import SingleProfile, { SingleProfileType } from "../../components/common/Single/SingleProfile";
-import TextFieldNew from "../../components/common/TextField/TextFieldNew";
+import TextField from "../../components/common/TextField/TextField";
 import CheckboxGroup from "../../components/common/CheckboxGroup/CheckboxGroup";
 import { setMultipleField } from "../../utils/formatData";
+import useApi from "../../components/hooks/useApi";
+import validateReCaptcha from "../../utils/validateReCaptcha";
 
 interface FormInterface {
   Fullname: string;
@@ -42,11 +40,12 @@ interface FormInterface {
   ProfilePicture: string;
   IsFeatured: boolean;
   Slug: string;
-  TypesOfContract: Array<string>;
+  TypeOfContract: Array<string>;
   Fields: Array<string>;
   WorkingSchedule: Array<string>;
   BestWork: Array<string>;
   Preview: boolean;
+  published_at: boolean;
 }
 
 const ProfessionalCreate:FC = () =>{
@@ -54,12 +53,21 @@ const ProfessionalCreate:FC = () =>{
   const [updateFile, setUploadFile] = useState(false);
   const [newProfile, setNewProfile] = useState<SingleProfileType>(null)
   const modalRef = useRef<ModalHandle>(null);
+  const [formData, setFormData] = useState<FormInterface>(null);
   const history = useHistory();
+  const reRef = useRef<ReCAPTCHA>();
+
+  const { 
+    response: responseSubmit, 
+    loading: loadingSubmit, 
+    sendData } = useApi({
+      url: '/professionals',
+      method: 'POST',
+      data: JSON.stringify(formData),
+  });
 
   const handleOpenModal = () => modalRef.current.openModal();
   const handleCloseModal = () => modalRef.current.closeModal();
-
-  const handleSubmit = () => history.push('/professional/create/success');
 
   const handlePreview = (doc: FormInterface) => {
     const dataFormated: SingleProfileType = {
@@ -73,11 +81,11 @@ const ProfessionalCreate:FC = () =>{
       experience: doc.Experience,
       image: doc.ProfilePicture,
       workgin_shedule: setMultipleField(doc.WorkingSchedule, 'WorkingSchedule'),
-      type_of_contract: setMultipleField(doc.TypesOfContract, 'TypesOfContract'),
+      type_of_contract: setMultipleField(doc.TypeOfContract, 'TypeOfContract'),
       fields: setMultipleField(doc.Fields, 'Fields'),
     }
 
-    console.log('handlePreview:', dataFormated);
+    // console.log('handlePreview:', dataFormated);
 
     setNewProfile(dataFormated);
     handleOpenModal();
@@ -90,17 +98,18 @@ const ProfessionalCreate:FC = () =>{
     Email: '',
     Linkedin: '',
     OnlinePortfolio: '',
-    CV: '',
-    Portfolio: '',
-    ProfilePicture: '',
+    CV: null,
+    Portfolio: null,
+    ProfilePicture: null,
     IsFeatured: false,
-    Slug: '',
-    TypesOfContract: [],
+    Slug: null,
+    TypeOfContract: [],
     Fields: [],
     WorkingSchedule: [],
-    Experience: null,
+    Experience: undefined,
     BestWork: [],
     Preview: false,
+    published_at: null
   }
 
   const formSchema = Yup.object().shape({
@@ -110,12 +119,14 @@ const ProfessionalCreate:FC = () =>{
       .required(t("general.profession", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
     Introduction: Yup.string()
       .required(t("general.introduction", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
+    Experience: Yup.number()
+      .required(t("general.experience-required", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
     Email: Yup.string()
       .email(t("general.email", {ns: namespaces.common}) + ' ' + t("forms.invalid-email", {ns: namespaces.common}))
       .required(t("general.email", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
     Linkedin: Yup.string(),
     OnlinePortfolio: Yup.string(),
-    TypesOfContract: Yup.array()
+    TypeOfContract: Yup.array()
       .min(1, t("general.type-of-contract", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common}))
       .required(),
     Fields: Yup.array()
@@ -125,6 +136,19 @@ const ProfessionalCreate:FC = () =>{
       .min(1, t("general.working-schedule", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common}))
       .required(),
   });
+
+  useEffect(() => {
+    // launch when setState is ready when handleSubmit was executed
+    formData !== null && sendData();
+  }, [formData])
+
+  useEffect(() => {
+    if(responseSubmit){
+      if(responseSubmit.status === 200){
+        history.push('/professional/create/success');
+      }
+    }
+  }, [responseSubmit]);
 
   return(
     <div className="custom-form" id="create-a-profile">
@@ -138,13 +162,31 @@ const ProfessionalCreate:FC = () =>{
       <Formik 
         initialValues={initialValues}
         validationSchema={formSchema}
-        onSubmit={(values, actions) => {
+        onSubmit={async (values, actions) => {
+          // GET token ReCaptcha
+          const token = await reRef.current.executeAsync();
+          reRef.current.reset();
+          // Validate captcha
+          const isValidCaptcha = await validateReCaptcha(token);
+          if(!isValidCaptcha){
+            return alert('invalid captcha');
+          }
+
           if(values.Preview){
             handlePreview(values);
-            console.log('onSubmit:', values);
+            // Reset variable
+            actions.setFieldValue('Preview', false);
           }else{
-            // TODO: handle submit
-            console.log(JSON.stringify(values, null, 2));
+            let data: FormInterface = Object.assign({}, values);
+
+            // Format fields that would be an array
+            data.TypeOfContract = setMultipleField(data.TypeOfContract, 'TypeOfContract');
+            data.Fields = setMultipleField(data.Fields, 'Fields');
+            data.WorkingSchedule = setMultipleField(data.WorkingSchedule, 'WorkingSchedule');
+
+            setFormData(data);
+            // handle submit on useEffect FormData
+            // console.log(JSON.stringify(data, null, 2));
           }
           // prevent submit
           actions.setSubmitting(false);
@@ -159,7 +201,7 @@ const ProfessionalCreate:FC = () =>{
                 <div className="col">
                   {/* Input Name and surname */}
                   <div>
-                    <TextFieldNew
+                    <TextField
                       element="input"
                       label={t("general.name-and-surname", {ns: namespaces.common})}
                       name="Fullname"
@@ -168,7 +210,7 @@ const ProfessionalCreate:FC = () =>{
                   </div>
                   {/* Input profession */}
                   <div>
-                    <TextFieldNew
+                    <TextField
                       element="input"
                       type="text"
                       label={t("general.profession", {ns: namespaces.common})}
@@ -178,7 +220,7 @@ const ProfessionalCreate:FC = () =>{
                   </div>
                   {/* Textarea introduction */}
                   <div>
-                    <TextFieldNew 
+                    <TextField 
                       element="textarea"
                       label={t("general.introduction", {ns: namespaces.common})}
                       name="Introduction"
@@ -187,7 +229,7 @@ const ProfessionalCreate:FC = () =>{
                   </div>
                   {/* Input experience */}
                   <div>
-                    <TextFieldNew
+                    <TextField
                       element="input"
                       type="number"
                       label={t("general.years-of-experience", {ns: namespaces.common})}
@@ -198,7 +240,7 @@ const ProfessionalCreate:FC = () =>{
                   </div>
                   <div>
                     {/* Input Email */}
-                    <TextFieldNew 
+                    <TextField 
                       element="input"
                       type="email"
                       label={t("general.email", {ns: namespaces.common})}
@@ -208,7 +250,7 @@ const ProfessionalCreate:FC = () =>{
                   </div>
                   <div>
                     {/* Input linkedin */}
-                    <TextFieldNew 
+                    <TextField 
                       element="input"
                       label={t("general.linkedin", {ns: namespaces.common})}
                       name="Linkedin"
@@ -216,7 +258,7 @@ const ProfessionalCreate:FC = () =>{
                   </div>
                   <div>
                     {/* Input Online portfolio */}
-                    <TextFieldNew 
+                    <TextField 
                       element="input"
                       label={t("general.online-portfolio", {ns: namespaces.common})}
                       name="OnlinePortfolio"
@@ -285,7 +327,7 @@ const ProfessionalCreate:FC = () =>{
                     <Label type="form" required>{t("general.type-of-contract", {ns: namespaces.common})}</Label>
                     <div className="checkbox-container two-column">
                       <CheckboxGroup
-                        name="TypesOfContract"
+                        name="TypeOfContract"
                         options={[
                           {
                             label: t("general.permanent", {ns: namespaces.common}),
@@ -357,9 +399,9 @@ const ProfessionalCreate:FC = () =>{
               <div className="actions">
                 <Button 
                   disabled={!formik.isValid}
+                  loading={loadingSubmit}
                   type="submit"
-                  primary 
-                  onClick={() => handleSubmit()}>
+                  primary >
                     {t("buttons.submit", {ns: namespaces.common})}
                 </Button>
                 <Button 
@@ -375,19 +417,36 @@ const ProfessionalCreate:FC = () =>{
               </div>
             </div>
             <ErrorFocus />
+            <ReCAPTCHA
+              sitekey="6LfszyMeAAAAALJi3GgI_heeMTWzPLW5HrK5_ebF"
+              size="invisible"
+              ref={reRef}
+              />
+            <Modal theme="light" ref={modalRef}>
+              <ModalHeader>{t("modal.title", { ns: namespaces.pages.professionalcreate})}</ModalHeader>
+              <ModalBody className="review-modal">
+                <SingleProfile data={newProfile} />
+              </ModalBody>
+              <ModalFooter>
+                <Button 
+                  secondary 
+                  onClick={() => handleCloseModal()}>
+                    {t("buttons.edit", {ns: namespaces.common})}
+                </Button>
+                <Button 
+                  primary
+                  loading={loadingSubmit}
+                  type="button"
+                  onClick={() => {
+                    formik.handleSubmit();
+                  }}>
+                    {t("buttons.submit", {ns: namespaces.common})}
+                </Button>
+              </ModalFooter>
+            </Modal>
           </Form>
         }
       </Formik>
-      <Modal theme="light" ref={modalRef}>
-        <ModalHeader>{t("modal.title", { ns: namespaces.pages.professionalcreate})}</ModalHeader>
-        <ModalBody className="review-modal">
-          <SingleProfile data={newProfile} />
-        </ModalBody>
-        <ModalFooter>
-          <Button secondary onClick={() => handleCloseModal()}>{t("buttons.edit", {ns: namespaces.common})}</Button>
-          <Button primary onClick={() => handleSubmit()}>{t("buttons.submit", {ns: namespaces.common})}</Button>
-        </ModalFooter>
-      </Modal>
     </div>
   );
 }

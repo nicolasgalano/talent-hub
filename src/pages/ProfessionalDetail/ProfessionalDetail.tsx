@@ -21,7 +21,6 @@ import Detail from '../../components/common/Detail/Detail'
 import SingleProfile from '../../components/common/Single/SingleProfile';
 import Modal, { ModalBody, ModalFooter, ModalHandle, ModalHeader } from '../../components/common/Modal/Modal';
 import TextField from '../../components/common/TextField/TextField';
-import TextFieldNew from '../../components/common/TextField/TextFieldNew';
 
 interface FormInterface {
   Fullname: string;
@@ -124,7 +123,7 @@ const ProfessionalDetail: FC = () => {
                 <div className="row">
                   <div className="col">
                     {/* Input Name and surname */}
-                    <TextFieldNew
+                    <TextField
                       element="input"
                       type="text"
                       label={t("general.name-and-surname")}
@@ -134,7 +133,7 @@ const ProfessionalDetail: FC = () => {
                   </div>
                   <div className="col">
                     {/* Input Email */}
-                    <TextFieldNew
+                    <TextField
                       element="input"
                       type="email"
                       label={t("general.email")}
@@ -146,7 +145,7 @@ const ProfessionalDetail: FC = () => {
                 <div className="row">
                   <div className="col">
                     {/* Input Company or project name */}
-                    <TextFieldNew 
+                    <TextField 
                       element="input"
                       type="text"
                       label={t("general.company-or-project-name")}
@@ -158,7 +157,7 @@ const ProfessionalDetail: FC = () => {
                 <div className="row">
                   <div className="col">
                     {/* Textarea message */}
-                    <TextFieldNew 
+                    <TextField 
                       element="textarea"
                       label={t("general.message")}
                       id="Message"
