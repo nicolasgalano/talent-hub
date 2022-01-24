@@ -158,13 +158,13 @@ const OpeningApply:FC = () => {
         validationSchema={formSchema}
         onSubmit={async (values, actions) => {
           // GET token ReCaptcha
-          const token = await reRef.current.executeAsync();
-          reRef.current.reset();
+          // const token = await reRef.current.executeAsync();
+          // reRef.current.reset();
           // Validate captcha
-          const isValidCaptcha = await validateReCaptcha(token);
+          /*const isValidCaptcha = await validateReCaptcha(token);
           if(!isValidCaptcha){
             return alert('invalid captcha');
-          }
+          }*/
 
           if(values.Preview){
             handlePreview(values);
