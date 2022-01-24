@@ -4,7 +4,7 @@ export interface FetchQuery {
   Fullname_contains?: string;
   WorkingSchedule: string;
   TypeOfContract: string;
-  Fields: string;
+  Fields: string[] | null;
   ExperienceFrom_gte?: number;
   ExperienceTo_lte?: number;
   _start: number;

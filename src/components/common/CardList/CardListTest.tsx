@@ -55,7 +55,7 @@ const EXPERIENCE_FROM = 0;
 const EXPERIENCE_TO = 10;
 
 const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch, type, onSearch, onFilter, onRangeChanged,
-                                      defaultFiltersSelected, onSort, firstTimeLoading, handleOnFetch, resultsCount, resetPage, loadMoreClicked}) => {
+                                      onSort, firstTimeLoading, handleOnFetch, resultsCount, resetPage, loadMoreClicked}) => {
   const [openFilter, setOpenFilter] = useState(false);
   const modalRef = useRef<ModalHandle>(null);
   const {width: widthBrowser} = useWindowSize();
@@ -66,10 +66,15 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
   const [inputSearchValue, setInputSearchValue] = useState('');
   const [experienceRange, setExperienceRange] = useState([EXPERIENCE_FROM, EXPERIENCE_TO]);
   const [showSortDropdown, setShowSortDropdown] = useState(false);
+  const [defaultFiltersSelected, setDefaultFiltersSelected] = useState({
+    schedule: [],
+    field: [],
+    contract: [],
+  });
   const [fetchQueryObj, setFetchQueryObj] = useState<FetchQuery>({
     WorkingSchedule: '',
     TypeOfContract: '',
-    Fields: '',
+    Fields: null,
     ExperienceFrom_gte: EXPERIENCE_FROM,
     ExperienceTo_lte: EXPERIENCE_TO,
     _start: 0,
@@ -88,12 +93,47 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
   useEffect(() => {
     let urlParams = queryParse(searchParams);
     console.log('on URL params changed', urlParams);
+    let filterObj = {
+      schedule: [],
+      field: [],
+      contract: [],
+    };
+
+    Object.keys(filterObj).forEach(filterName => {
+      if(urlParams[filterName] && urlParams[filterName].length) {
+        filterObj[filterName] = urlParams[filterName];
+      }
+    });
 
     let sort:string = (urlParams.order)? urlParams.order.toString() : '';
 
     let newQueryObj = {
       ...fetchQueryObj
     };
+
+    if (filterObj.schedule.length) {
+
+    }
+    else {
+      delete newQueryObj.WorkingSchedule;
+    }
+
+    if (filterObj.field.length) {
+      // let allFilter = filterObj.field.toString();
+      // let filterArr = allFilter.split(',');
+      newQueryObj.Fields = filterObj.field;
+    }
+    else {
+      delete newQueryObj.Fields;
+    }
+
+    if (filterObj.contract.length) {
+
+    }
+    else {
+      delete newQueryObj.TypeOfContract;
+    }
+
     let sortLabel = 'Latest';
     if (sort) {
       newQueryObj._sort = `id:${sort}`;
@@ -139,7 +179,7 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
     let newQueryObj = {...mainQuery};
 
     let currentUrlParams = queryParse(searchParams);
-    interface FilterObj {
+    /*interface FilterObj {
       schedule: string[];
       field: string[];
       contract: string[];
@@ -174,7 +214,7 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
     }
     else {
       delete newQueryObj.TypeOfContract;
-    }
+    }*/
 
 
     let queryWhere = {
@@ -218,16 +258,15 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
     ];
 
     let {_sort, _start, _limit, ExperienceFrom_gte, ExperienceTo_lte,
+      Fields,
       ...filterParamsOnly} = newQueryObj;
 
+    console.log('filterParamsOnly', filterParamsOnly);
     queryWhere._where = {
       ...filterParamsOnly
     };
 
-    console.log(queryWhere._where._or);
-
     if (type == 'professionals') {
-      // queryWhere._where._or = [{Experience_gte: experienceFrom}, {Experience_lte: experienceTo}]
       delete queryWhere._where._or;
       queryWhere._where = {
         ...queryWhere._where,
@@ -239,8 +278,17 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
       queryWhere._where._or = [experienceFirstSegment, experienceSecondSegment];
     }
 
+    let countWhere = {
+      _where: {...queryWhere._where},
+    };
+
+    if (Fields && Fields.length) {
+      queryWhere['Fields'] = Fields.join('|');
+      countWhere['Fields'] = Fields.join('|');
+    }
+
     let queryWhereStr = queryStringify(queryWhere);
-    let countQueryStr = queryStringify({_where: {...queryWhere._where}});
+    let countQueryStr = queryStringify(countWhere);
 
     setQueryStr(queryWhereStr);
     setQueryCountStr(countQueryStr);
@@ -320,6 +368,32 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
     history.push({search: updatedUrlString});
   };
 
+  const handleFilterSelected = (param) => {
+    console.log('handleFilterSelected: ', param);
+    let currentUrlParams = queryParse(searchParams);
+    let filterObj = {
+      schedule: [],
+      field: [],
+      contract: [],
+    };
+
+    Object.keys(filterObj).forEach(filterName => {
+      if(param[filterName] && param[filterName].length) {
+        filterObj[filterName] = param[filterName];
+      }
+    });
+
+    let updatedUrlParams = {
+      ...currentUrlParams,
+      ...filterObj
+    }
+    console.log('updatedUrlParams', updatedUrlParams);
+
+    let updatedUrlString = queryStringify(updatedUrlParams);
+    console.log('new urlParams', updatedUrlString);
+    history.push({search: updatedUrlString});
+  };
+
   const handleActiveFilters = (filter: Array<string>, key: string) => {
     let actFilter: object = {...activeFilters};
     // Not working
@@ -392,7 +466,8 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
 
   useEffect(() => {
     if(!firstTimeLoading) {
-      onFilter(activeFilters);
+      // onFilter(activeFilters);
+      handleFilterSelected(activeFilters);
     }
   }, [activeFilters])
 
