@@ -53,8 +53,6 @@ export const jobsSlices = createSlice({
   },
   reducers: {
     setJobPage: (state, action) => {
-      console.log('setJobPage');
-      console.log(action);
       state.allJobs.page = action.payload;
     }
   },

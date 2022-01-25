@@ -15,6 +15,9 @@ export interface FetchQuery {
 export interface ProfessionalsQuery {
   Fullname_contains: string;
 }
+export interface OpeningsQuery {
+  PositionOffered_contains: string;
+}
 
 const handleSearch = () => {
 

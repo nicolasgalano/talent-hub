@@ -24,7 +24,7 @@ import Range from "../Range/Range";
 import Label from "../Label/Label";
 import FilterButtons from "../FilterButtons/FilterButtons";
 import Skeleton from "../Skeleton/Skeleton";
-import {ProfessionalsQuery, FetchQuery} from './utils';
+import {ProfessionalsQuery, FetchQuery, OpeningsQuery} from './utils';
 import { debounce } from '../../../utils/debounce';
 
 
@@ -84,6 +84,9 @@ const CardListWithFilters:FC<CardListProps> = ({data: cards, loading, placeholde
   });
   const [professionalsQuery, setProfessionalsQuery] = useState<ProfessionalsQuery>({
     Fullname_contains: ''
+  });
+  const [openingsQuery, setOpeningsQuery] = useState<OpeningsQuery>({
+    PositionOffered_contains: ''
   });
   const [mainQuery, setMainQuery] = useState<any>({});
   const [queryStr, setQueryStr] = useState(null);
@@ -146,6 +149,12 @@ const CardListWithFilters:FC<CardListProps> = ({data: cards, loading, placeholde
       newQueryObj = {
         ...newQueryObj,
         ...professionalsQuery
+      }
+    }
+    else {
+      newQueryObj = {
+        ...newQueryObj,
+        // ...openingsQuery
       }
     }
 
@@ -236,7 +245,12 @@ const CardListWithFilters:FC<CardListProps> = ({data: cards, loading, placeholde
         ...newQueryObj,
         ...professionalsQuery,
       }
-
+    }
+    else if (type == 'openings'){
+      newQueryObj = {
+        ...newQueryObj,
+        // ...openingsQuery,
+      }
     }
 
     let experienceFrom = (currentUrlParams.experienceFrom)? parseInt(currentUrlParams.experienceFrom.toString()) : EXPERIENCE_FROM;
@@ -264,7 +278,7 @@ const CardListWithFilters:FC<CardListProps> = ({data: cards, loading, placeholde
       Fields, TypeOfContract, WorkingSchedule,
       ...filterParamsOnly} = newQueryObj;
 
-    // console.log('filterParamsOnly', filterParamsOnly);
+    console.log('filterParamsOnly', filterParamsOnly);
     queryWhere._where = {
       ...filterParamsOnly
     };
@@ -277,8 +291,12 @@ const CardListWithFilters:FC<CardListProps> = ({data: cards, loading, placeholde
         Experience_lte: experienceTo
       }
     }
-    else if (type == 'jobs') {
+    else if (type == 'openings') {
       queryWhere._where._or = [experienceFirstSegment, experienceSecondSegment];
+      // delete queryWhere._where._or;
+      /*queryWhere._where = {
+        ...queryWhere._where,
+      }*/
     }
 
     let countWhere = {
@@ -298,6 +316,7 @@ const CardListWithFilters:FC<CardListProps> = ({data: cards, loading, placeholde
       countWhere['WorkingSchedule'] = WorkingSchedule.join('|');
     }
 
+    console.log(queryWhere);
     let queryWhereStr = queryStringify(queryWhere);
     let countQueryStr = queryStringify(countWhere);
 
@@ -326,7 +345,10 @@ const CardListWithFilters:FC<CardListProps> = ({data: cards, loading, placeholde
       setProfessionalsQuery(newProfessionalQuery);
     }
     else if (type == 'openings') {
+      let newOpeningsQuery = {...openingsQuery};
       newQueryObj.PositionOffered_contains = param;
+      console.log('newQueryObj', newQueryObj);
+      setOpeningsQuery(newOpeningsQuery);
     }
 
     newQueryObj._start = 0;
