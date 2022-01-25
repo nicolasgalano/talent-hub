@@ -108,7 +108,11 @@ const profilePicture = (img) => {
 export const galleryPictures = (imgs: Array<any>) => {
   if(imgs.length !== 0 && imgs !== null){
     return imgs.map((img) => {
-      if(img.formats){
+      // console.log('galleryPictures', img);
+      if (typeof img == 'string') {
+        return img;
+      }
+      else if(img.formats){
         // Get large size if exist
         if(img.formats.large !== undefined){
           return img.formats.large.url;
@@ -127,6 +131,22 @@ export const galleryPictures = (imgs: Array<any>) => {
     return null;
   }
 }
+
+export const filePreview = (imgFile) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.addEventListener("load", function () {
+      // result is a base64 string
+      resolve(reader.result);
+    }, false);
+
+    if (imgFile) {
+      reader.readAsDataURL(imgFile);
+    }
+  });
+
+};
 
 export const generateURL = (url: string) => {
 

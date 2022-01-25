@@ -10,10 +10,11 @@ interface FileButtonProps {
   label: string;
   multiple?: boolean;
   onChange?: Function;
-  accept?: string
+  accept?: string;
+  maxFiles?: number;
 };
 
-const FileButton: FC<FileButtonProps> = ({label, multiple = false, onChange = null, accept = null}) => {
+const FileButton: FC<FileButtonProps> = ({label, multiple = false, onChange = null, accept = null, maxFiles = null}) => {
   const inputFileRef = useRef<any>();
   const [uploadFiles, setUploadFiles] = useState([]);
   const [hasFiles, setHasFiles] = useState(false);
@@ -29,6 +30,10 @@ const FileButton: FC<FileButtonProps> = ({label, multiple = false, onChange = nu
       }
 
       for (var i = 0; i < files.length; i++) {
+        if (maxFiles &&
+          fileList.length == maxFiles) {
+          continue;
+        }
         fileList.push(files.item(i));
       }
       setUploadFiles(fileList);
@@ -102,6 +107,7 @@ const FileButton: FC<FileButtonProps> = ({label, multiple = false, onChange = nu
         type="file"
         className="hidden"
         ref={inputFileRef}
+        max="2"
         multiple={multiple}
         accept={accept}
         onChange={handleFileUpload} />

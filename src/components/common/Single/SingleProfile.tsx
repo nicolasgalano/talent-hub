@@ -22,11 +22,11 @@ export type SingleProfileType = {
   email: string;
   portfolio: string;
   linkedin: string;
-  gallery?: Array<string>;
+  gallery?: Array<string> | any;
   experience?: number;
   // Common
   company_project_candidate: string;
-  image?: string;
+  image?: string | any;
   profession_job_name: string;
   workgin_shedule?: Array<any>;
   type_of_contract?: Array<any>;
@@ -64,7 +64,7 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
   }
 
   // Best works
-  let gallery = data.gallery ? galleryPictures(data.gallery) : null;
+  let gallery: any = data.gallery ? galleryPictures(data.gallery) : null;
 
   const settings = {
     slidesToShow: 1,
@@ -211,7 +211,7 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
             <Slider className="slide-gallery" {...settings}>
               {
                 gallery.map((img, key) => (
-                  <img src={img} alt={`gallery-${key}`} key={`gallery-${key}`} />    
+                  <img src={img} alt={`gallery-${key}`} key={`gallery-${key}`} />
                 ))
               }
             </Slider>

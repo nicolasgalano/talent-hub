@@ -23,9 +23,10 @@ import Modal, { ModalBody, ModalFooter, ModalHandle, ModalHeader } from "../../c
 import SingleProfile, { SingleProfileType } from "../../components/common/Single/SingleProfile";
 import TextField from "../../components/common/TextField/TextField";
 import CheckboxGroup from "../../components/common/CheckboxGroup/CheckboxGroup";
-import { setMultipleField } from "../../utils/formatData";
+import { setMultipleField, filePreview } from "../../utils/formatData";
 import useApi from "../../components/hooks/useApi";
 import validateReCaptcha from "../../utils/validateReCaptcha";
+import FileButton from "../../components/common/FileButton/FileButton";
 
 interface FormInterface {
   Fullname: string;
@@ -54,13 +55,17 @@ const ProfessionalCreate:FC = () =>{
   const [newProfile, setNewProfile] = useState<SingleProfileType>(null)
   const modalRef = useRef<ModalHandle>(null);
   const [formData, setFormData] = useState<FormInterface>(null);
+  const [cvFileUpload, setCvFileUpload] = useState(null);
+  const [portfolioFileUpload, setPortfolioFileUpload] = useState(null);
+  const [profilePicFileUpload, setProfilePicFileUpload] = useState(null);
+  const [showcaseFileUpload, setShowcaseFileUpload] = useState([]);
   const history = useHistory();
   const reRef = useRef<ReCAPTCHA>();
 
   const { 
     response: responseSubmit, 
     loading: loadingSubmit, 
-    sendData } = useApi({
+    sendFormData } = useApi({
       url: '/professionals',
       method: 'POST',
       data: JSON.stringify(formData),
@@ -69,7 +74,7 @@ const ProfessionalCreate:FC = () =>{
   const handleOpenModal = () => modalRef.current.openModal();
   const handleCloseModal = () => modalRef.current.closeModal();
 
-  const handlePreview = (doc: FormInterface) => {
+  const handlePreview = async (doc: FormInterface) => {
     const dataFormated: SingleProfileType = {
       company_project_candidate: doc.Fullname,
       profession_job_name: doc.Profession,
@@ -77,12 +82,22 @@ const ProfessionalCreate:FC = () =>{
       email: doc.Email,
       portfolio: doc.OnlinePortfolio,
       linkedin: doc.Linkedin,
-      gallery: doc.BestWork,
+      gallery: [],
       experience: doc.Experience,
-      image: doc.ProfilePicture,
+      image: null,
       workgin_shedule: setMultipleField(doc.WorkingSchedule, 'WorkingSchedule'),
       type_of_contract: setMultipleField(doc.TypeOfContract, 'TypeOfContract'),
       fields: setMultipleField(doc.Fields, 'Fields'),
+    }
+
+    let listFile = [];
+    for (let i = 0; i < showcaseFileUpload.length; i++) {
+      let fileBase64 = await filePreview(showcaseFileUpload[i]);
+      listFile.push(fileBase64);
+    }
+    dataFormated.gallery = listFile;
+    if (profilePicFileUpload) {
+      dataFormated.image = await filePreview(profilePicFileUpload);
     }
 
     // console.log('handlePreview:', dataFormated);
@@ -141,16 +156,48 @@ const ProfessionalCreate:FC = () =>{
 
   useEffect(() => {
     // launch when setState is ready when handleSubmit was executed
-    formData !== null && sendData();
+    if (formData !== null) {
+      const formDataEl = new FormData();
+      formDataEl.append('data', JSON.stringify(formData));
+      formDataEl.append('files.CV', cvFileUpload);
+      formDataEl.append('files.Portfolio', portfolioFileUpload);
+      for(let i = 0; i < showcaseFileUpload.length; i++) {
+        formDataEl.append('files.BestWork', showcaseFileUpload[i]);
+      }
+      formDataEl.append('files.ProfilePicture', profilePicFileUpload);
+
+      let axiosReq = {
+        url: '/professionals',
+        method: 'POST',
+        data: formDataEl
+      };
+      sendFormData(axiosReq);
+    };
   }, [formData])
 
   useEffect(() => {
     if(responseSubmit){
       if(responseSubmit.status === 200){
-        history.push('/professional/create/success');
+        history.push('/professionals/create/success');
       }
     }
   }, [responseSubmit]);
+
+  const handleCvUpload = (fileList) => {
+    setCvFileUpload(fileList[0]);
+  };
+
+  const handlePortfolioUpload = (fileList) => {
+    setPortfolioFileUpload(fileList[0]);
+  };
+
+  const handleShowcaseUpload = (fileList) => {
+    setShowcaseFileUpload(fileList);
+  };
+
+  const handleProfilePicUpload = (fileList) => {
+    setProfilePicFileUpload(fileList[0]);
+  };
 
   return(
     <div className="custom-form" id="create-a-profile">
@@ -175,7 +222,7 @@ const ProfessionalCreate:FC = () =>{
           }*/
 
           if(values.Preview){
-            handlePreview(values);
+            await handlePreview(values);
             // Reset variable
             actions.setFieldValue('Preview', false);
           }else{
@@ -271,27 +318,38 @@ const ProfessionalCreate:FC = () =>{
                   <div className="upload-box">
                     <Label type="form">{t("general.cv", {ns: namespaces.common})}</Label>
                     { !updateFile && <Typography variant="body-s" element="p" className="recomended">{t("general.file-types-accepted", {ns: namespaces.common})} PDF, DOC</Typography>}
-                    { updateFile && <File title="CV_DanieleFlorencia.pdf" className="file" /> }
-                    { !updateFile && <Button secondary className="btn-upload" onClick={() => setUploadFile(!updateFile)}>{t("general.upload-cv", {ns: namespaces.common})}</Button>}
+                    <FileButton
+                      label={t("general.upload-cv", {ns: namespaces.common})}
+                      onChange={handleCvUpload}
+                      multiple={false}
+                      accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf"
+                    />
                   </div>
                   {/* Input portfolio */}
                   <div className="upload-box">
                     <Label type="form">{t("general.portfolio", {ns: namespaces.common})}</Label>
                     { !updateFile && <Typography variant="body-s" element="p" className="recomended">{t("general.file-types-accepted", {ns: namespaces.common})} PDF</Typography>}
-                    { updateFile && <File title="Portfolio_Daniele.pdf" className="file" /> }
-                    { !updateFile && <Button secondary className="btn-upload" onClick={() => setUploadFile(!updateFile)}>{t("general.upload-portfolio", {ns: namespaces.common})}</Button>}
+                    {/*{ updateFile && <File title="Portfolio_Daniele.pdf" className="file" /> }
+                    { !updateFile && <Button secondary className="btn-upload" onClick={() => setUploadFile(!updateFile)}>{t("general.upload-portfolio", {ns: namespaces.common})}</Button>}*/}
+                    <FileButton
+                      label={t("general.upload-portfolio", {ns: namespaces.common})}
+                      onChange={handlePortfolioUpload}
+                      multiple={false}
+                      accept=".pdf"
+                    />
                   </div>
                   {/* Input showcase */}
                   <div className="upload-box">
                     <Label type="form">{t("general.upload-showcase", {ns: namespaces.common})}</Label>
                     { !updateFile && <Typography variant="body-s" element="p" className="recomended">{t("general.recomended-size", {ns: namespaces.common})} 736 x 408px</Typography>}
-                    { updateFile && <File title="Picture1.jpg" className="file" /> }
-                    { updateFile && <File title="Picture2.jpg" className="file" /> }
-                    { updateFile && <File title="Picture3.jpg" className="file" /> }
-                    { updateFile && <File title="Picture4.jpg" className="file" /> }
-                    { updateFile && <File title="Picture5.jpg" className="file" /> }
-                    { updateFile && <File title="Picture6.jpg" className="file" /> }
-                    { !updateFile && <Button secondary className="btn-upload" onClick={() => setUploadFile(!updateFile)}>{t("general.upload-pictures", {ns: namespaces.common})}</Button>}
+
+                    <FileButton
+                      label={t("general.upload-pictures", {ns: namespaces.common})}
+                      onChange={handleShowcaseUpload}
+                      maxFiles={6}
+                      multiple={true}
+                      accept="image/*"
+                    />
                   </div>
                 </div>
                 <div className="col uploads">
@@ -299,8 +357,14 @@ const ProfessionalCreate:FC = () =>{
                   <div className="upload-box">
                     <Label type="form">{t("general.picture", {ns: namespaces.common})}</Label>
                     { !updateFile && <Typography variant="body-s" element="p" className="recomended">{t("general.recomended-size", {ns: namespaces.common})} 100 x 100px</Typography>}
-                    { updateFile && <File title="ProfilePicture.png" className="file" /> }
-                    { !updateFile && <Button secondary className="btn-upload" onClick={() => setUploadFile(!updateFile)}>{t("general.upload-picture", {ns: namespaces.common})}</Button>}
+                    {/*{ updateFile && <File title="ProfilePicture.png" className="file" /> }
+                    { !updateFile && <Button secondary className="btn-upload" onClick={() => setUploadFile(!updateFile)}>{t("general.upload-picture", {ns: namespaces.common})}</Button>}*/}
+                    <FileButton
+                      label={t("general.upload-picture", {ns: namespaces.common})}
+                      onChange={handleProfilePicUpload}
+                      multiple={false}
+                      accept="image/*"
+                    />
                   </div>
                   {/* Checkbox's Working schedule */}
                   <div>
@@ -346,7 +410,7 @@ const ProfessionalCreate:FC = () =>{
                           },
                           {
                             label: t("general.intership", {ns: namespaces.common}),
-                            value: "INTERSHIP"
+                            value: "INTERNSHIP"
                           },
                         ]}
                       />

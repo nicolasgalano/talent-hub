@@ -111,7 +111,7 @@ const professionalsRoutes: RouteInterface = {
       exact: true,
     },
     {
-      path: '/professional/create/success',
+      path: '/professionals/create/success',
       name: 'Success',
       component: ProfessionalCreateSuccess,
       exact: true,
