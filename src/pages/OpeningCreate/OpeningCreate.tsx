@@ -341,7 +341,7 @@ const OpeningCreate:FC = () =>{
                           },
                           {
                             label: t("general.intership", {ns: namespaces.common}),
-                            value: "INTERSHIP"
+                            value: "INTERNSHIP"
                           },
                         ]}
                       />
