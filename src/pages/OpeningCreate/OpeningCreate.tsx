@@ -58,10 +58,14 @@ interface FormInterface {
   published_at: boolean;
 }
 
+const EXPERIENCE_FROM = 0;
+const EXPERIENCE_TO = 8;
+
 const OpeningCreate:FC = () =>{
   const { t } = useTranslation([namespaces.pages.openingcreate, namespaces.common]);
   const [modalData, setModalData] = useState<SingleOrganizationAndProjectType>(null);
   const [formData, setFormData] = useState<FormInterface>(null);
+  const [experienceRange, setExperienceRange] = useState([EXPERIENCE_FROM, EXPERIENCE_TO]);
   const [uploadFile2, setUploadFile2] = useState(null);
   const history = useHistory();
   const modalRef = useRef<ModalHandle>(null);
@@ -87,8 +91,8 @@ const OpeningCreate:FC = () =>{
       about: doc.About,
       responsabilities: doc.Responsibilities,
       benefits: doc.Benefits,
-      experience_from: '1', //TODO: Only for testing
-      experience_to: '3', //TODO: Only for testing
+      experience_from: `${experienceRange[0]}`,
+      experience_to: `${experienceRange[1]}`,
       start_date: moment((doc.Month + ' ' + doc.Year), "MMMM YYYY").format('YYYY-MM-DD'),
       salary_from: doc.SalaryFrom && doc.SalaryFrom.toString(),
       salary_to: doc.SalaryTo && doc.SalaryTo.toString(),
@@ -198,6 +202,10 @@ const OpeningCreate:FC = () =>{
     setUploadFile2(fileList[0])
   };
 
+  const handleRangeChanged = values => {
+    setExperienceRange(values);
+  };
+
   return(
     <div className="custom-form" id="post-a-job">
       <HeroPost 
@@ -241,6 +249,9 @@ const OpeningCreate:FC = () =>{
             data.StartDate = moment((data.Month + ' ' + data.Year), "MMMM YYYY").format();
             delete data.Month;
             delete data.Year;
+
+            data.ExperienceFrom = experienceRange[0];
+            data.ExperienceTo = experienceRange[1];
 
             setFormData(data);
 
@@ -360,7 +371,9 @@ const OpeningCreate:FC = () =>{
                   {/* Input Experience */}
                   <div>
                     <Label type="form" required>{t("general.experience-required", {ns: namespaces.common})}</Label>
-                    <Range />
+                    <Range
+                      defaultValue={experienceRange}
+                      callback={handleRangeChanged} />
                   </div>
                   {/* Checkbox's Working schedule */}
                   <div>
