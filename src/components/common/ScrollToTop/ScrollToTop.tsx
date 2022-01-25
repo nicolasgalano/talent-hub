@@ -18,7 +18,8 @@ const ScrollToTop:FC <ScrollToTopProps> = ({children}) => {
   // console.log(prevLocation);
   // console.log(location);
   if (prevLocation) {
-    if (prevLocation.pathname == '/openings' && location.pathname == '/openings') {
+    if ((prevLocation.pathname == '/openings' && location.pathname == '/openings') ||
+      (prevLocation.pathname == '/professionals' && location.pathname == '/professionals')) {
       scrollToTop = false;
     }
   }
