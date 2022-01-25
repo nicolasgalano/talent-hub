@@ -1,7 +1,5 @@
 import React, { FC, Fragment, useEffect, useCallback, useState } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
-import {queryParse, queryStringify} from '../../utils/queryString';
-import { debounce } from '../../utils/debounce';
+
 // Files
 import './Professionals.scss';
 import { useTranslation } from 'react-i18next';
@@ -20,62 +18,17 @@ import Hero from '../../components/common/Hero/Hero';
 import { useAppDispatch, useAppSelector } from '../../components/hooks/hooks';
 import { getAllProfessionals, getCountAllProfessionals, setProfessionalsPage } from '../../redux/slices/professionalsSlices';
 
-interface QueryInterface {
-  PositionOffered_contains: string;
-  WorkingSchedule: string;
-  TypeOfContract: string;
-  Fields: string;
-  ExperienceFrom_gte?: number;
-  ExperienceTo_lte?: number;
-  _start: number;
-  _limit: number;
-  _sort: string;
-}
-
-const RESULTS_PER_PAGE = 6;
-const EXPERIENCE_FROM = 0;
-const EXPERIENCE_TO = 10;
 
 const Professionals:FC = () => {
   const { t } = useTranslation([namespaces.common, namespaces.pages.professionals]);
-  const searchParams = useLocation().search;
-  const history = useHistory();
 
   // redux
   const {data, loading, page} = useAppSelector((state) => state.professionals.allProfessionals);
   const countProfessionals = useAppSelector((state) => state.professionals.allProfessionals.count);
   const dispatch = useAppDispatch();
 
-
   const [queryStr, setQueryStr] = useState(null);
   const [queryCountStr, setQueryCountStr] = useState(null);
-  const [queryObj, setQueryObj] = useState<QueryInterface>({
-    PositionOffered_contains: '',
-    WorkingSchedule: '',
-    TypeOfContract: '',
-    Fields: '',
-    // ExperienceFrom_gte: EXPERIENCE_FROM,
-    // ExperienceTo_lte: EXPERIENCE_TO,
-    _start: 0,
-    _limit: RESULTS_PER_PAGE,
-    _sort: 'id:DESC'
-  });
-
-
-  const handleSearch = (param: string) => {
-    let newQueryObj = {...queryObj};
-    newQueryObj.PositionOffered_contains = param;
-
-    newQueryObj._start = 0;
-    newQueryObj._limit = RESULTS_PER_PAGE;
-
-    // dispatch(setJobPage(1));
-
-    setQueryObj({
-      ...newQueryObj,
-    });
-  };
-
 
   const handleOnFetch = (queryStr, queryCountStr) => {
     console.log('handleOnFetch', queryStr);
