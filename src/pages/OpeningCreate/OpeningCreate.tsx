@@ -9,7 +9,7 @@ import { namespaces } from '../../i18n/i18n.constants';
 import { ErrorMessage, Form, Formik } from "formik";
 import * as Yup from "yup";
 import moment from "moment";
-import { setMultipleField } from "../../utils/formatData";
+import { setMultipleField, filePreview } from "../../utils/formatData";
 import { ErrorFocus } from "../../utils/ErrorFocus";
 import ReCAPTCHA from "react-google-recaptcha";
 import validateReCaptcha from "../../utils/validateReCaptcha";
@@ -73,7 +73,7 @@ const OpeningCreate:FC = () =>{
 
   const { 
     response: responseSubmit, 
-    loading: loadingSubmit, 
+    loading: loadingSubmit,
     error: errorSubmit,
     sendData, sendFormData } = useApi({
       url: '/jobs',
@@ -84,7 +84,7 @@ const OpeningCreate:FC = () =>{
   const handleOpenModal = () => modalRef.current.openModal();
   const handleCloseModal = () => modalRef.current.closeModal();
 
-  const handlePreview = (doc: FormInterface) => {
+  const handlePreview = async(doc: FormInterface) => {
     const dataFormated: SingleOrganizationAndProjectType = {
       profession_job_name: doc.PositionOffered,
       company_project_candidate: doc.OrganizationName,
@@ -99,13 +99,17 @@ const OpeningCreate:FC = () =>{
       salary_currency: doc.Currency,
       salary_type: doc.SalaryType,
       organizationProject: doc.OrganizationProject,
-      image: 'https://talent-hub-website-53698d6.s3.amazonaws.com/logo_indicius_a73c00b319.jpg',
+      image: null,
       workgin_shedule: setMultipleField(doc.WorkingSchedule, 'WorkingSchedule'),
       type_of_contract: setMultipleField(doc.TypeOfContract, 'TypeOfContract'),
       fields: setMultipleField(doc.Fields, 'Fields'),
     }
 
+
     // console.log('handlePreview:', dataFormated);
+    if (uploadFile2) {
+      dataFormated.image = await filePreview(uploadFile2);
+    }
 
     setModalData(dataFormated);
     handleOpenModal();

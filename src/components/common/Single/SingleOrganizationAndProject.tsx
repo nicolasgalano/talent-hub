@@ -26,7 +26,7 @@ export type SingleOrganizationAndProjectType = {
   organizationProject?: string;
   // Common
   company_project_candidate: string;
-  image?: string;
+  image?: string | any;
   profession_job_name: string;
   workgin_shedule: Array<any>;
   type_of_contract: Array<any>;

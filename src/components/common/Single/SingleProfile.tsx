@@ -184,7 +184,7 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
         {
           data.image &&
             <div className="company-or-project mobile">
-              <img src={flordaniele} alt="logo" />
+              <img src={data.image} alt="logo" />
               <Typography variant="heading-xxs" element="h2">
                 {data.profession_job_name}
               </Typography>
