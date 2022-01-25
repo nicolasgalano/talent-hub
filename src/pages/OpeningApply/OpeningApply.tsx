@@ -110,19 +110,7 @@ const OpeningApply:FC = () => {
   };
 
   const initialValues: FormInterface = {
-    Fullname: 'Juan',
-    Profession: 'dev',
-    Introduction: 'Alo',
-    Email: 'juan@gmail.com',
-    Linkedin: '',
-    OnlinePortfolio: '',
-    CV: null,
-    Portfolio: null,
-    ProfilePicture: null,
-    BestWork: [],
-    Preview: false,
-    published_at: null,
-    /*Fullname: '',
+    Fullname: '',
     Profession: '',
     Introduction: '',
     Email: '',
@@ -133,7 +121,7 @@ const OpeningApply:FC = () => {
     ProfilePicture: null,
     BestWork: [],
     Preview: false,
-    published_at: null*/
+    published_at: null
   }
 
   const formSchema = Yup.object().shape({
