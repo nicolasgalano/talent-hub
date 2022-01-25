@@ -54,8 +54,8 @@ const RESULTS_PER_PAGE = 6;
 const EXPERIENCE_FROM = 0;
 const EXPERIENCE_TO = 10;
 
-const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch, type, onSearch, onFilter, onRangeChanged,
-                                      onSort, firstTimeLoading, handleOnFetch, resultsCount, resetPage, loadMoreClicked}) => {
+const CardListWithFilters:FC<CardListProps> = ({data: cards, loading, placeholderSearch, type,
+                                      handleOnFetch, resultsCount, resetPage, loadMoreClicked}) => {
   const [openFilter, setOpenFilter] = useState(false);
   const modalRef = useRef<ModalHandle>(null);
   const {width: widthBrowser} = useWindowSize();
@@ -63,6 +63,7 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
   const [activeFilters, setActiveFilters] = useState({});
   const [countFilters, setCountFilters] = useState(null);
   const [sortDefault, setSortDefault] = useState('Latest');
+  const [firstTimeLoading, setFirstTimeLoading] = useState(true);
   const [inputSearchValue, setInputSearchValue] = useState('');
   const [experienceRange, setExperienceRange] = useState([EXPERIENCE_FROM, EXPERIENCE_TO]);
   const [showSortDropdown, setShowSortDropdown] = useState(false);
@@ -72,8 +73,8 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
     contract: [],
   });
   const [fetchQueryObj, setFetchQueryObj] = useState<FetchQuery>({
-    WorkingSchedule: '',
-    TypeOfContract: '',
+    WorkingSchedule: null,
+    TypeOfContract: null,
     Fields: null,
     ExperienceFrom_gte: EXPERIENCE_FROM,
     ExperienceTo_lte: EXPERIENCE_TO,
@@ -93,54 +94,38 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
   useEffect(() => {
     let urlParams = queryParse(searchParams);
     console.log('on URL params changed', urlParams);
-    let filterObj = {
-      schedule: [],
-      field: [],
-      contract: [],
-    };
-
-    Object.keys(filterObj).forEach(filterName => {
-      if(urlParams[filterName] && urlParams[filterName].length) {
-        filterObj[filterName] = urlParams[filterName];
-      }
-    });
-
-    let sort:string = (urlParams.order)? urlParams.order.toString() : '';
 
     let newQueryObj = {
       ...fetchQueryObj
     };
+    let newFilterObj = {...defaultFiltersSelected};
 
-    if (filterObj.schedule.length) {
+    let schedule:string = (urlParams.schedule)? urlParams.schedule.toString() : '';
+    let field:string = (urlParams.field)? urlParams.field.toString() : '';
+    let contract:string = (urlParams.contract)? urlParams.contract.toString() : '';
 
+    if(schedule) {
+      let scheduleArr = schedule.split(',');
+      newFilterObj.schedule = scheduleArr;
     }
     else {
-      delete newQueryObj.WorkingSchedule;
+      newFilterObj.schedule = [];
     }
 
-    if (filterObj.field.length) {
-      // let allFilter = filterObj.field.toString();
-      // let filterArr = allFilter.split(',');
-      newQueryObj.Fields = filterObj.field;
+    if(field) {
+      let fieldArr = field.split(',');
+      newFilterObj.field = fieldArr;
     }
     else {
-      delete newQueryObj.Fields;
+      newFilterObj.field = [];
     }
 
-    if (filterObj.contract.length) {
-
+    if(contract) {
+      let contractArr = contract.split(',');
+      newFilterObj.contract = contractArr;
     }
     else {
-      delete newQueryObj.TypeOfContract;
-    }
-
-    let sortLabel = 'Latest';
-    if (sort) {
-      newQueryObj._sort = `id:${sort}`;
-      sortLabel = (sort == 'ASC')? 'Oldest' : sortLabel;
-    }
-    else {
-      newQueryObj._sort = `id:DESC`;
+      newFilterObj.contract = [];
     }
 
     if (urlParams.experienceFrom) {
@@ -164,9 +149,16 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
       }
     }
 
-    setSortDefault(sortLabel);
-    setShowSortDropdown(true);
+    console.log('newFilterObj', newFilterObj);
+    let size = getActiveFiltersLength(newFilterObj);
+    console.log('size', size);
+
+    setCountFilters(size);
+
+    setDefaultFiltersSelected(newFilterObj);
     setMainQuery(newQueryObj);
+    setFirstTimeLoading(false);
+
     setExperienceRange([newQueryObj.ExperienceFrom_gte, newQueryObj.ExperienceTo_lte]);
   }, [searchParams]);
 
@@ -179,7 +171,18 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
     let newQueryObj = {...mainQuery};
 
     let currentUrlParams = queryParse(searchParams);
-    /*interface FilterObj {
+
+    let sort:string = (currentUrlParams.order)? currentUrlParams.order.toString() : null;
+    let sortLabel = 'Latest';
+    if (sort) {
+      newQueryObj._sort = `id:${sort}`;
+      sortLabel = (sort == 'ASC')? 'Oldest' : sortLabel;
+    }
+    else {
+      newQueryObj._sort = `id:DESC`;
+    }
+
+    interface FilterObj {
       schedule: string[];
       field: string[];
       contract: string[];
@@ -196,25 +199,25 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
     });
 
     if (filterObj.schedule.length) {
-
+      newQueryObj.WorkingSchedule = filterObj.schedule;
     }
     else {
       delete newQueryObj.WorkingSchedule;
     }
 
     if (filterObj.field.length) {
-
+      newQueryObj.Fields = filterObj.field;
     }
     else {
       delete newQueryObj.Fields;
     }
 
     if (filterObj.contract.length) {
-
+      newQueryObj.TypeOfContract = filterObj.contract;
     }
     else {
       delete newQueryObj.TypeOfContract;
-    }*/
+    }
 
 
     let queryWhere = {
@@ -258,10 +261,10 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
     ];
 
     let {_sort, _start, _limit, ExperienceFrom_gte, ExperienceTo_lte,
-      Fields,
+      Fields, TypeOfContract, WorkingSchedule,
       ...filterParamsOnly} = newQueryObj;
 
-    console.log('filterParamsOnly', filterParamsOnly);
+    // console.log('filterParamsOnly', filterParamsOnly);
     queryWhere._where = {
       ...filterParamsOnly
     };
@@ -286,10 +289,20 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
       queryWhere['Fields'] = Fields.join('|');
       countWhere['Fields'] = Fields.join('|');
     }
+    if (TypeOfContract && TypeOfContract.length) {
+      queryWhere['TypeOfContract'] = TypeOfContract.join('|');
+      countWhere['TypeOfContract'] = TypeOfContract.join('|');
+    }
+    if (WorkingSchedule && WorkingSchedule.length) {
+      queryWhere['WorkingSchedule'] = WorkingSchedule.join('|');
+      countWhere['WorkingSchedule'] = WorkingSchedule.join('|');
+    }
 
     let queryWhereStr = queryStringify(queryWhere);
     let countQueryStr = queryStringify(countWhere);
 
+    setSortDefault(sortLabel);
+    setShowSortDropdown(true);
     setQueryStr(queryWhereStr);
     setQueryCountStr(countQueryStr);
   }, [mainQuery]);
@@ -370,6 +383,8 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
 
   const handleFilterSelected = (param) => {
     console.log('handleFilterSelected: ', param);
+    // let size = getActiveFiltersLength(param);
+    // setCountFilters(size);
     let currentUrlParams = queryParse(searchParams);
     let filterObj = {
       schedule: [],
@@ -388,14 +403,15 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
       ...filterObj
     }
     console.log('updatedUrlParams', updatedUrlParams);
-
+    resetPage();
     let updatedUrlString = queryStringify(updatedUrlParams);
     console.log('new urlParams', updatedUrlString);
     history.push({search: updatedUrlString});
   };
 
   const handleActiveFilters = (filter: Array<string>, key: string) => {
-    let actFilter: object = {...activeFilters};
+    console.log('handleActiveFilters');
+    let actFilter: object = {...defaultFiltersSelected};
     // Not working
     // let actFilter: object = activeFilters;
     actFilter[key] = filter;
@@ -403,9 +419,17 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
     // Not working
     // actFilter['size'] = size;
     // working
-    setCountFilters(size);
+    // setCountFilters(size);
     setActiveFilters(actFilter);
+    // handleFilterSelected(actFilter);
   }
+
+
+  useEffect(() => {
+    if(!firstTimeLoading) {
+      handleFilterSelected(activeFilters);
+    }
+  }, [activeFilters])
 
   const getActiveFiltersLength = (arr) => {
     let size: number = 0;
@@ -464,12 +488,12 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
     }
   }, [widthBrowser])
 
-  useEffect(() => {
+  /*useEffect(() => {
     if(!firstTimeLoading) {
       // onFilter(activeFilters);
       handleFilterSelected(activeFilters);
     }
-  }, [activeFilters])
+  }, [activeFilters])*/
 
   return(
     <Fragment>
@@ -484,7 +508,7 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
           </div>
           <div className="actions">
             <Button basic className="btn-filters" onClick={() => handleOpenFilter()}>
-              <Typography variant="label" element="span">
+              {!firstTimeLoading && <Typography variant="label" element="span">
                 {
                   countFilters > 0 && countFilters + ' '
                 }
@@ -492,7 +516,7 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
                   // Print "Filter" or "Filters"
                   t("general.filter", {count: countFilters}) 
                 }
-              </Typography>
+              </Typography>}
               {
                 openFilter || countFilters ?
                   <img src={filterActive} alt="btn filters active"/> :
@@ -560,4 +584,4 @@ const CardListTest:FC<CardListProps> = ({data: cards, loading, placeholderSearch
     </Fragment>
   );
 }
-export default CardListTest;
+export default CardListWithFilters;

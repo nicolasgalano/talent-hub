@@ -12,7 +12,7 @@ import { professionals3D } from '../../assets/illustrations';
 import { Button } from 'decentraland-ui/dist/components/Button/Button';
 
 // UI Custom Component
-import CardList from '../../components/common/CardList/CardListTest';
+import CardList from '../../components/common/CardList/CardListWithFilters';
 import Tabs from '../../components/common/Tabs/Tabs';
 import Hero from '../../components/common/Hero/Hero';
 

@@ -2,8 +2,8 @@ import { useLocation, useHistory } from 'react-router-dom';
 
 export interface FetchQuery {
   Fullname_contains?: string;
-  WorkingSchedule: string;
-  TypeOfContract: string;
+  WorkingSchedule: string[] | null;
+  TypeOfContract: string[] | null;
   Fields: string[] | null;
   ExperienceFrom_gte?: number;
   ExperienceTo_lte?: number;
