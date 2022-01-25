@@ -329,8 +329,6 @@ const ProfessionalCreate:FC = () =>{
                   <div className="upload-box">
                     <Label type="form">{t("general.portfolio", {ns: namespaces.common})}</Label>
                     { !updateFile && <Typography variant="body-s" element="p" className="recomended">{t("general.file-types-accepted", {ns: namespaces.common})} PDF</Typography>}
-                    {/*{ updateFile && <File title="Portfolio_Daniele.pdf" className="file" /> }
-                    { !updateFile && <Button secondary className="btn-upload" onClick={() => setUploadFile(!updateFile)}>{t("general.upload-portfolio", {ns: namespaces.common})}</Button>}*/}
                     <FileButton
                       label={t("general.upload-portfolio", {ns: namespaces.common})}
                       onChange={handlePortfolioUpload}
@@ -357,8 +355,6 @@ const ProfessionalCreate:FC = () =>{
                   <div className="upload-box">
                     <Label type="form">{t("general.picture", {ns: namespaces.common})}</Label>
                     { !updateFile && <Typography variant="body-s" element="p" className="recomended">{t("general.recomended-size", {ns: namespaces.common})} 100 x 100px</Typography>}
-                    {/*{ updateFile && <File title="ProfilePicture.png" className="file" /> }
-                    { !updateFile && <Button secondary className="btn-upload" onClick={() => setUploadFile(!updateFile)}>{t("general.upload-picture", {ns: namespaces.common})}</Button>}*/}
                     <FileButton
                       label={t("general.upload-picture", {ns: namespaces.common})}
                       onChange={handleProfilePicUpload}

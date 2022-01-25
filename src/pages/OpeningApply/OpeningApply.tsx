@@ -24,7 +24,8 @@ import File from '../../components/common/File/File';
 import Modal, { ModalBody, ModalFooter, ModalHandle, ModalHeader } from '../../components/common/Modal/Modal';
 import SingleProfile, { SingleProfileType } from '../../components/common/Single/SingleProfile';
 import TextField from '../../components/common/TextField/TextField';
-import { formatOpeningDetails } from '../../utils/formatData';
+import { formatOpeningDetails, filePreview } from '../../utils/formatData';
+import FileButton from "../../components/common/FileButton/FileButton";
 
 interface LocationProps {
   positionOffered: string;
@@ -51,6 +52,10 @@ const OpeningApply:FC = () => {
   const [applicants, setApplicants] = useState<SingleProfileType>(null)
   const modalRef = useRef<ModalHandle>(null);
   const [formData, setFormData] = useState<FormInterface>(null);
+  const [cvFileUpload, setCvFileUpload] = useState(null);
+  const [portfolioFileUpload, setPortfolioFileUpload] = useState(null);
+  const [profilePicFileUpload, setProfilePicFileUpload] = useState(null);
+  const [showcaseFileUpload, setShowcaseFileUpload] = useState([]);
   const [title, setTitle] = useState<string>('');
   const reRef = useRef<ReCAPTCHA>();
   const history = useHistory();
@@ -67,7 +72,7 @@ const OpeningApply:FC = () => {
   const { 
     response: responseSubmit, 
     loading: loadingSubmit, 
-    sendData } = useApi({
+    sendData, sendFormData } = useApi({
       url: '/applicants',
       method: 'POST',
       data: JSON.stringify(formData),
@@ -76,7 +81,7 @@ const OpeningApply:FC = () => {
   const handleOpenModal = () => modalRef.current.openModal();
   const handleCloseModal = () => modalRef.current.closeModal();
 
-  const handlePreview = (doc: FormInterface) => {
+  const handlePreview = async (doc: FormInterface) => {
     const dataFormated: SingleProfileType = {
       company_project_candidate: doc.Fullname,
       profession_job_name: doc.Profession,
@@ -84,8 +89,18 @@ const OpeningApply:FC = () => {
       email: doc.Email,
       portfolio: doc.OnlinePortfolio,
       linkedin: doc.Linkedin,
-      gallery: doc.BestWork,
+      gallery: [],
       image: doc.ProfilePicture,
+    }
+
+    let listFile = [];
+    for (let i = 0; i < showcaseFileUpload.length; i++) {
+      let fileBase64 = await filePreview(showcaseFileUpload[i]);
+      listFile.push(fileBase64);
+    }
+    dataFormated.gallery = listFile;
+    if (profilePicFileUpload) {
+      dataFormated.image = await filePreview(profilePicFileUpload);
     }
 
     // console.log('handlePreview:', dataFormated);
@@ -95,7 +110,19 @@ const OpeningApply:FC = () => {
   };
 
   const initialValues: FormInterface = {
-    Fullname: '',
+    Fullname: 'Juan',
+    Profession: 'dev',
+    Introduction: 'Alo',
+    Email: 'juan@gmail.com',
+    Linkedin: '',
+    OnlinePortfolio: '',
+    CV: null,
+    Portfolio: null,
+    ProfilePicture: null,
+    BestWork: [],
+    Preview: false,
+    published_at: null,
+    /*Fullname: '',
     Profession: '',
     Introduction: '',
     Email: '',
@@ -106,7 +133,7 @@ const OpeningApply:FC = () => {
     ProfilePicture: null,
     BestWork: [],
     Preview: false,
-    published_at: null
+    published_at: null*/
   }
 
   const formSchema = Yup.object().shape({
@@ -134,7 +161,24 @@ const OpeningApply:FC = () => {
 
   useEffect(() => {
     // launch when setState is ready when handleSubmit was executed
-    formData !== null && sendData();
+    // formData !== null && sendData();
+    if (formData !== null) {
+      const formDataEl = new FormData();
+      formDataEl.append('data', JSON.stringify(formData));
+      formDataEl.append('files.CV', cvFileUpload);
+      formDataEl.append('files.Portfolio', portfolioFileUpload);
+      for(let i = 0; i < showcaseFileUpload.length; i++) {
+        formDataEl.append('files.BestWork', showcaseFileUpload[i]);
+      }
+      formDataEl.append('files.ProfilePicture', profilePicFileUpload);
+
+      let axiosReq = {
+        url: '/applicants',
+        method: 'POST',
+        data: formDataEl,
+      };
+      sendFormData(axiosReq);
+    }
   }, [formData])
 
   useEffect(() => {
@@ -144,6 +188,22 @@ const OpeningApply:FC = () => {
       }
     }
   }, [responseSubmit]);
+
+  const handleCvUpload = (fileList) => {
+    setCvFileUpload(fileList[0]);
+  };
+
+  const handlePortfolioUpload = (fileList) => {
+    setPortfolioFileUpload(fileList[0]);
+  };
+
+  const handleShowcaseUpload = (fileList) => {
+    setShowcaseFileUpload(fileList);
+  };
+
+  const handleProfilePicUpload = (fileList) => {
+    setProfilePicFileUpload(fileList[0]);
+  };
 
   return (
     <div className="custom-form" id="job-details-contact">
@@ -249,34 +309,46 @@ const OpeningApply:FC = () => {
                   <div className="upload-box">
                     <Label type="form">{t("general.cv", {ns: namespaces.common})}</Label>
                     { !updateFile && <Typography variant="body-s" element="p" className="recomended">{t("general.file-types-accepted", {ns: namespaces.common})} PDF, DOC</Typography>}
-                    { updateFile && <File title="CV_DanieleFlorencia.pdf" className="file" /> }
-                    { !updateFile && <Button secondary className="btn-upload" onClick={() => setUploadFile(!updateFile)}>{t("general.upload-cv", {ns: namespaces.common})}</Button>}
+                    <FileButton
+                      label={t("general.upload-cv", {ns: namespaces.common})}
+                      onChange={handleCvUpload}
+                      multiple={false}
+                      accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf"
+                    />
                   </div>
                   {/* Input portfolio */}
                   <div className="upload-box">
                     <Label type="form">{t("general.portfolio", {ns: namespaces.common})}</Label>
                     { !updateFile && <Typography variant="body-s" element="p" className="recomended">{t("general.file-types-accepted", {ns: namespaces.common})} PDF</Typography>}
-                    { updateFile && <File title="Portfolio_Daniele.pdf" className="file" /> }
-                    { !updateFile && <Button secondary className="btn-upload" onClick={() => setUploadFile(!updateFile)}>{t("general.upload-portfolio", {ns: namespaces.common})}</Button>}
+                    <FileButton
+                      label={t("general.upload-portfolio", {ns: namespaces.common})}
+                      onChange={handlePortfolioUpload}
+                      multiple={false}
+                      accept=".pdf"
+                    />
                   </div>
                   {/* Input picture */}
                   <div className="upload-box">
                     <Label type="form">{t("general.picture", {ns: namespaces.common})}</Label>
                     { !updateFile && <Typography variant="body-s" element="p" className="recomended">{t("general.recomended-size", {ns: namespaces.common})} 100 x 100px</Typography>}
-                    { updateFile && <File title="ProfilePicture.png" className="file" /> }
-                    { !updateFile && <Button secondary className="btn-upload" onClick={() => setUploadFile(!updateFile)}>{t("general.upload-picture", {ns: namespaces.common})}</Button>}
+                    <FileButton
+                      label={t("general.upload-picture", {ns: namespaces.common})}
+                      onChange={handleProfilePicUpload}
+                      multiple={false}
+                      accept="image/*"
+                    />
                   </div>
                   {/* Input showcase */}
                   <div className="upload-box">
                     <Label type="form">{t("general.upload-showcase", {ns: namespaces.common})}</Label>
                     { !updateFile && <Typography variant="body-s" element="p" className="recomended">{t("general.recomended-size", {ns: namespaces.common})} 736 x 408px</Typography>}
-                    { updateFile && <File title="Picture1.jpg" className="file" /> }
-                    { updateFile && <File title="Picture2.jpg" className="file" /> }
-                    { updateFile && <File title="Picture3.jpg" className="file" /> }
-                    { updateFile && <File title="Picture4.jpg" className="file" /> }
-                    { updateFile && <File title="Picture5.jpg" className="file" /> }
-                    { updateFile && <File title="Picture6.jpg" className="file" /> }
-                    { !updateFile && <Button secondary className="btn-upload" onClick={() => setUploadFile(!updateFile)}>{t("general.upload-pictures", {ns: namespaces.common})}</Button>}
+                    <FileButton
+                      label={t("general.upload-pictures", {ns: namespaces.common})}
+                      onChange={handleShowcaseUpload}
+                      maxFiles={6}
+                      multiple={true}
+                      accept="image/*"
+                    />
                   </div>
                 </div>
               </div>
