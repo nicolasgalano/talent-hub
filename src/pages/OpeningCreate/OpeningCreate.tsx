@@ -57,7 +57,6 @@ interface FormInterface {
   Image?: string;
   Preview: boolean;
   published_at: boolean;
-  CompanyLogo: any
 }
 
 const OpeningCreate:FC = () =>{
@@ -110,30 +109,7 @@ const OpeningCreate:FC = () =>{
   }
 
   const initialValues: FormInterface = {
-    PositionOffered: 'Juan',
-    OrganizationName: 'Acme',
-    Organization: '',
-    Responsibilities: 'ewq',
-    Benefits: '',
-    TypeOfContract: [],
-    Fields: [],
-    ExperienceFrom: 1,
-    ExperienceTo: null,
-    WorkingSchedule: [],
-    Email: 'juan@gmail.com',
-    About: 'test',
-    SalaryFrom: undefined,
-    SalaryTo: undefined,
-    Currency: 'USD',
-    SalaryType: 'YEAR',
-    Month: 'September',
-    Year: '2021',
-    StartDate: '',
-    OrganizationProject: '',
-    Preview: false,
-    published_at: null,
-    CompanyLogo: null,
-    /*PositionOffered: '',
+    PositionOffered: '',
     OrganizationName: '',
     Organization: '',
     Responsibilities: '',
@@ -154,11 +130,10 @@ const OpeningCreate:FC = () =>{
     StartDate: '',
     OrganizationProject: '',
     Preview: false,
-    published_at: null*/
+    published_at: null
   }
 
   const formSchema = Yup.object().shape({
-    // CompanyLogo: Yup.mixed().required(),
     PositionOffered: Yup.string()
       .required(t("general.position-offered", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
     OrganizationName: Yup.string()
@@ -221,7 +196,6 @@ const OpeningCreate:FC = () =>{
   }, [responseSubmit]);
 
   const handleFileUpload = (fileList) => {
-    console.log('handleFileUpload', fileList);
     setUploadFile2(fileList[0])
   };
 
@@ -268,12 +242,6 @@ const OpeningCreate:FC = () =>{
             data.StartDate = moment((data.Month + ' ' + data.Year), "MMMM YYYY").format();
             delete data.Month;
             delete data.Year;
-
-            // console.log(data.CompanyLogo);
-            console.log('uploadFile', uploadFile2);
-            delete data.CompanyLogo;
-            // data.CompanyLogo = uploadFile2;
-            // data.CompanyLogo = 'asda';
 
             setFormData(data);
 
@@ -547,11 +515,9 @@ const OpeningCreate:FC = () =>{
                     <FileButton
                       label={t("general.upload-logo", {ns: namespaces.common})}
                       onChange={handleFileUpload}
-                      multiple={true}
+                      multiple={false}
                       accept="image/*"
                     />
-                    {/*<input type="file" onChange={handleFileUpload} multiple />*/}
-
                   </div>
                 </div>
               </div>
