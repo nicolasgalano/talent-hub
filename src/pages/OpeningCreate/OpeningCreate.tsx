@@ -28,6 +28,7 @@ import Modal, { ModalBody, ModalFooter, ModalHandle, ModalHeader } from "../../c
 import TextField from "../../components/common/TextField/TextField";
 import Dropdown from "../../components/common/Dropdown/Dropdown";
 import CheckboxGroup from "../../components/common/CheckboxGroup/CheckboxGroup";
+import FileButton from "../../components/common/FileButton/FileButton";
 
 // Types
 import SingleOrganizationAndProject, { SingleOrganizationAndProjectType } from "../../components/common/Single/SingleOrganizationAndProject";
@@ -56,13 +57,14 @@ interface FormInterface {
   Image?: string;
   Preview: boolean;
   published_at: boolean;
+  CompanyLogo: any
 }
 
 const OpeningCreate:FC = () =>{
   const { t } = useTranslation([namespaces.pages.openingcreate, namespaces.common]);
-  const [updateFile, setUploadFile] = useState(false);
   const [modalData, setModalData] = useState<SingleOrganizationAndProjectType>(null);
   const [formData, setFormData] = useState<FormInterface>(null);
+  const [uploadFile2, setUploadFile2] = useState(null);
   const history = useHistory();
   const modalRef = useRef<ModalHandle>(null);
   const reRef = useRef<ReCAPTCHA>();
@@ -71,7 +73,7 @@ const OpeningCreate:FC = () =>{
     response: responseSubmit, 
     loading: loadingSubmit, 
     error: errorSubmit,
-    sendData } = useApi({
+    sendData, sendFormData } = useApi({
       url: '/jobs',
       method: 'POST',
       data: JSON.stringify(formData),
@@ -108,7 +110,30 @@ const OpeningCreate:FC = () =>{
   }
 
   const initialValues: FormInterface = {
-    PositionOffered: '',
+    PositionOffered: 'Juan',
+    OrganizationName: 'Acme',
+    Organization: '',
+    Responsibilities: 'ewq',
+    Benefits: '',
+    TypeOfContract: [],
+    Fields: [],
+    ExperienceFrom: 1,
+    ExperienceTo: null,
+    WorkingSchedule: [],
+    Email: 'juan@gmail.com',
+    About: 'test',
+    SalaryFrom: undefined,
+    SalaryTo: undefined,
+    Currency: 'USD',
+    SalaryType: 'YEAR',
+    Month: 'September',
+    Year: '2021',
+    StartDate: '',
+    OrganizationProject: '',
+    Preview: false,
+    published_at: null,
+    CompanyLogo: null,
+    /*PositionOffered: '',
     OrganizationName: '',
     Organization: '',
     Responsibilities: '',
@@ -129,10 +154,11 @@ const OpeningCreate:FC = () =>{
     StartDate: '',
     OrganizationProject: '',
     Preview: false,
-    published_at: null
+    published_at: null*/
   }
 
   const formSchema = Yup.object().shape({
+    // CompanyLogo: Yup.mixed().required(),
     PositionOffered: Yup.string()
       .required(t("general.position-offered", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
     OrganizationName: Yup.string()
@@ -171,7 +197,19 @@ const OpeningCreate:FC = () =>{
 
   useEffect(() => {
     // launch when setState is ready when handleSubmit was executed
-    formData !== null && sendData();
+    // formData !== null && sendData();
+    if (formData !== null ) {
+      const formDataEl = new FormData();
+      formDataEl.append('data', JSON.stringify(formData));
+      formDataEl.append('files.CompanyLogo', uploadFile2);
+
+      let axiosReq = {
+        url: '/jobs',
+        method: 'POST',
+        data: formDataEl
+      }
+      sendFormData(axiosReq);
+    }
   }, [formData])
 
   useEffect(() => {
@@ -181,7 +219,11 @@ const OpeningCreate:FC = () =>{
       }
     }
   }, [responseSubmit]);
-  
+
+  const handleFileUpload = (fileList) => {
+    console.log('handleFileUpload', fileList);
+    setUploadFile2(fileList[0])
+  };
 
   return(
     <div className="custom-form" id="post-a-job">
@@ -227,10 +269,17 @@ const OpeningCreate:FC = () =>{
             delete data.Month;
             delete data.Year;
 
+            // console.log(data.CompanyLogo);
+            console.log('uploadFile', uploadFile2);
+            delete data.CompanyLogo;
+            // data.CompanyLogo = uploadFile2;
+            // data.CompanyLogo = 'asda';
+
             setFormData(data);
 
             // handle submit on useEffect FormData
-            console.log(JSON.stringify(data, null, 2));
+            // console.log(JSON.stringify(data, null, 2));
+            console.log(data);
           }
           // prevent submit
           actions.setSubmitting(false);
@@ -494,8 +543,15 @@ const OpeningCreate:FC = () =>{
                   <div className="upload-box">
                     <Label type="form">{t("general.company", {ns: namespaces.common})}</Label>
                     <Typography variant="body-s" element="p" className="recomended">{t("general.recomended-size", {ns: namespaces.common})} 100 x 100px</Typography>
-                    { updateFile && <File title="CompanyLogo.png" className="file" /> }
-                    <Button secondary className="btn-upload" type="button" onClick={() => setUploadFile(!updateFile)}>{t("general.upload-logo", {ns: namespaces.common})}</Button>
+
+                    <FileButton
+                      label={t("general.upload-logo", {ns: namespaces.common})}
+                      onChange={handleFileUpload}
+                      multiple={true}
+                      accept="image/*"
+                    />
+                    {/*<input type="file" onChange={handleFileUpload} multiple />*/}
+
                   </div>
                 </div>
               </div>

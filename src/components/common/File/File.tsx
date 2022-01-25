@@ -15,10 +15,10 @@ interface FileProps {
 
 const File:FC <FileProps> = ({title, handleClick, className}) => {
 
-  const onClickDelete = () => handleClick;
+  const onClickDelete = () => {handleClick()};
 
   return (
-    <button className={clsx('btn-delete', className)}>
+    <button className={clsx('btn-delete', className)} onClick={ev => {ev.preventDefault();}}>
       {title}
       <img src={deleteFile} alt="delete" onClick={onClickDelete} />
     </button>

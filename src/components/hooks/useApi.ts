@@ -29,7 +29,17 @@ const useApi = (axiosParams: AxiosRequestConfig) => {
   };
 
   const sendData = () => {
+    if (axiosParams.url == '/jobs') {
+      console.log('send Data');
+      console.log(axiosParams.data);
+    }
     fetchData(axiosParams);
+  }
+
+  const sendFormData = (params) => {
+    console.log('send form Data');
+    console.log(params.data);
+    fetchData(params);
   }
 
   useEffect(() => {
@@ -38,7 +48,7 @@ const useApi = (axiosParams: AxiosRequestConfig) => {
     }
   },[]);
 
-  return { response, error, loading, sendData };
+  return { response, error, loading, sendData, sendFormData };
 }
 
 export default useApi;
