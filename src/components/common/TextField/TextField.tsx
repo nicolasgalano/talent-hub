@@ -62,6 +62,7 @@ const TextField: FC<TextFieldProps & FieldHookConfig<string>> = ({label, element
               name={props.name}
               id={props.id}
               type={props.type}
+              {...(props.type==='number' ? { inputMode: 'decimal', pattern: '[0-9]*' } : {})}
               min={min}
               className='input' 
               /> :
