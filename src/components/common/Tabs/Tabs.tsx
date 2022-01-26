@@ -44,7 +44,7 @@ const Tabs:FC<TabsProps> = ({dataTabs}) => {
         </div>
         {
           dataTabs.cta &&
-            <Link className="action" to={dataTabs.cta.to}>
+            <Link className={'action '+((path === '/professionals')?'professionals':'')} to={dataTabs.cta.to}>
               <Button basic>
                 <img src={plus} alt="icon plus" />
                 { dataTabs.cta.title }

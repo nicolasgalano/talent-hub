@@ -43,6 +43,11 @@
         align-items: center;
         column-gap: 13px;
       }
+      &.professionals{
+        @include media-breakpoint-down(sm){
+          margin-top: 37px;
+        }
+      }
     }
   }
 }
