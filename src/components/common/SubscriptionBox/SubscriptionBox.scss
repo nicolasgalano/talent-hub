@@ -126,6 +126,9 @@
     }
 
     .info{
+      @include media-breakpoint-down(xs) {
+        padding: 55px 20px 65px;
+      }
       .body-xl{
         margin-bottom:0px !important;
       }
