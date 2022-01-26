@@ -41,7 +41,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        column-gap: 13px;
+        img{margin-right:13px;}
       }
       &.professionals{
         @include media-breakpoint-down(sm){
