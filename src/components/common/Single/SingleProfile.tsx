@@ -77,22 +77,22 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
   const renderMoreInfo = () => (
     <>
       {
-        contract &&
-          <div>
-            {/* Type of contract */}
-            <Label type="review">{t("general.type-of-contract")}</Label>
-            <Typography variant="body-l" element="p">
-              { contract.join(' / ') }
-            </Typography>
-          </div>
-      }
-      {
         schedule &&
           <div>
             {/* Working schedule */}
             <Label type="review">{t("general.working-schedule")}</Label>
             <Typography variant="body-l" element="p">
               { schedule.join(' / ') }
+            </Typography>
+          </div>
+      }
+      {
+        contract &&
+          <div>
+            {/* Type of contract */}
+            <Label type="review">{t("general.type-of-contract")}</Label>
+            <Typography variant="body-l" element="p">
+              { contract.join(' / ') }
             </Typography>
           </div>
       }
