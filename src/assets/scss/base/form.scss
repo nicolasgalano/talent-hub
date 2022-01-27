@@ -162,6 +162,11 @@
             }
           }
         }
+
+        &.menu-max-height .menu {
+          max-height: 220px;
+          overflow-y: scroll;
+        }
       }
       .upload-box{
         > label{

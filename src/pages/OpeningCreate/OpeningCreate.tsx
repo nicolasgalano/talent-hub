@@ -211,6 +211,10 @@ const OpeningCreate:FC = () =>{
     setExperienceRange(values);
   };
 
+  let currentYear = moment().format('YYYY');
+  let nextYear = moment().add(1, 'year').format('YYYY');
+  const yearsList = [currentYear, nextYear];
+
   return(
     <div className="custom-form" id="post-a-job">
       <HeroPost 
@@ -447,6 +451,7 @@ const OpeningCreate:FC = () =>{
                     <div className="start-date">
                       <Dropdown
                         name="Month"
+                        className="menu-max-height"
                         options={Array(
                           t("months.january", {ns: namespaces.common}),
                           t("months.febrary", {ns: namespaces.common}),
@@ -466,8 +471,8 @@ const OpeningCreate:FC = () =>{
 
                       <Dropdown
                         name="Year"
-                        options={Array('2021', '2022')}
-                        optionDefault="2021" 
+                        options={yearsList}
+                        optionDefault={currentYear}
                         direction="right" />
 
                     </div>
