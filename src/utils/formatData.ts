@@ -110,7 +110,7 @@ const profilePicture = (img) => {
 export const galleryPictures = (imgs: Array<any>) => {
   if(imgs.length !== 0 && imgs !== null){
     return imgs.map((img) => {
-      // console.log('galleryPictures', img);
+      console.log('galleryPictures', img);
       if (typeof img == 'string') {
         return img;
       }
@@ -122,8 +122,8 @@ export const galleryPictures = (imgs: Array<any>) => {
           return img.formats.medium.url;
         }else if(img.formats.small !== undefined){
           return img.formats.small.url;
-        }else if(img.formats.large !== undefined){
-          return img.formats.large.url;
+        }else if(img.formats.thumbnail !== undefined){
+          return img.formats.thumbnail.url;
         }
       }else{
         return img.url;
