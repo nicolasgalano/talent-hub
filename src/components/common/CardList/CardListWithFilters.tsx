@@ -1,4 +1,4 @@
-import React, { FC, Fragment, useEffect, useRef, useState, useCallback } from "react";
+import React, { FC, Fragment, useEffect, useRef, useState, useCallback, useMemo } from "react";
 import clsx from 'clsx';
 import { useLocation, useHistory } from 'react-router-dom';
 import {queryParse, queryStringify} from '../../../utils/queryString';
@@ -359,7 +359,10 @@ const CardListWithFilters:FC<CardListProps> = ({data: cards, loading, placeholde
     setMainQuery(newQueryObj);
   };
 
-  const searchDebounce = useCallback(debounce(handleSearch, 400), [inputSearchValue]);
+  /*const searchDebounce = useMemo(
+    () => debounce(handleSearch, 400),
+    []);*/
+  const searchDebounce = handleSearch;
 
   const handleLoadMoreClick = (ev) => {
     ev.preventDefault();
