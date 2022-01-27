@@ -42,6 +42,7 @@ export const formatProfessionals = (res: any) => {
 export const formatOpeningDetails = (res: any) => {
   const doc = res[0];
   const formattedData: SingleOrganizationAndProjectType = {
+    id: doc.id,
     profession_job_name: doc.PositionOffered,
     about: doc.About,
     responsabilities: doc.Responsibilities,
@@ -67,6 +68,7 @@ export const formatOpeningDetails = (res: any) => {
 export const formatProfessionalDetails = (res: any) => {
   const doc = res[0];
   const formattedData: SingleProfileType = {
+    id: doc.id,
     company_project_candidate: doc.Fullname,
     profession_job_name: doc.Profession,
     introduction: doc.Introduction,

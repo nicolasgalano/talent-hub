@@ -34,7 +34,8 @@ const OpeningDetails: FC = () => {
           onClickAction={() => history.push({
             pathname: `./${data.slug}/apply`,
             state: {
-              positionOffered: data.profession_job_name
+              positionOffered: data.profession_job_name,
+              id: data.id
             }
           })}
           >

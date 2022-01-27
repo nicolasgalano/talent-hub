@@ -13,6 +13,7 @@ import Tag from '../Tag/Tag';
 import { formatContract, formatExperienceRequired, formatField, formatSalary, formatSchedule, formatStartDate, getMultipleField } from '../../../utils/formatData';
 
 export type SingleOrganizationAndProjectType = {
+  id?: number;
   about?: string;
   responsabilities: string;
   benefits: string;

@@ -29,6 +29,7 @@ import FileButton from "../../components/common/FileButton/FileButton";
 
 interface LocationProps {
   positionOffered: string;
+  id: number;
 }
 
 interface FormInterface {
@@ -44,6 +45,7 @@ interface FormInterface {
   BestWork: Array<string>;
   Preview: boolean;
   published_at: boolean;
+  Job: number;
 }
 
 const OpeningApply:FC = () => {
@@ -57,6 +59,7 @@ const OpeningApply:FC = () => {
   const [profilePicFileUpload, setProfilePicFileUpload] = useState(null);
   const [showcaseFileUpload, setShowcaseFileUpload] = useState([]);
   const [title, setTitle] = useState<string>('');
+  const [jobId, setJobId] = useState<number>(null);
   const reRef = useRef<ReCAPTCHA>();
   const history = useHistory();
   // Get data that was send on params
@@ -110,7 +113,20 @@ const OpeningApply:FC = () => {
   };
 
   const initialValues: FormInterface = {
-    Fullname: '',
+    Fullname: 'juan',
+    Profession: 'dev',
+    Introduction: 'test',
+    Email: 'juan@gmail.com',
+    Linkedin: '',
+    OnlinePortfolio: '',
+    CV: null,
+    Portfolio: null,
+    ProfilePicture: null,
+    BestWork: [],
+    Preview: false,
+    published_at: null,
+    Job: jobId,
+    /*Fullname: '',
     Profession: '',
     Introduction: '',
     Email: '',
@@ -121,7 +137,8 @@ const OpeningApply:FC = () => {
     ProfilePicture: null,
     BestWork: [],
     Preview: false,
-    published_at: null
+    published_at: null,
+    Job: jobId*/
   }
 
   const formSchema = Yup.object().shape({
@@ -141,9 +158,14 @@ const OpeningApply:FC = () => {
   useEffect(() => {
     if(state){ 
       setTitle(state.positionOffered);
+      setJobId(state.id);
     }else{
-      (response && !state) && 
-        setTitle(formatOpeningDetails(response.data).profession_job_name);
+      if (response && !state) {
+        let openingDetails = formatOpeningDetails(response.data);
+        setTitle(openingDetails.profession_job_name);
+        console.log('openingDetails.id', openingDetails.id);
+        setJobId(openingDetails.id);
+      }
     }
   }, [response])
 
@@ -214,13 +236,15 @@ const OpeningApply:FC = () => {
           if(!isValidCaptcha){
             return alert('invalid captcha');
           }*/
-
+          console.log('onSubmit', values, jobId);
           if(values.Preview){
             handlePreview(values);
             // Reset variable
             actions.setFieldValue('Preview', false);
           }else{
             let data: FormInterface = Object.assign({}, values);
+
+            data.Job = jobId;
 
             setFormData(data);
             // handle submit on useEffect FormData

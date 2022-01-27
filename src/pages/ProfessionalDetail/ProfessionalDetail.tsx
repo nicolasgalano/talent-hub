@@ -112,7 +112,12 @@ const ProfessionalDetail: FC = () => {
           initialValues={initialValues}
           validationSchema={formSchema}
           onSubmit={(values, actions) => {
-            setFormData(values);
+            let allValues = {
+              ...values,
+              Professional: data.id
+            }
+            console.log(allValues);
+            setFormData(allValues);
             // prevent submit
             actions.setSubmitting(false);
           }}

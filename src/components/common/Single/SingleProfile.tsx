@@ -18,6 +18,7 @@ import { useWindowSize } from '../../hooks/useWindowsSize';
 import { generateURL, visibleURL } from '../../../utils/formatData';
 
 export type SingleProfileType = {
+  id?: number;
   introduction: string;
   email: string;
   portfolio: string;
