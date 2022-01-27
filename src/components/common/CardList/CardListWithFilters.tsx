@@ -52,7 +52,7 @@ interface CardListProps {
 
 const RESULTS_PER_PAGE = 6;
 const EXPERIENCE_FROM = 0;
-const EXPERIENCE_TO = 10;
+const EXPERIENCE_TO = 20;
 
 const CardListWithFilters:FC<CardListProps> = ({data: cards, loading, placeholderSearch, type,
                                       handleOnFetch, resultsCount, resetPage, loadMoreClicked}) => {
