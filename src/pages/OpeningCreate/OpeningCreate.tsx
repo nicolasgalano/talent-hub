@@ -197,6 +197,7 @@ const OpeningCreate:FC = () =>{
   useEffect(() => {
     if(responseSubmit){
       if(responseSubmit.status === 200){
+        handleCloseModal();
         history.push('/openings/post-a-job/success');
       }
     }

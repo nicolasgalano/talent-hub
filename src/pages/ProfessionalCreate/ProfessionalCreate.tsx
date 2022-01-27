@@ -178,6 +178,7 @@ const ProfessionalCreate:FC = () =>{
   useEffect(() => {
     if(responseSubmit){
       if(responseSubmit.status === 200){
+        handleCloseModal();
         history.push('/professionals/create/success');
       }
     }
