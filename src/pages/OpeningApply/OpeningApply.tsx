@@ -172,6 +172,7 @@ const OpeningApply:FC = () => {
   useEffect(() => {
     if(responseSubmit){
       if(responseSubmit.status === 200){
+        handleCloseModal();
         history.push(`/job/${slug}/apply/success`);
       }
     }
@@ -301,6 +302,7 @@ const OpeningApply:FC = () => {
                       label={t("general.upload-cv", {ns: namespaces.common})}
                       onChange={handleCvUpload}
                       multiple={false}
+                      maxFiles={1}
                       accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf"
                     />
                   </div>
@@ -311,6 +313,7 @@ const OpeningApply:FC = () => {
                     <FileButton
                       label={t("general.upload-portfolio", {ns: namespaces.common})}
                       onChange={handlePortfolioUpload}
+                      maxFiles={1}
                       multiple={false}
                       accept=".pdf"
                     />
@@ -322,6 +325,7 @@ const OpeningApply:FC = () => {
                     <FileButton
                       label={t("general.upload-picture", {ns: namespaces.common})}
                       onChange={handleProfilePicUpload}
+                      maxFiles={1}
                       multiple={false}
                       accept="image/*"
                     />
@@ -348,7 +352,7 @@ const OpeningApply:FC = () => {
                   loading={loadingSubmit}
                   type="submit"
                   primary >
-                    {t("buttons.submit", {ns: namespaces.common})}
+                    {t("general.apply", {ns: namespaces.common})}
                 </Button>
                 <Button 
                   disabled={!formik.isValid}
@@ -386,7 +390,7 @@ const OpeningApply:FC = () => {
                   onClick={() => {
                     formik.handleSubmit();
                   }}>
-                    {t("buttons.submit", {ns: namespaces.common})}
+                    {t("general.apply", {ns: namespaces.common})}
                 </Button>
               </ModalFooter>
             </Modal>

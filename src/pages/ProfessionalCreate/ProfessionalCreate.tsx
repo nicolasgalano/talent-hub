@@ -322,6 +322,7 @@ const ProfessionalCreate:FC = () =>{
                     <FileButton
                       label={t("general.upload-cv", {ns: namespaces.common})}
                       onChange={handleCvUpload}
+                      maxFiles={1}
                       multiple={false}
                       accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf"
                     />
@@ -333,6 +334,7 @@ const ProfessionalCreate:FC = () =>{
                     <FileButton
                       label={t("general.upload-portfolio", {ns: namespaces.common})}
                       onChange={handlePortfolioUpload}
+                      maxFiles={1}
                       multiple={false}
                       accept=".pdf"
                     />
@@ -359,6 +361,7 @@ const ProfessionalCreate:FC = () =>{
                     <FileButton
                       label={t("general.upload-picture", {ns: namespaces.common})}
                       onChange={handleProfilePicUpload}
+                      maxFiles={1}
                       multiple={false}
                       accept="image/*"
                     />

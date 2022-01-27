@@ -96,13 +96,13 @@ const FileButton: FC<FileButtonProps> = ({label, multiple = false, onChange = nu
   return (
     <div>
       { hasFiles && renderFileList()}
-      <Button
+      { ((maxFiles && uploadFiles.length < maxFiles) || !maxFiles) && <Button
         secondary
         className="btn-upload"
         onClick={onButtonClicked}
         type="button">
         {label}
-      </Button>
+      </Button> }
       <input
         type="file"
         className="hidden"

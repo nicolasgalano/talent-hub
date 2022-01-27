@@ -532,6 +532,7 @@ const OpeningCreate:FC = () =>{
                     <FileButton
                     label={t("general.upload-logo", {ns: namespaces.common})}
                     onChange={handleFileUpload}
+                    maxFiles={1}
                     multiple={false}
                     accept="image/*"
                   />
