@@ -511,7 +511,12 @@ const CardListWithFilters:FC<CardListProps> = ({data: cards, loading, placeholde
         modalRef.current.openModal();
       }
     }
-  }, [widthBrowser])
+  }, [widthBrowser]);
+
+  const handleModalApplyButton = () => {
+    modalRef.current.closeModal();
+    setOpenFilter(false);
+  };
 
   /*useEffect(() => {
     if(!firstTimeLoading) {
@@ -602,7 +607,10 @@ const CardListWithFilters:FC<CardListProps> = ({data: cards, loading, placeholde
         <ModalBody>
           { renderFilters() }
           <div className="apply">
-            <Button primary size="large">{ t("general.apply") }</Button>
+            <Button
+              primary
+              onClick={handleModalApplyButton}
+              size="large">{ t("general.apply") }</Button>
           </div>
         </ModalBody>
       </Modal>
