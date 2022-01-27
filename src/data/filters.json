@@ -8,6 +8,21 @@
     },
     {
       "ENGINEERING": "Engineering"
+    },
+    {
+      "MODELLING": "Modelling"
+    },
+    {
+      "PROJECT_MANAGEMENT": "Project Management"
+    },
+    {
+      "MARKETING": "Marketing"
+    },
+    {
+      "ART_DIRECTION": "Art Direction"
+    },
+    {
+      "DATA_ANALYTICS": "Data Analytics"
     }
   ],
   "contract": [
