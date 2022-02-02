@@ -301,3 +301,15 @@ export const setMultipleField = (list: Array<any>, key: string) => {
   })
   return newList;
 }
+
+export const generateSlug = (position: string) => {
+  let slug = '';
+  // delete space, and join with "-"
+  slug  = position.split(' ').join('-').toLowerCase();
+  // generate random ID with 8 caraters
+  const id = Math.random().toString(36).slice(2, 10).toLowerCase();
+  // concat
+  slug = slug + '-' + id;
+
+  return slug;
+}

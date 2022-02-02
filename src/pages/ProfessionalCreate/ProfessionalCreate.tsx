@@ -23,7 +23,7 @@ import Modal, { ModalBody, ModalFooter, ModalHandle, ModalHeader } from "../../c
 import SingleProfile, { SingleProfileType } from "../../components/common/Single/SingleProfile";
 import TextField from "../../components/common/TextField/TextField";
 import CheckboxGroup from "../../components/common/CheckboxGroup/CheckboxGroup";
-import { setMultipleField, filePreview } from "../../utils/formatData";
+import { setMultipleField, filePreview, generateSlug } from "../../utils/formatData";
 import useApi from "../../components/hooks/useApi";
 import validateReCaptcha from "../../utils/validateReCaptcha";
 import FileButton from "../../components/common/FileButton/FileButton";
@@ -233,6 +233,9 @@ const ProfessionalCreate:FC = () =>{
             data.TypeOfContract = setMultipleField(data.TypeOfContract, 'TypeOfContract');
             data.Fields = setMultipleField(data.Fields, 'Fields');
             data.WorkingSchedule = setMultipleField(data.WorkingSchedule, 'WorkingSchedule');
+
+            // Create Slug
+            data.Slug = generateSlug(data.Fullname);
 
             setFormData(data);
             // handle submit on useEffect FormData
