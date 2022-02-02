@@ -87,8 +87,8 @@
     gap: 44px;
     margin-bottom: 80px;
     @include media-breakpoint-down(xxl){
-      column-gap: 32px;
-      .card{margin-bottom:34px;}
+      gap: 34px 32px;
+      // .card{margin-bottom:34px;}
     }
     @include media-breakpoint-down(lg){
       .card .header .txt h3{
@@ -98,7 +98,8 @@
     @include media-breakpoint-down(md){
       grid-template-columns: repeat(2, 1fr);
       justify-content: center;
-      .card{margin-bottom:24px;}
+      row-gap: 24px;
+      // .card{margin-bottom:24px;}
     }
     @include media-breakpoint-down(sm){
       display: flex;
