@@ -24,6 +24,9 @@
     align-items: center;
     background: linear-gradient(180deg, #AEF3E5 0%, #54D8BD 99.99%, #54D8BD 100%);
     overflow: hidden;
+    @include media-breakpoint-down(xs) {
+      height: 308px;
+    }
     img{
       width: auto;
       height: 401px;
@@ -130,7 +133,11 @@
 
     .info{
       @include media-breakpoint-down(xs) {
-        padding: 55px 20px 65px;
+        height: 364px;
+        justify-content: center;
+        padding-top: unset;
+        padding-bottom: unset;
+    
       }
       .body-xl{
         margin-bottom:0px !important;
