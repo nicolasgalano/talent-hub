@@ -9,7 +9,7 @@ import { namespaces } from '../../i18n/i18n.constants';
 import { ErrorMessage, Form, Formik } from "formik";
 import * as Yup from "yup";
 import moment from "moment";
-import { setMultipleField, filePreview } from "../../utils/formatData";
+import { setMultipleField, filePreview, generateSlug } from "../../utils/formatData";
 import { ErrorFocus } from "../../utils/ErrorFocus";
 import ReCAPTCHA from "react-google-recaptcha";
 import validateReCaptcha from "../../utils/validateReCaptcha";
@@ -56,6 +56,7 @@ interface FormInterface {
   Image?: string;
   Preview: boolean;
   published_at: boolean;
+  Slug: string;
 }
 
 const EXPERIENCE_FROM = 0;
@@ -137,7 +138,8 @@ const OpeningCreate:FC = () =>{
     StartDate: '',
     OrganizationProject: '',
     Preview: false,
-    published_at: null
+    published_at: null,
+    Slug: null
   }
 
   const formSchema = Yup.object().shape({
@@ -261,6 +263,9 @@ const OpeningCreate:FC = () =>{
 
             data.ExperienceFrom = experienceRange[0];
             data.ExperienceTo = experienceRange[1];
+
+            // Create Slug
+            data.Slug = generateSlug(data.PositionOffered);
 
             setFormData(data);
 
