@@ -90,7 +90,7 @@ const OpeningCreate:FC = () =>{
       profession_job_name: doc.PositionOffered,
       company_project_candidate: doc.OrganizationName,
       about: doc.About,
-      responsabilities: doc.Responsibilities,
+      responsibilities: doc.Responsibilities,
       benefits: doc.Benefits,
       experience_from: `${experienceRange[0]}`,
       experience_to: `${experienceRange[1]}`,
@@ -148,7 +148,7 @@ const OpeningCreate:FC = () =>{
     OrganizationName: Yup.string()
       .required(t("general.organization", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
     Responsibilities: Yup.string()
-      .required(t("general.responsabilities", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
+      .required(t("general.responsibilities", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
     TypeOfContract: Yup.array()
       .min(1, t("general.type-of-contract", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common}))
       .required(t("general.type-of-contract", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
@@ -294,11 +294,11 @@ const OpeningCreate:FC = () =>{
                       name="PositionOffered"
                       required />
                   </div>
-                  {/* Textarea responsabilities */}
+                  {/* Textarea responsibilities */}
                   <div>
                     <TextField
                       element="textarea"
-                      label={t("general.responsabilities", {ns: namespaces.common})}
+                      label={t("general.responsibilities", {ns: namespaces.common})}
                       name="Responsibilities"
                       id="Responsibilities"
                       required />
@@ -459,7 +459,7 @@ const OpeningCreate:FC = () =>{
                         className="menu-max-height"
                         options={Array(
                           t("months.january", {ns: namespaces.common}),
-                          t("months.febrary", {ns: namespaces.common}),
+                          t("months.february", {ns: namespaces.common}),
                           t("months.march", {ns: namespaces.common}),
                           t("months.april", {ns: namespaces.common}),
                           t("months.may", {ns: namespaces.common}),
@@ -469,7 +469,7 @@ const OpeningCreate:FC = () =>{
                           t("months.september", {ns: namespaces.common}),
                           t("months.october", {ns: namespaces.common}),
                           t("months.november", {ns: namespaces.common}),
-                          t("months.decenber", {ns: namespaces.common})
+                          t("months.december", {ns: namespaces.common})
                         )}
                         optionDefault={t("months.september", {ns: namespaces.common})}
                         direction="right" />
@@ -537,7 +537,7 @@ const OpeningCreate:FC = () =>{
                   {/* Input logo */}
                   <div className="upload-box">
                     <Label type="form">{t("general.company", {ns: namespaces.common})}</Label>
-                    <Typography variant="body-s" element="p" className="recomended">{t("general.recomended-size", {ns: namespaces.common})} 100 x 100px</Typography>
+                    <Typography variant="body-s" element="p" className="recommended">{t("general.recommended-size", {ns: namespaces.common})} 100 x 100px</Typography>
 
                     <FileButton
                     label={t("general.upload-logo", {ns: namespaces.common})}

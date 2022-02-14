@@ -15,7 +15,7 @@ import { formatContract, formatExperienceRequired, formatField, formatSalary, fo
 export type SingleOrganizationAndProjectType = {
   id?: number;
   about?: string;
-  responsabilities: string;
+  responsibilities: string;
   benefits: string;
   experience_from: string;
   experience_to: string;
@@ -98,12 +98,12 @@ const SingleOrganizationAndProject:FC <SingleOrganizationAndProjectProps> = ({da
           { data.profession_job_name }
         </Typography>
         {
-          // Responsabilities
-          data.responsabilities &&
+          // Responsibilities
+          data.responsibilities &&
             <>
-              <Label type="review">{t("general.responsabilities")}</Label>
+              <Label type="review">{t("general.responsibilities")}</Label>
               <Typography variant="body-l" element="p">
-                {data.responsabilities}
+                {data.responsibilities}
               </Typography>
             </>
         }

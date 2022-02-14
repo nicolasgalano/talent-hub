@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const validateReCaptcha = async (token: string): Promise<boolean> => {
-  const secretKey = "6LfszyMeAAAAAGotfKSFDqg81zT2qh5Jmn1yGCB3";
+  const secretKey = process.env.REACT_APP_G_RECAPTCHA_PRIVATE_KEY;
   // Validate with Google servers
   return axios({
     method: 'post',

@@ -30,7 +30,7 @@
     "experience":             "Experience",
     "required-information":   "Required information",
     "position-offered":       "Position offered",
-    "responsabilities":       "Responsabilities",
+    "responsibilities":       "Responsibilities",
     "benefits":               "Benefits",
     "permanent":              "Permanent",
     "temporary":              "Temporary",
@@ -66,7 +66,7 @@
     "about-the-organization": "About the organization",
     "about-the-project":      "About the project",
     "company":                "Company or project logo",
-    "recomended-size":        "Recomended size",
+    "recommended-size":       "Recommended size",
     "upload-logo":            "Upload logo",
     "upload-cv":              "Upload CV",
     "upload-portfolio":       "Upload portfolio",
@@ -91,7 +91,7 @@
   },
   "months": {
     "january":    "January",
-    "febrary":    "Febrary",
+    "february":   "February",
     "march":      "March",
     "april":      "April",
     "may":        "May",
@@ -101,6 +101,6 @@
     "september":  "September",
     "october":    "October",
     "november":   "November",
-    "decenber":   "Decenber"
+    "december":   "December"
   }
 }

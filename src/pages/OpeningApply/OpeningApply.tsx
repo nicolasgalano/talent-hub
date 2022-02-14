@@ -216,6 +216,11 @@ const OpeningApply:FC = () => {
     setProfilePicFileUpload(fileList[0]);
   };
 
+  useEffect(() => {
+    console.log('Api public key:', process.env.REACT_APP_G_RECAPTCHA_PUBLIC_KEY);
+  }, [])
+  
+
   return (
     <div className="custom-form" id="job-details-contact">
       <HeroPost
@@ -321,7 +326,7 @@ const OpeningApply:FC = () => {
                   {/* Input cv */}
                   <div className="upload-box">
                     <Label type="form">{t("general.cv", {ns: namespaces.common})}</Label>
-                    { !updateFile && <Typography variant="body-s" element="p" className="recomended">{t("general.file-types-accepted", {ns: namespaces.common})} PDF, DOC</Typography>}
+                    { !updateFile && <Typography variant="body-s" element="p" className="recommended">{t("general.file-types-accepted", {ns: namespaces.common})} PDF, DOC</Typography>}
                     <FileButton
                       label={t("general.upload-cv", {ns: namespaces.common})}
                       onChange={handleCvUpload}
@@ -333,7 +338,7 @@ const OpeningApply:FC = () => {
                   {/* Input portfolio */}
                   <div className="upload-box">
                     <Label type="form">{t("general.portfolio", {ns: namespaces.common})}</Label>
-                    { !updateFile && <Typography variant="body-s" element="p" className="recomended">{t("general.file-types-accepted", {ns: namespaces.common})} PDF</Typography>}
+                    { !updateFile && <Typography variant="body-s" element="p" className="recommended">{t("general.file-types-accepted", {ns: namespaces.common})} PDF</Typography>}
                     <FileButton
                       label={t("general.upload-portfolio", {ns: namespaces.common})}
                       onChange={handlePortfolioUpload}
@@ -345,7 +350,7 @@ const OpeningApply:FC = () => {
                   {/* Input picture */}
                   <div className="upload-box">
                     <Label type="form">{t("general.picture", {ns: namespaces.common})}</Label>
-                    { !updateFile && <Typography variant="body-s" element="p" className="recomended">{t("general.recomended-size", {ns: namespaces.common})} 100 x 100px</Typography>}
+                    { !updateFile && <Typography variant="body-s" element="p" className="recommended">{t("general.recommended-size", {ns: namespaces.common})} 100 x 100px</Typography>}
                     <FileButton
                       label={t("general.upload-picture", {ns: namespaces.common})}
                       onChange={handleProfilePicUpload}
@@ -357,7 +362,7 @@ const OpeningApply:FC = () => {
                   {/* Input showcase */}
                   <div className="upload-box">
                     <Label type="form">{t("general.upload-showcase", {ns: namespaces.common})}</Label>
-                    { !updateFile && <Typography variant="body-s" element="p" className="recomended">{t("general.recomended-size", {ns: namespaces.common})} 736 x 408px</Typography>}
+                    { !updateFile && <Typography variant="body-s" element="p" className="recommended">{t("general.recommended-size", {ns: namespaces.common})} 736 x 408px</Typography>}
                     <FileButton
                       label={t("general.upload-pictures", {ns: namespaces.common})}
                       onChange={handleShowcaseUpload}

@@ -45,7 +45,7 @@ export const formatOpeningDetails = (res: any) => {
     id: doc.id,
     profession_job_name: doc.PositionOffered,
     about: doc.About,
-    responsabilities: doc.Responsibilities,
+    responsibilities: doc.Responsibilities,
     benefits: doc.Benefits,
     experience_from: doc.ExperienceFrom,
     experience_to: doc.ExperienceTo,
