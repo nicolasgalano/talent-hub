@@ -214,15 +214,15 @@ const ProfessionalCreate:FC = () =>{
         validationSchema={formSchema}
         onSubmit={async (values, actions) => {
           // GET token ReCaptcha
-          // const token = await reRef.current.executeAsync();
-          // reRef.current.reset();
+          const token: string = await reRef.current.executeAsync();
+          reRef.current.reset();
           // Validate captcha
           /*const isValidCaptcha = await validateReCaptcha(token);
           if(!isValidCaptcha){
             return alert('invalid captcha');
           }*/
 
-          if(values.Preview){
+          if(values.Preview && token){
             await handlePreview(values);
             // Reset variable
             actions.setFieldValue('Preview', false);
@@ -488,7 +488,7 @@ const ProfessionalCreate:FC = () =>{
             </div>
             <ErrorFocus />
             <ReCAPTCHA
-              sitekey="6LfszyMeAAAAALJi3GgI_heeMTWzPLW5HrK5_ebF"
+              sitekey={process.env.REACT_APP_G_RECAPTCHA_PUBLIC_KEY}
               size="invisible"
               ref={reRef}
               />

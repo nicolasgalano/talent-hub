@@ -12,6 +12,7 @@ import { namespaces } from '../../i18n/i18n.constants';
 import { formatProfessionalDetails, generateURL } from '../../utils/formatData';
 import { Form, Formik } from 'formik';
 import * as Yup from "yup";
+import ReCAPTCHA from "react-google-recaptcha";
 
 // Semantic component
 import { Button } from 'semantic-ui-react';
@@ -32,6 +33,7 @@ interface FormInterface {
 const ProfessionalDetail: FC = () => {
   const {t} = useTranslation(namespaces.common);
   const history = useHistory();
+  const reRef = useRef<ReCAPTCHA>();
 
   const { slug }: { slug: string } = useParams();
   const [data, setData] = useState(null);
@@ -111,13 +113,18 @@ const ProfessionalDetail: FC = () => {
         <Formik
           initialValues={initialValues}
           validationSchema={formSchema}
-          onSubmit={(values, actions) => {
+          onSubmit={async (values, actions) => {
+            // GET token ReCaptcha
+            const token: string = await reRef.current.executeAsync();
+            reRef.current.reset();
+
             let allValues = {
               ...values,
               Professional: data.id
             }
-            console.log(allValues);
-            setFormData(allValues);
+            // console.log(allValues);
+
+            token && setFormData(allValues);
             // prevent submit
             actions.setSubmitting(false);
           }}
@@ -182,6 +189,11 @@ const ProfessionalDetail: FC = () => {
           </Form>
         </Formik>
       </Modal>
+      <ReCAPTCHA
+        sitekey={process.env.REACT_APP_G_RECAPTCHA_PUBLIC_KEY}
+        size="invisible"
+        ref={reRef}
+        />
     </Fragment>
   )
 }

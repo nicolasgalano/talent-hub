@@ -231,15 +231,16 @@ const OpeningCreate:FC = () =>{
         validationSchema={formSchema}
         onSubmit={async (values, actions) => {
           // GET token ReCaptcha
-          // const token = await reRef.current.executeAsync();
-          // reRef.current.reset();
+          const token: string = await reRef.current.executeAsync();
+          reRef.current.reset();
+          
           // Validate captcha
           // const isValidCaptcha = await validateReCaptcha(token);
           /*if(!isValidCaptcha){
             return alert('invalid captcha');
           }*/
 
-          if(values.Preview){
+          if(values.Preview && token){
             handlePreview(values);
             // Reset variable
             actions.setFieldValue('Preview', false);
@@ -271,7 +272,7 @@ const OpeningCreate:FC = () =>{
 
             // handle submit on useEffect FormData
             // console.log(JSON.stringify(data, null, 2));
-            console.log(data);
+            // console.log(data);
           }
           // prevent submit
           actions.setSubmitting(false);
@@ -574,9 +575,13 @@ const OpeningCreate:FC = () =>{
             </div>
             <ErrorFocus />
             <ReCAPTCHA
-              sitekey="6LfszyMeAAAAALJi3GgI_heeMTWzPLW5HrK5_ebF"
+              sitekey={process.env.REACT_APP_G_RECAPTCHA_PUBLIC_KEY}
               size="invisible"
               ref={reRef}
+              // onChange={(token: string)=> {
+              //   formik.setFieldValue('recaptcha', token);
+              //   console.log('token:' , token);
+              // }}
               />
             <Modal theme="light" ref={modalRef}>
               <ModalHeader>{t("modal.title", { ns: namespaces.pages.openingcreate})}</ModalHeader>
