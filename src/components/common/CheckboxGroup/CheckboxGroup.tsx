@@ -30,6 +30,7 @@ const CheckboxGroup: FC<CheckboxGroupProps> = ({name, options, radio}) => {
               id={option.value}
               key={option.value}
               type={radio ? 'radio' : 'checkbox'}
+              checked={radio && field.value === option.value}
               onChange={field.onChange}
               radio={radio}
               />

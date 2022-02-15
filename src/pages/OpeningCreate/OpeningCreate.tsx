@@ -45,8 +45,8 @@ interface FormInterface {
   WorkingSchedule: Array<string>;
   Email: string;
   About: string;
-  SalaryFrom: number;
-  SalaryTo: number;
+  SalaryFrom: number | '';
+  SalaryTo: number | '';
   Currency: string;
   SalaryType: string;
   Month: string;
@@ -129,8 +129,8 @@ const OpeningCreate:FC = () =>{
     WorkingSchedule: [],
     Email: '',
     About: '',
-    SalaryFrom: undefined,
-    SalaryTo: undefined,
+    SalaryFrom: '',
+    SalaryTo: '',
     Currency: 'USD',
     SalaryType: 'YEAR',
     Month: 'September',

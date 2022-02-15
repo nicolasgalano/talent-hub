@@ -32,7 +32,7 @@ interface FormInterface {
   Fullname: string;
   Profession: string;
   Introduction: string;
-  Experience: number;
+  Experience: number | '';
   Email: string;
   Linkedin: string;
   OnlinePortfolio: string;
@@ -47,6 +47,9 @@ interface FormInterface {
   BestWork: Array<string>;
   Preview: boolean;
   published_at: boolean;
+  StudioOrIndividual: 'STUDIO' | 'INDIVIDUAL' | '';
+  StudioActivity?: string;
+  TeamAndSkill?: string;
 }
 
 const ProfessionalCreate:FC = () =>{
@@ -77,13 +80,15 @@ const ProfessionalCreate:FC = () =>{
   const handlePreview = async (doc: FormInterface) => {
     const dataFormated: SingleProfileType = {
       company_project_candidate: doc.Fullname,
-      profession_job_name: doc.Profession,
+      // profession_job_name: doc.Profession,
+      profession_job_name: doc.StudioOrIndividual === 'STUDIO' ? doc.StudioActivity : doc.Profession,
+      team_and_skill: doc.StudioOrIndividual === 'STUDIO' ? doc.TeamAndSkill : null,
       introduction: doc.Introduction,
       email: doc.Email,
       portfolio: doc.OnlinePortfolio,
       linkedin: doc.Linkedin,
       gallery: [],
-      experience: doc.Experience,
+      experience: doc.Experience !== '' ? doc.Experience : null,
       image: null,
       workgin_shedule: setMultipleField(doc.WorkingSchedule, 'WorkingSchedule'),
       type_of_contract: setMultipleField(doc.TypeOfContract, 'TypeOfContract'),
@@ -100,7 +105,7 @@ const ProfessionalCreate:FC = () =>{
       dataFormated.image = await filePreview(profilePicFileUpload);
     }
 
-    // console.log('handlePreview:', dataFormated);
+    console.log('handlePreview:', dataFormated);
 
     setNewProfile(dataFormated);
     handleOpenModal();
@@ -121,17 +126,18 @@ const ProfessionalCreate:FC = () =>{
     TypeOfContract: [],
     Fields: [],
     WorkingSchedule: [],
-    Experience: undefined,
+    Experience: '',
     BestWork: [],
     Preview: false,
-    published_at: null
+    published_at: null,
+    StudioOrIndividual: '',
+    StudioActivity: '',
+    TeamAndSkill: ''
   }
 
   const formSchema = Yup.object().shape({
     Fullname: Yup.string()
       .required(t("general.name-and-surname", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
-    Profession: Yup.string()
-      .required(t("general.profession", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
     Introduction: Yup.string()
       .required(t("general.introduction", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
     Experience: Yup.number()
@@ -152,6 +158,26 @@ const ProfessionalCreate:FC = () =>{
     WorkingSchedule: Yup.array()
       .min(1, t("general.working-schedule", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common}))
       .required(),
+    StudioOrIndividual: Yup.string()
+      .required(t("general.studio-or-individual", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
+    Profession: Yup.string()
+      .when('StudioOrIndividual', {
+        is: 'INDIVIDUAL',
+        then: (schema) => schema.required(t("general.profession", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
+        otherwise: (schema) => schema.notRequired(),
+      }),
+    StudioActivity: Yup.string()
+      .when('StudioOrIndividual', {
+        is: 'STUDIO',
+        then: (schema) => schema.required(t("general.studio", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
+        otherwise: (schema) => schema.notRequired(),
+      }),
+    TeamAndSkill: Yup.string()
+      .when('StudioOrIndividual', {
+        is: 'STUDIO',
+        then: (schema) => schema.required(t("general.team-and-skill-question", {ns: namespaces.common}) + ' ' + t("forms.required", {ns: namespaces.common})),
+        otherwise: (schema) => schema.notRequired(),
+      }),
   });
 
   useEffect(() => {
@@ -221,7 +247,6 @@ const ProfessionalCreate:FC = () =>{
           if(!isValidCaptcha){
             return alert('invalid captcha');
           }*/
-
           if(values.Preview && token){
             await handlePreview(values);
             // Reset variable
@@ -237,8 +262,8 @@ const ProfessionalCreate:FC = () =>{
             // Create Slug
             data.Slug = generateSlug(data.Fullname);
 
-            setFormData(data);
             // handle submit on useEffect FormData
+            setFormData(data);
             // console.log(JSON.stringify(data, null, 2));
           }
           // prevent submit
@@ -261,16 +286,65 @@ const ProfessionalCreate:FC = () =>{
                       id="Fullname"
                       required />
                   </div>
-                  {/* Input profession */}
+                  {/* Studio or Individual */}
                   <div>
-                    <TextField
-                      element="input"
-                      type="text"
-                      label={t("general.profession", {ns: namespaces.common})}
-                      name="Profession"
-                      id="Profession"
-                      required />
+                    <Label type="form" required>{t("general.studio-or-individual", {ns: namespaces.common})}</Label>
+                    <div className="checkbox-inline">
+                      <CheckboxGroup
+                        name="StudioOrIndividual"
+                        radio
+                        options={[
+                          {
+                            label: t("general.studio", {ns: namespaces.common}),
+                            value: "STUDIO"
+                          },
+                          {
+                            label: t("general.individual", {ns: namespaces.common}),
+                            value: "INDIVIDUAL"
+                          },
+                        ]}
+                        />
+                      </div>
                   </div>
+                  {
+                    formik.values.StudioOrIndividual === 'STUDIO' &&
+                      <>
+                        {/* Input studio */}
+                        <div>
+                          <TextField
+                            element="input"
+                            type="text"
+                            label={t("general.studio-activity", {ns: namespaces.common})}
+                            name="StudioActivity"
+                            id="StudioActivity"
+                            required />
+                        </div>
+                        {/* Textarea Team And Skill */}
+                        <div>
+                          <TextField 
+                            element="textarea"
+                            label={t("general.team-and-skill-question", {ns: namespaces.common})}
+                            name="TeamAndSkill"
+                            id="TeamAndSkill"
+                            required />
+                        </div>
+                      </>
+                  }
+                  {
+                    formik.values.StudioOrIndividual === 'INDIVIDUAL' &&
+                      <>
+                        {/* Input profession */}
+                        <div>
+                          <TextField
+                            element="input"
+                            type="text"
+                            label={t("general.profession", {ns: namespaces.common})}
+                            name="Profession"
+                            id="Profession"
+                            required />
+                        </div>
+                      </>
+                  }
                   {/* Textarea introduction */}
                   <div>
                     <TextField 
@@ -487,11 +561,11 @@ const ProfessionalCreate:FC = () =>{
               </div>
             </div>
             <ErrorFocus />
-            <ReCAPTCHA
+            {/* <ReCAPTCHA
               sitekey={process.env.REACT_APP_G_RECAPTCHA_PUBLIC_KEY}
               size="invisible"
               ref={reRef}
-              />
+              /> */}
             <Modal theme="light" ref={modalRef}>
               <ModalHeader>{t("modal.title", { ns: namespaces.pages.professionalcreate})}</ModalHeader>
               <ModalBody className="review-modal">

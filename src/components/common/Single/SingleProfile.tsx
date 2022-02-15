@@ -25,6 +25,7 @@ export type SingleProfileType = {
   linkedin: string;
   gallery?: Array<string> | any;
   experience?: number;
+  team_and_skill?: string;
   // Common
   company_project_candidate: string;
   image?: string | any;
@@ -204,6 +205,16 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
               <Label type="review">{t("general.introduction")}</Label>
               <Typography variant="body-l" element="p">
                 {data.introduction}
+              </Typography>
+            </>
+        }
+        {
+          // Team And Skill
+          data.team_and_skill &&
+            <>
+              <Label type="review">{t("general.team_and_skill")}</Label>
+              <Typography variant="body-l" element="p">
+                {data.team_and_skill}
               </Typography>
             </>
         }
