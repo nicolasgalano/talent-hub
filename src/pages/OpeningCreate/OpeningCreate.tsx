@@ -240,7 +240,11 @@ const OpeningCreate:FC = () =>{
             return alert('invalid captcha');
           }*/
 
-          if(values.Preview && token){
+          if(!token){
+            return;
+          }
+
+          if(values.Preview){
             handlePreview(values);
             // Reset variable
             actions.setFieldValue('Preview', false);
@@ -578,10 +582,6 @@ const OpeningCreate:FC = () =>{
               sitekey={process.env.REACT_APP_G_RECAPTCHA_PUBLIC_KEY}
               size="invisible"
               ref={reRef}
-              // onChange={(token: string)=> {
-              //   formik.setFieldValue('recaptcha', token);
-              //   console.log('token:' , token);
-              // }}
               />
             <Modal theme="light" ref={modalRef}>
               <ModalHeader>{t("modal.title", { ns: namespaces.pages.openingcreate})}</ModalHeader>

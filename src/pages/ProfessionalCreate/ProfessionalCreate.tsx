@@ -247,7 +247,11 @@ const ProfessionalCreate:FC = () =>{
           if(!isValidCaptcha){
             return alert('invalid captcha');
           }*/
-          if(values.Preview && token){
+          if(!token){
+            return;
+          }
+
+          if(values.Preview){
             await handlePreview(values);
             // Reset variable
             actions.setFieldValue('Preview', false);
@@ -561,11 +565,11 @@ const ProfessionalCreate:FC = () =>{
               </div>
             </div>
             <ErrorFocus />
-            {/* <ReCAPTCHA
+            <ReCAPTCHA
               sitekey={process.env.REACT_APP_G_RECAPTCHA_PUBLIC_KEY}
               size="invisible"
               ref={reRef}
-              /> */}
+              />
             <Modal theme="light" ref={modalRef}>
               <ModalHeader>{t("modal.title", { ns: namespaces.pages.professionalcreate})}</ModalHeader>
               <ModalBody className="review-modal">

@@ -241,8 +241,11 @@ const OpeningApply:FC = () => {
           if(!isValidCaptcha){
             return alert('invalid captcha');
           }*/
+          if(!token){
+            return;
+          }
           // console.log('onSubmit', values, jobId);
-          if(values.Preview && token){
+          if(values.Preview){
             handlePreview(values);
             // Reset variable
             actions.setFieldValue('Preview', false);
