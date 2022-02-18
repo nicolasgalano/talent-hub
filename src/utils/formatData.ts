@@ -28,7 +28,7 @@ export const formatProfessionals = (res: any) => {
     const formattedData: CardProps = {
       id: professional.id,
       title: professional.Fullname,
-      profession: professional.Profession,
+      profession: professional.Profession ? professional.Profession : professional.StudioActivity,
       img: profilePicture(professional.ProfilePicture),
       description: professional.Introduction,
       date: professional.published_at,
@@ -70,7 +70,7 @@ export const formatProfessionalDetails = (res: any) => {
   const formattedData: SingleProfileType = {
     id: doc.id,
     company_project_candidate: doc.Fullname,
-    profession_job_name: doc.Profession,
+    profession_job_name: doc.Profession ? doc.Profession : doc.StudioActivity,
     introduction: doc.Introduction,
     email: doc.Email,
     portfolio: doc.OnlinePortfolio,
@@ -80,7 +80,9 @@ export const formatProfessionalDetails = (res: any) => {
     type_of_contract: doc.TypeOfContract,
     fields: doc.Fields,
     image: profilePicture(doc.ProfilePicture),
-    experience: doc.Experience
+    experience: doc.Experience,
+    team_and_skill: doc.TeamAndSkill,
+    studio_activity: doc.StudioActivity
   };
   return formattedData;
 }

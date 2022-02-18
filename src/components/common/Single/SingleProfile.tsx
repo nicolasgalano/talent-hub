@@ -18,6 +18,7 @@ import { useWindowSize } from '../../hooks/useWindowsSize';
 import { generateURL, visibleURL } from '../../../utils/formatData';
 
 export type SingleProfileType = {
+  // Common
   id?: number;
   introduction: string;
   email: string;
@@ -25,14 +26,16 @@ export type SingleProfileType = {
   linkedin: string;
   gallery?: Array<string> | any;
   experience?: number;
-  team_and_skill?: string;
-  // Common
   company_project_candidate: string;
   image?: string | any;
   profession_job_name: string;
   workgin_shedule?: Array<any>;
   type_of_contract?: Array<any>;
   fields?: Array<any>;
+  // Studio
+  team_and_skill?: string;
+  studio_activity?: string;
+  
 }
 
 interface SingleProfileProps {
@@ -188,14 +191,26 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
             <div className="company-or-project mobile">
               <img src={data.image} alt="logo" />
               <Typography variant="heading-xxs" element="h2">
-                {data.profession_job_name}
+                { 
+                  data.profession_job_name ? 
+                    data.profession_job_name :
+                    data.studio_activity ? 
+                      data.studio_activity :
+                      ''
+                }
               </Typography>
             </div>
         }
         {
           !data.image &&
             <Typography variant="heading-xxs" element="h2" className="profession">
-              { data.profession_job_name}
+              { 
+                data.profession_job_name ? 
+                  data.profession_job_name :
+                  data.studio_activity ? 
+                    data.studio_activity :
+                    ''
+              }
             </Typography>
         }
         {
