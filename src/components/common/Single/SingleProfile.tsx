@@ -212,7 +212,7 @@ const SingleProfile:FC <SingleProfileProps> = ({data}) => {
           // Team And Skill
           data.team_and_skill &&
             <>
-              <Label type="review">{t("general.team_and_skill")}</Label>
+              <Label type="review">{t("general.team-and-skill")}</Label>
               <Typography variant="body-l" element="p">
                 {data.team_and_skill}
               </Typography>
